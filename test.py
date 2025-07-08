@@ -6,7 +6,7 @@ epi = epitran.Epitran("cmn-Hans")
 # 初始化 panphon 的特征表
 ft = panphon.FeatureTable()
 
-text = "月亮偷偷给海鸥送去柠檬。"  # 待转写的中文文本
+text = "月亮"  # 待转写的中文文本
 # 使用 epitran 进行音标（ASCII）转写
 ascii_transcription = epi.transliterate(text)
 
