@@ -18,9 +18,9 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    parser = argparse.ArgumentParser(description="将输入句子转为 IPA")
+    parser = argparse.ArgumentParser(description="Convert text to IPA")
     parser.add_argument(
-        "--language", required=True, help="语言（例如：Chinese Mandarin）"
+        "--language", required=True, help="(eg. Mandarin)"
     )
     parser.add_argument("--sentence", required=True, help="要转写的句子")
 
