@@ -17,27 +17,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def direct_ipa_conversion(
-    language: str, sentence: str, config: GoruutConfig = None
-) -> bool:
-    """Convert a given sentence to IPA for the specified language."""
-    if not sentence.strip():
-        logger.error("输入句子为空")
-        return False
-
-    try:
-        ipa = run_goruut_and_get_ipa(language, sentence, config)
-        if ipa:
-            print(f"IPA: {ipa}")
-            return True
-        else:
-            logger.error("无法获取 IPA 音标")
-            return False
-    except Exception as e:
-        logger.error(f"转写 IPA 失败：{e}")
-        return False
-
-
 def main():
     parser = argparse.ArgumentParser(description="Convert text to IPA")
     parser.add_argument(
