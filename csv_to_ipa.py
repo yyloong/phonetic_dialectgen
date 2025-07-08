@@ -71,6 +71,10 @@ def process_csv_for_ipa(
         return False
 
 
+def setup_logging():
+    print("设置日志记录")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="将 CSV 文件的指定列中文文本转为 IPA"
