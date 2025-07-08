@@ -1,3 +1,3 @@
 # phonetic_dialectgen
 
-a text-to-speech model
+A text-to-speech model with excellent performance.
