@@ -5,7 +5,6 @@ import logging
 from tqdm import tqdm
 from goruut_ipa import get_ipa_phonemes, goruut_server_context, GoruutConfig
 
-
 def process_csv_for_ipa(
     csv_path: str,
     language: str = "Chinese Mandarin",
