@@ -1,9 +1,14 @@
 import pandas as pd
 import argparse
-from tqdm import tqdm
-from goruut_ipa import run_goruut_and_get_ipa
 import logging
 import os
+from goruut_ipa import (
+    run_goruut_and_get_ipa,
+    get_ipa_with_segmentation,
+    GoruutConfig,
+    goruut_server_context,
+)
+from tqdm import tqdm
 
 # Configure logging
 os.makedirs("logs", exist_ok=True)
@@ -18,93 +23,87 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def process_csv(csv_file: str, language: str, input_col: int) -> None:
-    """Process a CSV file to add IPA phonemes for Chinese text in the specified column."""
+def process_csv(input_csv: str, language: str, input_col: int) -> str:
+    """Process CSV file to add IPA column."""
+    logger.info(f"读取 CSV 文件：{input_csv}")
+
     try:
-        # Read CSV file
-        logger.info(f"读取 CSV 文件：{csv_file}")
-        df = pd.read_csv(csv_file)
+        df = pd.read_csv(input_csv)
         if input_col >= len(df.columns):
-            logger.error(
-                f"输入列索引 {input_col} 超出 CSV 列数 {len(df.columns)}"
-            )
-            raise ValueError(
-                f"Input column index {input_col} exceeds number of columns {len(df.columns)}"
-            )
+            logger.error(f"输入列索引 {input_col} 超出 CSV 列范围")
+            raise ValueError(f"Input column index {input_col} out of range")
 
-        input_col_name = df.columns[input_col]
-        logger.info(f"处理列：{input_col_name}")
-
-        # Initialize new columns
-        df["IPA"] = ""
-        df["FailedWord"] = ""
-
-        # Process each row starting from the first row
+        ipa_results = []
+        failed_words_list = []
         failed_rows = 0
-        for idx, row in tqdm(df.iterrows(), total=len(df), desc="处理行"):
-            sentence = str(row[input_col_name]).strip()
-            if not sentence:
-                logger.warning(f"行 {idx} 为空，跳过")
-                continue
+        config = GoruutConfig()
 
-            try:
-                ipa, failed_words, success = run_goruut_and_get_ipa(
-                    language, sentence
+        # Start goruut server once before processing all rows
+        with goruut_server_context(config) as server:
+            # Process each row
+            for sentence in tqdm(df.iloc[:, input_col], desc="处理行"):
+                if not isinstance(sentence, str):
+                    logger.warning(f"无效输入，非字符串: {sentence}")
+                    ipa_results.append("")
+                    failed_words_list.append([])
+                    failed_rows += 1
+                    continue
+
+                # Call get_ipa_with_segmentation directly with server config
+                ipa, failed_words, success = get_ipa_with_segmentation(
+                    language, sentence, server.config
                 )
-                df.at[idx, "IPA"] = ipa
-                df.at[idx, "FailedWord"] = (
-                    ",".join(failed_words) if failed_words else ""
-                )
+                ipa_results.append(ipa)
+                failed_words_list.append(",".join(failed_words))
                 if not success:
                     failed_rows += 1
-                    logger.warning(f"行 {idx} 处理失败，失败词: {failed_words}")
-            except Exception as e:
-                logger.error(f"行 {idx} 处理出错: {e}")
-                df.at[idx, "IPA"] = ""
-                df.at[idx, "FailedWord"] = sentence
-                failed_rows += 1
 
-        # Save results
-        output_file = csv_file.replace(".csv", "_with_IPA.csv")
-        df.to_csv(output_file, index=False, encoding="utf-8")
-        logger.info(f"已保存结果到 {output_file}")
+        # Add IPA and FailedWord columns
+        df["IPA"] = ipa_results
+        df["FailedWord"] = failed_words_list
 
-        # Log failure rate
+        # Save to new CSV
+        output_csv = os.path.splitext(input_csv)[0] + "_with_IPA.csv"
+        df.to_csv(output_csv, index=False, encoding="utf-8")
+        logger.info(f"已保存结果到 {output_csv}")
+
         failure_rate = failed_rows / len(df) if len(df) > 0 else 0
         logger.info(
             f"处理完成，失败行数: {failed_rows}/{len(df)}，失败率: {failure_rate:.2%}"
         )
         print(
-            f"{output_file}: 处理完成，失败行数: {failed_rows}/{len(df)}，失败率: {failure_rate:.2%}"
+            f"{output_csv}: 处理完成，失败行数: {failed_rows}/{len(df)}，失败率: {failure_rate:.2%}"
         )
+        return output_csv
 
     except FileNotFoundError:
-        logger.error(f"CSV 文件未找到：{csv_file}")
-        raise
+        logger.error(f"CSV 文件未找到：{input_csv}")
+        raise FileNotFoundError(f"CSV file not found: {input_csv}")
     except Exception as e:
-        logger.error(f"处理 CSV 时出错：{e}")
-        raise
+        logger.error(f"处理 CSV 文件时出错：{e}")
+        raise RuntimeError(f"Failed to process CSV: {e}")
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(
-        description="Convert Chinese text in CSV to IPA phonemes."
+        description="Convert Chinese text in CSV to IPA."
     )
-    parser.add_argument(
-        "--csv", type=str, required=True, help="Input CSV file path"
-    )
+    parser.add_argument("--csv", required=True, help="Path to input CSV file")
     parser.add_argument(
         "--language",
-        type=str,
         default="Chinese Mandarin",
-        help="Language for phoneme conversion",
+        help="Language for IPA conversion (default: Chinese Mandarin)",
     )
     parser.add_argument(
         "--input-col",
         type=int,
-        default=0,
-        help="Column index containing Chinese text",
+        default=1,
+        help="Column index for input text (default: 1)",
     )
     args = parser.parse_args()
 
     process_csv(args.csv, args.language, args.input_col)
+
+
+if __name__ == "__main__":
+    main()
