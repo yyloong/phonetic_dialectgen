@@ -80,10 +80,11 @@ def sp_get_spectrogram(path, turn):
 
 class wav_to_melspec:
     @staticmethod
-    def mp3_to_wave(wav_dir, mp3_dir):
+    def mp3_to_wave(mp3_dir,wav_dir,turn=None):
         os.makedirs(wav_dir, exist_ok=True)
         listdir = os.listdir(mp3_dir)
         mp3_paths = [os.path.join(mp3_dir, f) for f in listdir if f.endswith(".mp3")]
+        print(f"len:{len(mp3_paths)}")
         wav_paths = [
             os.path.join(wav_dir, f.replace(".mp3", ".wav"))
             for f in listdir
@@ -123,9 +124,9 @@ class wav_to_melspec:
     def parallel_process(
         file_or_dir, wav_dir, save_dir, process_fun, num_workers=mp.cpu_count()
     ):
-        os.makedirs(save_dir, exist_ok=True)
-        listdir = os.listdir(wav_dir)
         if file_or_dir == "file":
+            os.makedirs(save_dir, exist_ok=True)
+            listdir = os.listdir(wav_dir)
             wav_paths = [
                 os.path.join(wav_dir, f) for f in listdir if f.endswith(".wav")
             ]
@@ -201,15 +202,20 @@ def zhvoice_mel():
     save_dir_total_list = []
     for i in range(len(mp3_dir_list)):
         listdir = os.listdir(mp3_dir_list[i])
+        print(f"listdir: {len(listdir)}")
         for dir in listdir:
             mp3_concatdir = os.path.join(mp3_dir_list[i], dir)
-            if not os.isdir(mp3_concatdir):
+            if not os.path.isdir(mp3_concatdir):
                 continue
             mp3_dir_total_list.append(mp3_concatdir)
             wav_concatdir = os.path.join(wav_dir_list[i], dir)
+            os.makedirs(wav_concatdir, exist_ok=True)
             wav_dir_total_list.append(wav_concatdir)
             save_concatdir = os.path.join(save_dir_list[i], dir)
+            os.makedirs(save_concatdir, exist_ok=True)
             save_dir_total_list.append(save_concatdir)
+    print("mp3_dir_total_list:", len(mp3_dir_total_list))
+    print("wav_dir_total_list:", len(wav_dir_total_list))
     wav_to_melspec.parallel_process(
         "dir", mp3_dir_total_list, wav_dir_total_list, wav_to_melspec.mp3_to_wave
     )
@@ -260,7 +266,7 @@ def CVCorpus_mel():
 def KeSpeech_mel():
     root_dir = "/mnt/nas/shared/datasets/voices/KeSpeech/Audio"
     save_dir = root_dir
-    phase1_mandarin = root_dir + "Metadata"+" phase1_mandarin.csv"
+    phase1_mandarin = root_dir.replace("Audio","/Metadata/phase1_mandarin.csv")
     df=pd.read_csv(phase1_mandarin)
     relative_paths= list(df["audio"])
     wav_paths= []
@@ -268,11 +274,12 @@ def KeSpeech_mel():
     for re_path in relative_paths:
         wav_paths.append(os.path.join(root_dir, re_path))
         save_paths.append(os.path.join(save_dir, re_path.replace(".wav", ".pt").replace("phase","phase_mel")))
+        os.makedirs(os.path.dirname(save_paths[-1]), exist_ok=True)
     wav_to_melspec.parallel_process(
-        "file", wav_paths, save_paths, wav_to_melspec.process_file
+        "dir", wav_paths, save_paths, wav_to_melspec.process_file
     )
 
 
 if __name__ == "__main__":
     mp.set_start_method("spawn", force=True)
-    word_shk_cantonese()
+    zhvoice_mel()
