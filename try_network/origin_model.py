@@ -315,7 +315,12 @@ class DiscriminatorP(torch.nn.Module):
         fmap = []
 
         # 1d to 2d
-        b, c, t = x.shape
+        try:
+          b, c, t = x.shape
+        except:
+          b, t = x.shape
+          c = 1
+          x = x.unsqueeze(1)
         if t % self.period != 0: # pad first
             n_pad = self.period - (t % self.period)
             x = F.pad(x, (0, n_pad), "reflect")
@@ -431,8 +436,8 @@ class SynthesizerTrn(nn.Module):
     self.upsample_initial_channel = upsample_initial_channel
     self.upsample_kernel_sizes = upsample_kernel_sizes
     self.segment_size = segment_size
-    self.n_speakers = n_speakers
-    self.gin_channels = gin_channels
+    self.n_speakers = 0
+    self.gin_channels = 0
 
     self.use_sdp = use_sdp
 
@@ -463,7 +468,6 @@ class SynthesizerTrn(nn.Module):
       g = self.emb_g(sid).unsqueeze(-1) # [b, h, 1]
     else:
       g = None
-
     z, m_q, logs_q, y_mask = self.enc_q(y, y_lengths, g=g)
     z_p = self.flow(z, y_mask, g=g)
 
@@ -492,9 +496,9 @@ class SynthesizerTrn(nn.Module):
     m_p = torch.matmul(attn.squeeze(1), m_p.transpose(1, 2)).transpose(1, 2)
     logs_p = torch.matmul(attn.squeeze(1), logs_p.transpose(1, 2)).transpose(1, 2)
 
-    z_slice, ids_slice = commons.rand_slice_segments(z, y_lengths, self.segment_size)
-    o = self.dec(z_slice, g=g)
-    return o, l_length, attn, ids_slice, x_mask, y_mask, (z, z_p, m_p, logs_p, m_q, logs_q)
+    #z_slice, ids_slice = commons.rand_slice_segments(z, y_lengths, self.segment_size)
+    o = self.dec(z, g=g)
+    return o, l_length, attn, z, x_mask, y_mask, (z, z_p, m_p, logs_p, m_q, logs_q)
 
   def infer(self, x, x_lengths, sid=None, noise_scale=1, length_scale=1, noise_scale_w=1., max_len=None):
     x, m_p, logs_p, x_mask = self.enc_p(x, x_lengths)

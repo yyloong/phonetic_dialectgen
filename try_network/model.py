@@ -55,10 +55,10 @@ class TextEncoder(nn.Module):
         x = torch.transpose(x, 1, -1)  # [b, h, t]
         x_mask = torch.unsqueeze(commons.sequence_mask(x_lengths, x.size(2)), 1).to(
             x.dtype
-        )
+        )#[b,1,t]
 
         x = self.encoder(x * x_mask, x_mask)
-        stats = self.proj(x) * x_mask
+        stats = self.proj(x) * x_mask #[b,h,t]
 
         m, logs = torch.split(stats, self.out_channels, dim=1)
         return x, m, logs, x_mask
@@ -507,13 +507,3 @@ class SynthesizerTrn(nn.Module):
         z = self.flow(z_p, y_mask, reverse=True)
         o = self.dec(z, torch.tensor([z.shape[-1]]).to(device=z.device))
         return o, attn, y_mask, (z, z_p, m_p, logs_p)
-
-    def voice_conversion(self, y, y_lengths, sid_src, sid_tgt):
-        assert self.n_speakers > 0, "n_speakers have to be larger than 0."
-        g_src = self.emb_g(sid_src).unsqueeze(-1)
-        g_tgt = self.emb_g(sid_tgt).unsqueeze(-1)
-        z, m_q, logs_q, y_mask = self.enc_q(y, y_lengths, g=g_src)
-        z_p = self.flow(z, y_mask, g=g_src)
-        z_hat = self.flow(z_p, y_mask, g=g_tgt, reverse=True)
-        o_hat = self.dec(z_hat * y_mask, g=g_tgt)
-        return o_hat, y_mask, (z, z_p, z_hat)

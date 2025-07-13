@@ -36,6 +36,6 @@ if __name__ == "__main__":
     ### 获取梅尔频谱
     #mel = model.get_spectrogram("/home/u-longyy/Vocoder/test.wav")
     #mel = mel.to(model.device)
-    mel=torch.load('/home/u-longyy/week2/try_network/try.pt').reshape(1,80,-1).to(model.device)
+    mel=torch.load('/home/u-longyy/week2/try.pt').reshape(1,80,-1).to(model.device)
     ### 转化梅尔频谱
-    model.spectrogram_to_wave(mel, "/home/u-longyy/week2/try_network/try.wav")
+    model.spectrogram_to_wave(mel, "/home/u-longyy/week2/try.wav")
