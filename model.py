@@ -362,13 +362,13 @@ class GlowTTS(nn.Module):
     #     return {
     #         "token_ids": batch["token_ids"],                    # 文本 token IDs
     #         "token_ids_lengths": batch["token_ids_lengths"],    # 文本长度
-    #         "mel_input": batch["mel_input"],                          # 梅尔频谱  [B, C, T]
+    #         "mel_input": batch["mel_input"],                    # 梅尔频谱  [B, C, T]
     #         "mel_lengths": batch["mel_lengths"]                 # 梅尔频谱长度
     #     }
     
     #     text_input = batch["token_ids"]           # 文本 token IDs
     #     text_lengths = batch["token_ids_lengths"] # 文本长度
-    #     mel_input = batch["mel_input"]                  # 梅尔频谱  [B, C, T]
+    #     mel_input = batch["mel_input"]            # 梅尔频谱  [B, C, T]
     #     mel_lengths = batch["mel_lengths"]        # 梅尔频谱长度
         
     #     # 计算最大长度（用于 padding）
