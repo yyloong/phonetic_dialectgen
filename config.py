@@ -13,11 +13,8 @@ class GlowTTSConfig:
     Args:
         model(str):
             Model name used for selecting the right model at initialization. Defaults to `glow_tts`.
-        encoder_type (str):
-            Type of the encoder used by the model. Look at `TTS.tts.layers.glow_tts.encoder` for more details.
-            Defaults to `rel_pos_transformers`.
         encoder_params (dict):
-            Parameters used to define the encoder network. Look at `TTS.tts.layers.glow_tts.encoder` for more details.
+            Parameters used to define the encoder network. Look at `layers.encoder` for more details.
             Defaults to `{"kernel_size": 3, "dropout_p": 0.1, "num_layers": 6, "num_heads": 2, "hidden_channels_ffn": 768}`
         use_encoder_prenet (bool):
             enable / disable the use of a prenet for the encoder. Defaults to True.
@@ -40,8 +37,6 @@ class GlowTTSConfig:
             Number of decoder layers in each decoder block.  Defaults to 4.
         dropout_p_dec (float):
             Dropout rate for decoder. Defaults to 0.1.
-        num_speaker (int):
-            Number of speaker to define the size of speaker embedding layer. Defaults to 0.
         c_in_channels (int):
             Number of speaker embedding channels. It is set to 512 if embeddings are learned. Defaults to 0.
         num_splits (int):
@@ -55,9 +50,7 @@ class GlowTTSConfig:
             If True, encoder only computes mean value and uses constant variance for each time step. Defaults to true.
         encoder_type (str):
             Encoder module type. Possible values are`["rel_pos_transformer", "gated_conv", "residual_conv_bn", "time_depth_separable"]`
-            Check `TTS.tts.layers.glow_tts.encoder` for more details. Defaults to `rel_pos_transformers` as in the original paper.
-        encoder_params (dict):
-            Encoder module parameters. Defaults to None.
+            Check `layers.encoder` for more details. Defaults to `rel_pos_transformers` as in the original paper.
         data_dep_init_steps (int):
             Number of steps used for computing normalization parameters at the beginning of the training. GlowTTS uses
             Activation Normalization that pre-computes normalization stats at the beginning and use the same values
@@ -69,10 +62,6 @@ class GlowTTSConfig:
         use_speaker_embedding (bool):
             enable / disable using speaker embeddings for multi-speaker models. If set True, the model is
             in the multi-speaker mode. Defaults to False.
-        use_d_vector_file (bool):
-            enable /disable using external speaker embeddings in place of the learned embeddings. Defaults to False.
-        noam_schedule (bool):
-            enable / disable the use of Noam LR scheduler. Defaults to False.
         warmup_steps (int):
             Number of warm-up steps for the Noam scheduler. Defaults 4000.
         lr (float):
