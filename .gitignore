@@ -1,5 +1,6 @@
 # 数据文件夹
 data/
+melspec/
 *.pt
 *.csv
 

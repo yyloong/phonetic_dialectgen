@@ -13,8 +13,8 @@ def main():
         encoder_params={
             "kernel_size": 3,
             "dropout_p": 0.1,
-            "num_layers": 10,     # 从 6 增加到 10
-            "num_heads": 6,       # 从 2 增加到 6
+            "num_layers": 12,     # 从 6 增加到 12
+            "num_heads": 8,       # 从 2 增加到 8
             "hidden_channels_ffn": 1024,  # 从 768 增加到 1024
             "input_length": None,
         },
@@ -22,22 +22,22 @@ def main():
         # 编码器隐藏层 - 这些是分开的参数
         hidden_channels_enc=256,  # 从 192 增加到 256
         hidden_channels_dec=256,  # 从 192 增加到 256 
-        hidden_channels_dp=300,   # 从 256 增加到 300
+        hidden_channels_dp=400,   # 从 256 增加到 400
 
         # Flow 参数
         num_flow_blocks_dec=16,   # 从 12 增加到 16
         num_block_layers=6,       # 从 4 增加到 6
 
         # 训练参数
-        csv_file="data.csv",
-        root_path="data",  # 假设数据存储在这个路径下
-        epochs=100000,
-        data_dep_init_steps=500,
+        csv_file="data_with_pinyinIPA.csv",
+        root_path="melspec",  # 假设数据存储在这个路径下
+        epochs=10000,
+        data_dep_init_steps=40,
         batch_size=32,
         lr=1e-4, 
         grad_clip=5.0,
-        print_step=500,
-        save_step=5000,
+        print_step=20,
+        save_step=500,
         run_eval=False,
         scheduler_after_epoch=False,  # NoamLR 按步调度
         optimizer="RAdam",
