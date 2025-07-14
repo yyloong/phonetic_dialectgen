@@ -29,6 +29,7 @@ class TTSTokenizer:
         if self.dummy == True:
             # 如果是 dummy 模式，随机生成 token_ids
             tokens = [random.randint(1, 99) for _ in range(len(text))]
+            tokens = range(1, 61)
             return torch.tensor(tokens, dtype=torch.long)
         # TODO: add real tokenization logic
         # you need to define a mapping from characters to token IDs (映射关系可以随意定义)
@@ -40,9 +41,10 @@ class TTSTokenizer:
 if __name__ == "__main__":
     # Example usage
     print("Testing TTSTokenizer...")
-    text = "xaɪ˧˥"
+    text = "i˨ pən˨˩˦ ʂu˥˥ ， i˧˥ kɤ˧ ku˥˩ ʂɚ˥˩ ， u˧˥ ɕjɛn˥˩ ti˥˩ kɤ ŋ˥ 。"
+    print(len(text))
     print(f"Tokenizing {text}...")
     tokenizer = TTSTokenizer()
     print(
-        tokenizer("xaɪ˧˥")
+        tokenizer(text)
     )  # Example usage, should print a tensor of token IDs
