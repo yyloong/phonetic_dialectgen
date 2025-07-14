@@ -10,7 +10,7 @@ class GlowTTSConfig:
             Model name used for selecting the right model at initialization. Defaults to `glow_tts`.
         num_chars (int):
             Number of characters in the vocabulary. It is used to define the input size of the encoder
-            and the output size of the decoder. Defaults to 100.
+            and the output size of the decoder. Defaults to 47.
         encoder_type (str):
             Encoder module type. Possible values are`["rel_pos_transformer", "gated_conv", "residual_conv_bn", "time_depth_separable"]`
             Check `layers.encoder` for more details. Defaults to `rel_pos_transformers` as in the original paper.
@@ -92,7 +92,7 @@ class GlowTTSConfig:
     model: str = "glow_tts"
 
     # model params
-    num_chars: int = None
+    num_chars: int = 47
     encoder_type: str = "rel_pos_transformer"
     encoder_params: dict = field(
         default_factory=lambda: {
