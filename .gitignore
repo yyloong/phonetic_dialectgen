@@ -1,7 +1,6 @@
 # 数据文件夹
 data/
 *.pt
-*.wav
 *.csv
 
 # Python 缓存文件
