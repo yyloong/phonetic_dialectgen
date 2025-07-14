@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 
+
 @dataclass
 class GlowTTSConfig:
     """Defines parameters for GlowTTS model.
@@ -111,10 +112,10 @@ class GlowTTSConfig:
     dropout_p_dec: float = 0.05
     mean_only: bool = True
     out_channels: int = 80
-    num_flow_blocks_dec: int = 12         # Flow 块数量
+    num_flow_blocks_dec: int = 12  # Flow 块数量
     kernel_size_dec: int = 5
     dilation_rate: int = 1
-    num_block_layers: int = 4             # 每个 Flow 块的层数
+    num_block_layers: int = 4  # 每个 Flow 块的层数
     c_in_channels: int = 0
     num_splits: int = 4
     num_squeeze: int = 2
@@ -122,7 +123,7 @@ class GlowTTSConfig:
 
     # training params
     data_dep_init_steps: int = 10
-    epochs : int = 10
+    epochs: int = 10
     batch_size: int = 32
     print_step: int = 100
     save_step: int = 1000
@@ -131,31 +132,34 @@ class GlowTTSConfig:
     root_path: str = "data"  # 假设数据存储在这个
 
     # inference params
-    inference_noise_scale: float = 0.33   # 🔥 温度参数
+    inference_noise_scale: float = 0.33  # 🔥 温度参数
     length_scale: float = 1.0
 
     # optimizer parameters
     optimizer: str = "RAdam"
-    optimizer_params: dict = field(default_factory=lambda: {"betas": [0.9, 0.998], "weight_decay": 1e-6})
+    optimizer_params: dict = field(
+        default_factory=lambda: {"betas": [0.9, 0.998], "weight_decay": 1e-6}
+    )
     lr_scheduler: str = "NoamLR"
-    lr_scheduler_params: dict = field(default_factory=lambda: {"warmup_steps": 4000})
+    lr_scheduler_params: dict = field(
+        default_factory=lambda: {"warmup_steps": 4000}
+    )
     scheduler_after_epoch: bool = False  # NoamLR 按步调度
     grad_clip: float = 5.0
     lr: float = 1e-3
 
-
     def __iter__(self):
         """使配置类可迭代"""
         return iter(self.__dict__.items())
-    
+
     def keys(self):
         """返回所有配置键"""
         return self.__dict__.keys()
-    
+
     def values(self):
         """返回所有配置值"""
         return self.__dict__.values()
-    
+
     def items(self):
         """返回所有配置项"""
         return self.__dict__.items()
