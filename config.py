@@ -28,14 +28,10 @@ class GlowTTSConfig:
             Number of base hidden channels used by the decoder WaveNet network. Defaults to 192 as in the original work.
         hidden_channels_dp (int):
             Number of layer channels of the duration predictor network. Defaults to 256 as in the original work.
-        mean_only (bool):
-            If true predict only the mean values by the decoder flow. Defaults to True.
         out_channels (int):
             Number of channels of the model output tensor. Defaults to 80.
         num_flow_blocks_dec (int):
             Number of decoder blocks. Defaults to 12.
-        inference_noise_scale (float):
-            Noise scale used at inference. Defaults to 0.33.
         kernel_size_dec (int):
             Decoder kernel size. Defaults to 5
         dilation_rate (int):
@@ -66,10 +62,8 @@ class GlowTTSConfig:
             Number of steps used for computing normalization parameters at the beginning of the training. GlowTTS uses
             Activation Normalization that pre-computes normalization stats at the beginning and use the same values
             for the rest. Defaults to 10.
-        style_wav_for_test (str):
-            Path to the wav file used for changing the style of the speech. Defaults to None.
         inference_noise_scale (float):
-            Variance used for sampling the random noise added to the decoder's input at inference. Defaults to 0.0.
+            Variance used for sampling the random noise added to the decoder's input at inference. Defaults to 0.33.
         length_scale (float):
             Multiply the predicted durations with this value to change the speech speed. Defaults to 1.
         use_speaker_embedding (bool):
@@ -115,12 +109,10 @@ class GlowTTSConfig:
     kernel_size_dec: int = 5
     dilation_rate: int = 1
     num_block_layers: int = 4             # 每个 Flow 块的层数
-    # num_speakers: int = 0
     c_in_channels: int = 0
     num_splits: int = 4
     num_squeeze: int = 2
     sigmoid_scale: bool = False
-    # d_vector_dim: int = 0
 
     # training params
     data_dep_init_steps: int = 10
@@ -134,7 +126,6 @@ class GlowTTSConfig:
     root_path: str = "data"  # 假设数据存储在这个
 
     # inference params
-    style_wav_for_test: str = None
     inference_noise_scale: float = 0.0
     length_scale: float = 1.0
 
