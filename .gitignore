@@ -33,4 +33,3 @@ __pycache__/
 # 模型
 outputs/
 *.pth
->>>>>>> origin/main
