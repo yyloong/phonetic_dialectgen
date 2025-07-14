@@ -1,14 +1,8 @@
 from dataclasses import dataclass, field
-from typing import List
 
 @dataclass
 class GlowTTSConfig:
     """Defines parameters for GlowTTS model.
-
-    Example:
-
-        >>> from TTS.tts.configs.glow_tts_config import GlowTTSConfig
-        >>> config = GlowTTSConfig()
 
     Args:
         model(str):
