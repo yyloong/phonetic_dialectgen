@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-requirements.txt
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
 # 数据文件夹
 data/
 *.pt
@@ -33,3 +10,4 @@ __pycache__/
 # 模型
 outputs/
 *.pth
+>>>>>>> origin/main
