@@ -13,6 +13,12 @@ class GlowTTSConfig:
     Args:
         model(str):
             Model name used for selecting the right model at initialization. Defaults to `glow_tts`.
+        num_chars (int):
+            Number of characters in the vocabulary. It is used to define the input size of the encoder
+            and the output size of the decoder. Defaults to 100.
+        encoder_type (str):
+            Encoder module type. Possible values are`["rel_pos_transformer", "gated_conv", "residual_conv_bn", "time_depth_separable"]`
+            Check `layers.encoder` for more details. Defaults to `rel_pos_transformers` as in the original paper.
         encoder_params (dict):
             Parameters used to define the encoder network. Look at `layers.encoder` for more details.
             Defaults to `{"kernel_size": 3, "dropout_p": 0.1, "num_layers": 6, "num_heads": 2, "hidden_channels_ffn": 768}`
@@ -25,6 +31,12 @@ class GlowTTSConfig:
             Number of base hidden channels used by the decoder WaveNet network. Defaults to 192 as in the original work.
         hidden_channels_dp (int):
             Number of layer channels of the duration predictor network. Defaults to 256 as in the original work.
+        dropout_p_dp (float):
+            Dropout rate for the duration predictor. Defaults to 0.1.
+        dropout_p_dec (float):
+            Dropout rate for decoder. Defaults to 0.1.
+        mean_only (bool):
+            If True, encoder only computes mean value and uses constant variance for each time step. Defaults to true.
         out_channels (int):
             Number of channels of the model output tensor. Defaults to 80.
         num_flow_blocks_dec (int):
@@ -35,8 +47,6 @@ class GlowTTSConfig:
             Rate to increase dilation by each layer in a decoder block. Defaults to 1.
         num_block_layers (int):
             Number of decoder layers in each decoder block.  Defaults to 4.
-        dropout_p_dec (float):
-            Dropout rate for decoder. Defaults to 0.1.
         c_in_channels (int):
             Number of speaker embedding channels. It is set to 512 if embeddings are learned. Defaults to 0.
         num_splits (int):
@@ -46,28 +56,42 @@ class GlowTTSConfig:
             'num_squeeze'. Defaults to 2.
         sigmoid_scale (bool):
             enable/disable sigmoid scaling in decoder. Defaults to False.
-        mean_only (bool):
-            If True, encoder only computes mean value and uses constant variance for each time step. Defaults to true.
-        encoder_type (str):
-            Encoder module type. Possible values are`["rel_pos_transformer", "gated_conv", "residual_conv_bn", "time_depth_separable"]`
-            Check `layers.encoder` for more details. Defaults to `rel_pos_transformers` as in the original paper.
         data_dep_init_steps (int):
             Number of steps used for computing normalization parameters at the beginning of the training. GlowTTS uses
             Activation Normalization that pre-computes normalization stats at the beginning and use the same values
             for the rest. Defaults to 10.
+        epochs (int):
+            Number of training epochs. Defaults to 10.
+        batch_size (int):
+            Batch size used for training. Defaults to 32.
+        print_step (int):
+            Print training progress every `print_step` steps. Defaults to 100.
+        save_step (int):
+            Save model every `save_step` steps. Defaults to 1000.
+        run_eval (bool):
+            Run evaluation every `save_step` steps. Defaults to True.
+        csv_file (str):
+            Path to the CSV file with training data. Defaults to `data.csv`.
+        root_path (str):
+            Path to the root directory with training data. Defaults to `data`.
         inference_noise_scale (float):
             Variance used for sampling the random noise added to the decoder's input at inference. Defaults to 0.33.
         length_scale (float):
             Multiply the predicted durations with this value to change the speech speed. Defaults to 1.
-        use_speaker_embedding (bool):
-            enable / disable using speaker embeddings for multi-speaker models. If set True, the model is
-            in the multi-speaker mode. Defaults to False.
-        warmup_steps (int):
-            Number of warm-up steps for the Noam scheduler. Defaults 4000.
+        optimizer (str):
+            Optimizer used for training. Defaults to `RAdam`.
+        optimizer_params (dict):
+            Parameters used to define the optimizer. Defaults to `{"betas": [0.9, 0.998], "weight_decay": 1e-6}`.
+        lr_scheduler (str):
+            Learning rate scheduler used for training. Defaults to `NoamLR`.
+        lr_scheduler_params (dict):
+            Parameters used to define the learning rate scheduler. Defaults to `{"warmup_steps": 4000}`.
+        scheduler_after_epoch (bool):
+            If True, the learning rate scheduler is called after each epoch. Defaults to False.
+        grad_clip (float):
+            Gradient clipping value. Defaults to 5.0.
         lr (float):
             Initial learning rate. Defaults to `1e-3`.
-        wd (float):
-            Weight decay coefficient. Defaults to `1e-7`.
     """
 
     model: str = "glow_tts"
@@ -94,7 +118,6 @@ class GlowTTSConfig:
     mean_only: bool = True
     out_channels: int = 80
     num_flow_blocks_dec: int = 12         # Flow 块数量
-    inference_noise_scale: float = 0.33   # 🔥 温度参数
     kernel_size_dec: int = 5
     dilation_rate: int = 1
     num_block_layers: int = 4             # 每个 Flow 块的层数
@@ -110,12 +133,11 @@ class GlowTTSConfig:
     print_step: int = 100
     save_step: int = 1000
     run_eval: bool = True
-    scheduler_after_epoch: bool = False  # NoamLR 按步调度
     csv_file: str = "data.csv"
     root_path: str = "data"  # 假设数据存储在这个
 
     # inference params
-    inference_noise_scale: float = 0.0
+    inference_noise_scale: float = 0.33   # 🔥 温度参数
     length_scale: float = 1.0
 
     # optimizer parameters
@@ -123,6 +145,7 @@ class GlowTTSConfig:
     optimizer_params: dict = field(default_factory=lambda: {"betas": [0.9, 0.998], "weight_decay": 1e-6})
     lr_scheduler: str = "NoamLR"
     lr_scheduler_params: dict = field(default_factory=lambda: {"warmup_steps": 4000})
+    scheduler_after_epoch: bool = False  # NoamLR 按步调度
     grad_clip: float = 5.0
     lr: float = 1e-3
 
