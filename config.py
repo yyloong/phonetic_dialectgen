@@ -1,59 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List
 
-# @dataclass
-# class BaseTTSConfig(BaseTrainingConfig):
-#     audio: BaseAudioConfig = field(default_factory=BaseAudioConfig)
-#     # phoneme settings
-#     use_phonemes: bool = False
-#     phonemizer: str = None
-#     phoneme_language: str = None
-#     compute_input_seq_cache: bool = False
-#     text_cleaner: str = None
-#     enable_eos_bos_chars: bool = False
-#     test_sentences_file: str = ""
-#     phoneme_cache_path: str = None
-#     # vocabulary parameters
-#     characters: CharactersConfig = None
-#     add_blank: bool = False
-#     # training params
-#     batch_group_size: int = 0
-#     loss_masking: bool = None
-#     # dataloading
-#     min_audio_len: int = 1
-#     max_audio_len: int = float("inf")
-#     min_text_len: int = 1
-#     max_text_len: int = float("inf")
-#     compute_f0: bool = False
-#     compute_energy: bool = False
-#     compute_linear_spec: bool = False
-#     precompute_num_workers: int = 0
-#     use_noise_augment: bool = False
-#     start_by_longest: bool = False
-#     shuffle: bool = False
-#     drop_last: bool = False
-#     # dataset
-#     datasets: List[BaseDatasetConfig] = field(default_factory=lambda: [BaseDatasetConfig()])
-#     # optimizer
-#     optimizer: str = "radam"
-#     optimizer_params: dict = None
-#     # scheduler
-#     lr_scheduler: str = None
-#     lr_scheduler_params: dict = field(default_factory=lambda: {})
-#     # testing
-#     test_sentences: List[str] = field(default_factory=lambda: [])
-#     # evaluation
-#     eval_split_max_size: int = None
-#     eval_split_size: float = 0.01
-#     # weighted samplers
-#     use_speaker_weighted_sampler: bool = False
-#     speaker_weighted_sampler_alpha: float = 1.0
-#     use_language_weighted_sampler: bool = False
-#     language_weighted_sampler_alpha: float = 1.0
-#     use_length_weighted_sampler: bool = False
-#     length_weighted_sampler_alpha: float = 1.0
-
-
 @dataclass
 class GlowTTSConfig:
     """Defines parameters for GlowTTS model.
@@ -115,8 +62,6 @@ class GlowTTSConfig:
             Check `TTS.tts.layers.glow_tts.encoder` for more details. Defaults to `rel_pos_transformers` as in the original paper.
         encoder_params (dict):
             Encoder module parameters. Defaults to None.
-        d_vector_dim (int):
-            Channels of external speaker embedding vectors. Defaults to 0.
         data_dep_init_steps (int):
             Number of steps used for computing normalization parameters at the beginning of the training. GlowTTS uses
             Activation Normalization that pre-computes normalization stats at the beginning and use the same values
@@ -132,8 +77,6 @@ class GlowTTSConfig:
             in the multi-speaker mode. Defaults to False.
         use_d_vector_file (bool):
             enable /disable using external speaker embeddings in place of the learned embeddings. Defaults to False.
-        d_vector_file (str):
-            Path to the file including pre-computed speaker embeddings. Defaults to None.
         noam_schedule (bool):
             enable / disable the use of Noam LR scheduler. Defaults to False.
         warmup_steps (int):
@@ -142,10 +85,6 @@ class GlowTTSConfig:
             Initial learning rate. Defaults to `1e-3`.
         wd (float):
             Weight decay coefficient. Defaults to `1e-7`.
-        min_seq_len (int):
-            Minimum input sequence length to be used at training.
-        max_seq_len (int):
-            Maximum input sequence length to be used at training. Larger values result in more VRAM usage.
     """
 
     model: str = "glow_tts"
@@ -176,12 +115,12 @@ class GlowTTSConfig:
     kernel_size_dec: int = 5
     dilation_rate: int = 1
     num_block_layers: int = 4             # 每个 Flow 块的层数
-    num_speakers: int = 0
+    # num_speakers: int = 0
     c_in_channels: int = 0
     num_splits: int = 4
     num_squeeze: int = 2
     sigmoid_scale: bool = False
-    d_vector_dim: int = 0
+    # d_vector_dim: int = 0
 
     # training params
     data_dep_init_steps: int = 10
@@ -207,10 +146,6 @@ class GlowTTSConfig:
     grad_clip: float = 5.0
     lr: float = 1e-3
 
-    # overrides
-    min_seq_len: int = 3
-    max_seq_len: int = 500
-    r: int = 1  # DO NOT CHANGE - TODO: make this immutable once coqpit implements it.
 
     def __iter__(self):
         """使配置类可迭代"""
