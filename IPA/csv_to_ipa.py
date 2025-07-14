@@ -107,34 +107,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-def process_csv_for_ipa(csv_path, language, input_col, config=None):
-    if not os.path.exists(csv_path):
-        logging.error(f"CSV 文件不存在: {csv_path}")
-        return False
-
-    try:
-        df = pd.read_csv(csv_path)
-    except Exception as e:
-        logging.error(f"读取 CSV 文件失败: {e}")
-        return False
-
-    if input_col >= len(df.columns):
-        logging.error(f"输入列索引 {input_col} 超出范围")
-        return False
-
-    input_col_name = df.columns[input_col]
-    output_col_name = f"{input_col_name}_ipa"
-
-    with goruut_server_context(config=config) as client:
-        tqdm.pandas(desc="转换为 IPA")
-        df[output_col_name] = df[input_col_name].progress_apply(
-            lambda x: get_ipa_phonemes(x, language=language, client=client)
-        )
-
-    output_csv_path = csv_path.replace(".csv", "_ipa.csv")
-    df.to_csv(output_csv_path, index=False)
-    logging.info(f"转换完成，结果已保存到: {output_csv_path}")
-
-    return True
