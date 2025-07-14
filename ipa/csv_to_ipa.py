@@ -91,6 +91,7 @@ def main():
     parser.add_argument("--csv", required=True, help="Path to input CSV file")
     parser.add_argument(
         "--language",
+        type=str,
         default="Chinese Mandarin",
         help="Language for IPA conversion (default: Chinese Mandarin)",
     )
