@@ -33,11 +33,11 @@ def main():
         root_path="melspec",  # 假设数据存储在这个路径下
         epochs=10000,
         data_dep_init_steps=40,
-        batch_size=32,
-        lr=1e-4, 
+        batch_size=16,
+        lr=1e-6, 
         grad_clip=5.0,
         print_step=20,
-        save_step=500,
+        save_step=3000,
         run_eval=False,
         scheduler_after_epoch=False,  # NoamLR 按步调度
         optimizer="RAdam",
@@ -57,8 +57,8 @@ def main():
     )
     
     # 开始训练
-    trainer.fit()
-    # trainer.fit_from_checkpoint("outputs/checkpoint_step_9999.pth")  # 从检查点恢复训练
+    # trainer.fit()
+    trainer.fit_from_checkpoint("outputs/checkpoint_step_1999.pth")  # 从检查点恢复训练
 
 if __name__ == "__main__":
     main()
