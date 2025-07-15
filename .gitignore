@@ -4,6 +4,7 @@ melspec/
 test_data/
 aitts*/
 *.pt
+*.wav
 *.csv
 
 # Python 缓存文件
