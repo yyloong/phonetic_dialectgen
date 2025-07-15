@@ -84,7 +84,7 @@ def inference_example():
     model, config = load_model_from_checkpoint(checkpoint_path)
     
     # 2. 准备输入文本
-    text = "tok2 sy55 iiu33 tshoŋ21 pɔk2 tou33 hɐu13 tsɔi33 tshoŋ21 hɐu13 tou33 pɔk2 。"
+    text = "fəŋ55 pau51 tʂəŋ51 tsai51 ɕye35 ɕi35 ʐu35 xɤ35 ian215 tsou51 kuan215 lɤ51 tɕhi51 。"
     
     # 3. 文本预处理（需要根据你的tokenizer调整）
     tokenizer = TTSTokenizer()
