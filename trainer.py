@@ -83,7 +83,10 @@ class GlowTTSTrainer:
         self.model = model.to(self.device)
         self.config = config
         self.optimizer = create_optimizer(model, config)
-        self.scheduler = create_scheduler(self.optimizer, config)
+        if config.use_scheduler:
+            self.scheduler = create_scheduler(self.optimizer, config)
+        else:
+            self.scheduler = None
         self.criterion = self.model.get_criterion()
         self.output_path = output_path
         
@@ -301,15 +304,15 @@ class GlowTTSTrainer:
         torch.save(self.model.state_dict(), f"{self.output_path}/best_model.pth")
         print(f"🏆 Best model saved: {self.output_path}/best_model.pth")
     
-    def load_checkpoint(self, checkpoint_path):
+    def load_checkpoint(self, checkpoint_path, config=None):
         """Load checkpoint"""
         checkpoint = torch.load(checkpoint_path, map_location='cpu', weights_only=False)
-        
         self.model.load_state_dict(checkpoint['model_state_dict'])
-        self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         
-        if self.scheduler and checkpoint['scheduler_state_dict']:
-            self.scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+        if config is None:
+            self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+            if self.scheduler and checkpoint['scheduler_state_dict']:
+                self.scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
         
         self.total_steps_done = checkpoint['total_steps_done']
         self.epochs_done = checkpoint['epochs_done']
@@ -342,10 +345,10 @@ class GlowTTSTrainer:
         print("🎉 Training completed!")
         print(f"🏆 Best loss: {self.best_loss:.4f}")
 
-    def fit_from_checkpoint(self, checkpoint_path):
+    def fit_from_checkpoint(self, checkpoint_path, config=None):
         """Resume training from checkpoint"""
         print(f"🔄 Resuming training from checkpoint: {checkpoint_path}")
-        self.load_checkpoint(checkpoint_path)
+        self.load_checkpoint(checkpoint_path, config)
         
         # Continue training
         self.fit()

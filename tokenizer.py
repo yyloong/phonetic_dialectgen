@@ -1,9 +1,8 @@
 import torch
 import random
+import json
 
-# TODO: TTSTokenizer
-# TODO: 在这里填入所有可能出现在 IPA 字符串中的字符总数: _____ (例如 100)， 这个值记为 n
-
+# IPA 字符串中的字符总数: 46 这个值记为 n
 
 class TTSTokenizer:
     """
@@ -21,30 +20,83 @@ class TTSTokenizer:
     例子: "xaɪ˧˥" -> tensor([3, 4, 2, 7, 9])
     """
 
-    def __init__(self, dummy=True):
-        self.dummy = dummy
-        # TODO: add code if necessary
+    def __init__(self):
+        self.mapping = {
+            " ": 1,
+            "0": 2,
+            "1": 3,
+            "2": 4,
+            "3": 5,
+            "4": 6,
+            "5": 7,
+            "a": 8,
+            "e": 9,
+            "f": 10,
+            "h": 11,
+            "i": 12,
+            "k": 13,
+            "l": 14,
+            "m": 15,
+            "n": 16,
+            "o": 17,
+            "p": 18,
+            "r": 19,
+            "s": 20,
+            "t": 21,
+            "u": 22,
+            "x": 23,
+            "y": 24,
+            'ø': 25,
+            'ŋ': 26,
+            'œ': 27,
+            'Ǿ': 28,
+            'ɐ': 29,
+            'ɔ': 30,
+            'ɕ': 31,
+            'ə': 32,
+            'ɛ': 33,
+            'ɤ': 34,
+            'ɿ': 35,
+            'ʂ': 36,
+            'ʅ': 37,
+            'ʐ': 38,
+            '—': 39,
+            '…': 40,
+            '。': 41,
+            '！': 42,
+            '，': 43,
+            '：': 44,
+            '；': 45,
+            '？': 46
+        }
 
     def __call__(self, text):
-        if self.dummy == True:
-            # 如果是 dummy 模式，随机生成 token_ids
-            tokens = [random.randint(1, 99) for _ in range(len(text))]
-            tokens = range(1, 61)
-            return torch.tensor(tokens, dtype=torch.long)
-        # TODO: add real tokenization logic
-        # you need to define a mapping from characters to token IDs (映射关系可以随意定义)
-        # and return the token IDs as a tensor
-        # you need to consider all possible characters in the IPA string
-        # 需考虑到空格，标点符号和其他特殊字符
+        # 定义中文标点符号集合
+        chinese_punctuation = "。！？，、；：“”‘’（）【】《》"
 
+        codes = []  # 存储编码结果
+
+        # 遍历每个字符
+        for char in text:
+            # 尝试在字典中查找字符
+            if char in self.mapping:
+                codes.append(self.mapping[char])
+            else:
+                # 检查是否为中文标点
+                if char in chinese_punctuation:
+                    continue  # 忽略标点
+                else:
+                    raise ValueError(f"字符 '{char}' 缺失映射")
+
+        return torch.tensor(codes, dtype=torch.long)
 
 if __name__ == "__main__":
     # Example usage
     print("Testing TTSTokenizer...")
-    text = "i˨ pən˨˩˦ ʂu˥˥ ， i˧˥ kɤ˧ ku˥˩ ʂɚ˥˩ ， u˧˥ ɕjɛn˥˩ ti˥˩ kɤ ŋ˥ 。"
+    text = "ye51 liaŋ51 thou55 thou55 kei215 xai215 ou55 suŋ51 tɕhy51 niŋ35 məŋ35 khou215 uei51 tɤ0 thaŋ35 kuo215 。"
     print(len(text))
-    print(f"Tokenizing {text}...")
+    print(f"Tokenizing ...")
     tokenizer = TTSTokenizer()
-    print(
-        tokenizer(text)
-    )  # Example usage, should print a tensor of token IDs
+    tokens = tokenizer(text)
+    print(tokens)  # Should print a tensor of token IDs
+    print(tokens.shape)  # Should match the length of the input text

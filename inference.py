@@ -40,7 +40,7 @@ def inference_example():
     """推理示例"""
     
     # 1. 加载模型
-    checkpoint_path = "./outputs/checkpoint_step_19999.pth"  # 你的检查点路径
+    checkpoint_path = "./outputs/checkpoint_step_113999.pth"  # 你的检查点路径
     # config = GlowTTSConfig(
     #     num_chars=100,
     #     out_channels=80,
@@ -84,14 +84,13 @@ def inference_example():
     model, config = load_model_from_checkpoint(checkpoint_path)
     
     # 2. 准备输入文本
-    # text = "jɑŋ˧˥ kwɑŋ˥˥ sa˨ tsaɪ˥˩ ʈʂʰwɑŋ˥˥ tʰaɪ˥ ʂɑŋ˥˩ ， nau˨ jɑŋ˧˥ jɑŋ˧˥ ti˥˩ 。"
+    text = "fəŋ55 pau51 tʂəŋ51 tsai51 ɕye35 ɕi35 ʐu35 xɤ35 ian215 tsou51 kuan215 lɤ51 tɕhi51 。"
     
     # 3. 文本预处理（需要根据你的tokenizer调整）
-    # tokenizer = TTSTokenizer()
+    tokenizer = TTSTokenizer()
     
     # 将文本转换为token序列
-    # token_ids = tokenizer(text)
-    token_ids = range(1, 61)  
+    token_ids = tokenizer(text)
     
     # 转换为tensor
     text_input = torch.LongTensor(token_ids).unsqueeze(0)  # [1, seq_len]
@@ -115,3 +114,4 @@ def inference_example():
 if __name__ == "__main__":
     mel_output = inference_example()
     torch.save(mel_output, "mel_output.pth")
+    print("✅ 推理完成，梅尔频谱已保存为 mel_output.pth")

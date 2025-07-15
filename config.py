@@ -10,7 +10,7 @@ class GlowTTSConfig:
             Model name used for selecting the right model at initialization. Defaults to `glow_tts`.
         num_chars (int):
             Number of characters in the vocabulary. It is used to define the input size of the encoder
-            and the output size of the decoder. Defaults to 100.
+            and the output size of the decoder. Defaults to 47.
         encoder_type (str):
             Encoder module type. Possible values are`["rel_pos_transformer", "gated_conv", "residual_conv_bn", "time_depth_separable"]`
             Check `layers.encoder` for more details. Defaults to `rel_pos_transformers` as in the original paper.
@@ -69,6 +69,10 @@ class GlowTTSConfig:
             Path to the CSV file with training data. Defaults to `data.csv`.
         root_path (str):
             Path to the root directory with training data. Defaults to `data`.
+        test_csv_file (str):
+            Path to the CSV file with test data. Defaults to `test_data.csv`.
+        test_root_path (str):
+            Path to the root directory with test data. Defaults to `test_data`.
         inference_noise_scale (float):
             Variance used for sampling the random noise added to the decoder's input at inference. Defaults to 0.33.
         length_scale (float):
@@ -77,6 +81,8 @@ class GlowTTSConfig:
             Optimizer used for training. Defaults to `RAdam`.
         optimizer_params (dict):
             Parameters used to define the optimizer. Defaults to `{"betas": [0.9, 0.998], "weight_decay": 1e-6}`.
+        use_scheduler (bool):
+            If True, use a learning rate scheduler. Defaults to True.
         lr_scheduler (str):
             Learning rate scheduler used for training. Defaults to `NoamLR`.
         lr_scheduler_params (dict):
@@ -92,7 +98,7 @@ class GlowTTSConfig:
     model: str = "glow_tts"
 
     # model params
-    num_chars: int = None
+    num_chars: int = 47
     encoder_type: str = "rel_pos_transformer"
     encoder_params: dict = field(
         default_factory=lambda: {
@@ -130,6 +136,8 @@ class GlowTTSConfig:
     run_eval: bool = True
     csv_file: str = "data.csv"
     root_path: str = "data"  # 假设数据存储在这个
+    test_csv_file: str = "test_data.csv" 
+    test_root_path: str = "test_data"
 
     # inference params
     inference_noise_scale: float = 0.33  # 🔥 温度参数
@@ -140,6 +148,7 @@ class GlowTTSConfig:
     optimizer_params: dict = field(
         default_factory=lambda: {"betas": [0.9, 0.998], "weight_decay": 1e-6}
     )
+    use_scheduler: bool = True
     lr_scheduler: str = "NoamLR"
     lr_scheduler_params: dict = field(
         default_factory=lambda: {"warmup_steps": 4000}

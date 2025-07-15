@@ -1,6 +1,10 @@
 # 数据文件夹
 data/
+melspec/
+test_data/
+aitts*/
 *.pt
+*.wav
 *.csv
 
 # Python 缓存文件
