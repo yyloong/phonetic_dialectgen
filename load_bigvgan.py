@@ -1,6 +1,6 @@
 ### 请先添加 bigvgan22HZ 目录路径
 import sys
-sys.path.append("/mnt/nas/shared/datasets/voices/bigvgan22HZ")
+sys.path.append("/home/u-wuhc/backup/bigvgan22HZ")
 import bigvgan as bigvgan
 import soundfile as sf
 import librosa
@@ -9,7 +9,7 @@ import torch
 
 
 class Load_Bigvgan:
-    def __init__(self, model_name="/mnt/nas/shared/datasets/voices/bigvgan22HZ"):
+    def __init__(self, model_name="/home/u-wuhc/backup/bigvgan22HZ"):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = bigvgan.BigVGAN.from_pretrained(model_name)
         self.model.remove_weight_norm()
