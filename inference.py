@@ -40,7 +40,7 @@ def inference_example():
     """推理示例"""
     
     # 1. 加载模型
-    checkpoint_path = "./outputs/checkpoint_step_107999.pth"  # 你的检查点路径
+    checkpoint_path = "./outputs/checkpoint_step_113999.pth"  # 你的检查点路径
     # config = GlowTTSConfig(
     #     num_chars=100,
     #     out_channels=80,
@@ -84,7 +84,7 @@ def inference_example():
     model, config = load_model_from_checkpoint(checkpoint_path)
     
     # 2. 准备输入文本
-    text = "ye51 liaŋ51 thou55 thou55 kei215 ɕiau215 kou215 suŋ51 lɤ0 thaŋ35 kuo215 。"
+    text = "tok2 sy55 iiu33 tshoŋ21 pɔk2 tou33 hɐu13 tsɔi33 tshoŋ21 hɐu13 tou33 pɔk2 。"
     
     # 3. 文本预处理（需要根据你的tokenizer调整）
     tokenizer = TTSTokenizer()
