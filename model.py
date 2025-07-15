@@ -331,11 +331,18 @@ class GlowTTS(nn.Module):
     def get_data_loader(self, config, is_eval):
         """创建数据加载器"""        
         # 创建数据集
-        dataset = TTSDataset(
-            tokenizer=TTSTokenizer(),
-            csv_file=config.csv_file,
-            root_path=config.root_path
-        )
+        if not is_eval:
+            dataset = TTSDataset(
+                tokenizer=TTSTokenizer(),
+                csv_file=config.csv_file,
+                root_path=config.root_path
+            )
+        else:
+            dataset = TTSDataset(
+                tokenizer=TTSTokenizer(),
+                csv_file=config.test_csv_file,
+                root_path=config.test_root_path
+            )
         # 创建数据加载器
         loader = DataLoader(
             dataset,

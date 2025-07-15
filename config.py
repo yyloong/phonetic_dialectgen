@@ -69,6 +69,10 @@ class GlowTTSConfig:
             Path to the CSV file with training data. Defaults to `data.csv`.
         root_path (str):
             Path to the root directory with training data. Defaults to `data`.
+        test_csv_file (str):
+            Path to the CSV file with test data. Defaults to `test_data.csv`.
+        test_root_path (str):
+            Path to the root directory with test data. Defaults to `test_data`.
         inference_noise_scale (float):
             Variance used for sampling the random noise added to the decoder's input at inference. Defaults to 0.33.
         length_scale (float):
@@ -132,6 +136,8 @@ class GlowTTSConfig:
     run_eval: bool = True
     csv_file: str = "data.csv"
     root_path: str = "data"  # 假设数据存储在这个
+    test_csv_file: str = "test_data.csv" 
+    test_root_path: str = "test_data"
 
     # inference params
     inference_noise_scale: float = 0.33  # 🔥 温度参数

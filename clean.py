@@ -1,7 +1,7 @@
 import pandas as pd
 from tokenizer import TTSTokenizer
 
-csv_file = "aitts3.csv"
+csv_file = "test_data.csv"
 file = pd.read_csv(csv_file)
 tokenizer = TTSTokenizer()
 for i in range(len(file)):
