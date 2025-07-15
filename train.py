@@ -29,8 +29,8 @@ def main():
         num_block_layers=6,       # 从 4 增加到 6
 
         # 训练参数
-        csv_file="aitts3.csv",
-        root_path="aitts3",  # 假设数据存储在这个路径下
+        csv_file="aitts4.csv",
+        root_path="aitts4",  # 假设数据存储在这个路径下
         epochs=10000,
         data_dep_init_steps=40,
         batch_size=16,
