@@ -2,6 +2,7 @@
 data/
 melspec/
 test_data/
+clips_wav_melspec/
 aitts*/
 *.pt
 *.wav
@@ -14,4 +15,3 @@ __pycache__/
 # 模型
 outputs/
 *.pth
->>>>>>> origin/main

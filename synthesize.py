@@ -11,7 +11,7 @@ def main():
     # checkpoint_path = "./outputs/checkpoint_step_122999.pth"  
 
     # 如果是仅包含模型权重的文件，还需要提供 config
-    checkpoint_path = "./outputs/best_model.pth"  
+    checkpoint_path = "./weights/best_model.pth"  
     # checkpoint_path = "/mnt/nas/shared/datasets/voices/best_model.pth"  # 你的检查点路径
 
     config = GlowTTSConfig(
