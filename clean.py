@@ -1,7 +1,7 @@
 import pandas as pd
 from tokenizer import TTSTokenizer
 
-csv_file = "aitts4.csv"
+csv_file = "~/backup/cv-hk.csv"
 error_count = 0
 valid_rows = []
 file = pd.read_csv(csv_file)
@@ -19,7 +19,8 @@ for i in range(len(file)):
 print(f"Total errors encountered: {error_count}")
 if valid_rows:
     valid_df = pd.DataFrame(valid_rows)
-    valid_df.to_csv("cleaned_" + csv_file, index=False)
-    print(f"Cleaned data saved to 'cleaned_{csv_file}'")
+    valid_df.to_csv("cleaned.csv", index=False)
+    print(f"Total valid rows: {len(valid_rows)}")
+    print(f"Cleaned data saved to 'cleaned.csv'")
 else:
     print("No valid rows found. No data saved.")
