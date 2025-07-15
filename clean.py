@@ -1,9 +1,25 @@
 import pandas as pd
 from tokenizer import TTSTokenizer
 
-csv_file = "test_data.csv"
+csv_file = "aitts4.csv"
+error_count = 0
+valid_rows = []
 file = pd.read_csv(csv_file)
 tokenizer = TTSTokenizer()
 for i in range(len(file)):
-    print(file["audio"][i])
-    token_ids = tokenizer(file["IPA"][i])
+    try:
+        token_ids = tokenizer(file["IPA"][i])
+        if len(token_ids) > 0:
+            valid_rows.append(file.iloc[i])
+    except Exception as e:
+        print(f"Error processing row {i}: {e}")
+        error_count += 1
+        continue
+
+print(f"Total errors encountered: {error_count}")
+if valid_rows:
+    valid_df = pd.DataFrame(valid_rows)
+    valid_df.to_csv("cleaned_" + csv_file, index=False)
+    print(f"Cleaned data saved to 'cleaned_{csv_file}'")
+else:
+    print("No valid rows found. No data saved.")
