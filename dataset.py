@@ -27,7 +27,7 @@ class TTSDataset(Dataset):
         """
         data = self.data_df.iloc[idx]
         mel_path = str(data["audio"]) + ".pt"      # 存储的是 [B, C, T] 格式的 mel-spec
-        mel_tensor = torch.load(osp.join(self.root_path, mel_path))
+        mel_tensor = torch.load(osp.join(self.root_path, mel_path), map_location='cpu') 
         text_tensor = self.text_tokenizer(data["IPA"])
         return {
             "token_id": text_tensor,
