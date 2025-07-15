@@ -77,6 +77,8 @@ class GlowTTSConfig:
             Optimizer used for training. Defaults to `RAdam`.
         optimizer_params (dict):
             Parameters used to define the optimizer. Defaults to `{"betas": [0.9, 0.998], "weight_decay": 1e-6}`.
+        use_scheduler (bool):
+            If True, use a learning rate scheduler. Defaults to True.
         lr_scheduler (str):
             Learning rate scheduler used for training. Defaults to `NoamLR`.
         lr_scheduler_params (dict):
@@ -140,6 +142,7 @@ class GlowTTSConfig:
     optimizer_params: dict = field(
         default_factory=lambda: {"betas": [0.9, 0.998], "weight_decay": 1e-6}
     )
+    use_scheduler: bool = True
     lr_scheduler: str = "NoamLR"
     lr_scheduler_params: dict = field(
         default_factory=lambda: {"warmup_steps": 4000}
