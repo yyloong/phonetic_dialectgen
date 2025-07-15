@@ -34,13 +34,16 @@ class Load_Bigvgan:
 if __name__ == "__main__":
     model = Load_Bigvgan()
     
+    # 原始梅尔频谱
     mel = torch.load("melspec/6953.pt")
     mel = mel.unsqueeze(0)  # 添加 batch 维度
     mel = mel.to(model.device)
-
-    # mel = torch.load("mel_output.pth")
-    # mel = mel.to(model.device).transpose(1, 2)
-     
-    ### 转化梅尔频谱
     model.spectrogram_to_wave(mel, "origin.wav")
     print("🎵 音频已保存为 origin.wav")
+
+    # 生成梅尔频谱
+    # mel = torch.load("mel_output.pth")
+    # mel = mel.to(model.device).transpose(1, 2)
+    # model.spectrogram_to_wave(mel, "output.wav")
+    # print("🎵 音频已保存为 output.wav")
+     

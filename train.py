@@ -34,7 +34,7 @@ def main():
         epochs=10000,
         data_dep_init_steps=40,
         batch_size=16,
-        lr=1e-5, 
+        lr=1e-4, 
         grad_clip=5.0,
         print_step=20,
         save_step=3000,
@@ -42,7 +42,7 @@ def main():
         # optimizer="RAdam",
         # optimizer_params={"betas": [0.9, 0.998], "weight_decay": 1e-6},
         optimizer = "AdamW",
-        optimizer_params = {"betas": [0.9, 0.999], "weight_decay": 1e-2},
+        optimizer_params = {"betas": [0.9, 0.999], "weight_decay": 5e-3},
         use_scheduler=False
         # lr_scheduler="NoamLR",
         # lr_scheduler_params={"warmup_steps": 10000},
@@ -61,7 +61,7 @@ def main():
     
     # 开始训练
     # trainer.fit()
-    trainer.fit_from_checkpoint("outputs/checkpoint_step_98999.pth", config)  # 从检查点恢复训练
+    trainer.fit_from_checkpoint("outputs/checkpoint_step_101999.pth", config)  # 从检查点恢复训练
 
 if __name__ == "__main__":
     main()

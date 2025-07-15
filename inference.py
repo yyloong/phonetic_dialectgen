@@ -40,7 +40,7 @@ def inference_example():
     """推理示例"""
     
     # 1. 加载模型
-    checkpoint_path = "./outputs/checkpoint_step_92999.pth"  # 你的检查点路径
+    checkpoint_path = "./outputs/checkpoint_step_104999.pth"  # 你的检查点路径
     # config = GlowTTSConfig(
     #     num_chars=100,
     #     out_channels=80,
