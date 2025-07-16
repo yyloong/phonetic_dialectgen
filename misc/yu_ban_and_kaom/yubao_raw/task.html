@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Task</title>
+</head>
+<body>
+    <ul>
+<li><a href='https://zhongguoyuyan.cn/point/10G57'><kbd>https://zhongguoyuyan.cn/point/10G57</kbd> 江苏_丰县#</a></li>
+<li><a href='https://zhongguoyuyan.cn/point/01165'><kbd>https://zhongguoyuyan.cn/point/01165</kbd> 广西_兴安县城话</a></li>
+    </ul>
+    <pre>
+
+// 这里填入链接
+const links = [
+"https://zhongguoyuyan.cn/point/10G57",
+"https://zhongguoyuyan.cn/point/01165"
+];
+
+function getDateTime() {
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = String(now.getMonth() + 1).padStart(2, "0")
+    var day = String(now.getDate()).padStart(2, "0");
+    var hour = String(now.getHours()).padStart(2, "0");
+    var minute = String(now.getMinutes()).padStart(2, "0");
+    var second = String(now.getSeconds()).padStart(2, "0");
+    return `${year}.${month}.${day} ${hour}:${minute}:${second}`; 
+}
+
+function getRandomInterval() {
+    return Math.floor(Math.random() * 60) + 120;
+}
+
+function openLinksSequentially(index) {
+    // 所有链接打开完毕
+    if (index >= links.length) {
+        console.log(`[${getDateTime()}] 所有链接打开完毕`);
+        setTimeout(() => {
+            openLinksSequentially(index + 1);
+        }, 3600 * 1000);
+    }
+    // 等待随机时间打开下一个
+    var rand_secs = getRandomInterval() * 1000;
+	if (index % 16 == 0) {
+        rand_secs += 60 * 1000;
+	}
+    console.log(`[${getDateTime()}] ${rand_secs / 1000}s -> ${links[index]} (${index}/${links.length})`);
+    setTimeout(() => {
+        window.open(links[index], "_blank");
+        openLinksSequentially(index + 1);
+    }, rand_secs);
+}
+
+// 立即打开第一个链接
+window.open(links[0], "_blank");
+// 然后从第二个链接开始依次打开
+openLinksSequentially(1);
+
+    </pre>
+</body>
+</html>
