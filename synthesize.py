@@ -42,7 +42,7 @@ def main():
     model, config = load_model_from_checkpoint(checkpoint_path, config=None)
     
     # 2. 准备输入文本
-    text = "fəŋ55 pau51 tʂəŋ51 tsai51 ɕye35 ɕi35 ʐu35 xɤ35 ian215 tsou51 kuan215 lɤ51 tɕhi51 。"
+    text = "ɕiŋ55 ɕiŋ55 ʂʅ51 niŋ35 məŋ35 uei51 tɤ0 ， tʂhʅ55 tɕhi215 lai35 thɤ51 pie35 thian35 。"
     
     # 3. 文本预处理
     tokenizer = TTSTokenizer()
