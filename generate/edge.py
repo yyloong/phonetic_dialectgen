@@ -3,6 +3,8 @@ import pandas as pd
 import tqdm
 import time
 
+# pip install edge-tts
+
 file = pd.read_csv("cv-hk.csv")
 
 for i in tqdm.tqdm(range(len(file))):
