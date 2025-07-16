@@ -33,7 +33,7 @@ def main():
         root_path="/home/u-wuhc/backup/edge-mel",  # 假设数据存储在这个路径下
         epochs=10000,
         data_dep_init_steps=80,
-        batch_size=28,
+        batch_size=32,
         lr=1e-5, 
         grad_clip=5.0,
         print_step=20,
@@ -56,12 +56,12 @@ def main():
     trainer = GlowTTSTrainer(
         model=model,
         config=config,
-        output_path="./restart"
+        output_path="./finetune"
     )
     
     # 开始训练
-    trainer.fit()
-    # trainer.fit_from_checkpoint("outputs/checkpoint_step_14999.pth", config)  # 从检查点恢复训练
+    # trainer.fit()
+    trainer.fit_from_checkpoint("finetune/checkpoint_step_128999.pth", config)  # 从检查点恢复训练
 
 if __name__ == "__main__":
     main()
