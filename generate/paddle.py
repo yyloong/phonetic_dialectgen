@@ -1,5 +1,10 @@
 from paddlespeech.cli.tts import TTSExecutor
 
+# pip install paddlespeech
+# pip install paddlepaddlw
+# pip install opencc-py
+# pip install aistudio-sdk==0.2.6
+
 tts_executor = TTSExecutor()
 # for i in range(0, 1):
 #     wav_file = tts_executor(
