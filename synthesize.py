@@ -8,8 +8,8 @@ def main():
     # 1. 加载模型
 
     # 如果检查点包含配置，则可以直接加载
-    checkpoint_path = "./outputs/checkpoint_step_17999.pth" 
-    checkpoint_path = "./outputs/fail.pth" 
+    checkpoint_path = "./outputs/checkpoint_step_20999.pth" 
+    # checkpoint_path = "./outputs/fail.pth" 
 
     # 如果是仅包含模型权重的文件，还需要提供 config
     # checkpoint_path = "/mnt/nas/shared/datasets/voices/best_model.pth"  # 你的检查点路径

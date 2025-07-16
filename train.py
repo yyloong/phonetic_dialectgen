@@ -32,9 +32,9 @@ def main():
         csv_file="/home/u-wuhc/backup/edge-hk-period.csv",
         root_path="/home/u-wuhc/backup/edge-mel",  # 假设数据存储在这个路径下
         epochs=10000,
-        data_dep_init_steps=60,
-        batch_size=24,
-        lr=1e-4, 
+        data_dep_init_steps=80,
+        batch_size=28,
+        lr=1e-5, 
         grad_clip=5.0,
         print_step=20,
         save_step=3000,
@@ -56,12 +56,12 @@ def main():
     trainer = GlowTTSTrainer(
         model=model,
         config=config,
-        output_path="./outputs"
+        output_path="./restart"
     )
     
     # 开始训练
-    # trainer.fit()
-    trainer.fit_from_checkpoint("outputs/checkpoint_step_14999.pth", config)  # 从检查点恢复训练
+    trainer.fit()
+    # trainer.fit_from_checkpoint("outputs/checkpoint_step_14999.pth", config)  # 从检查点恢复训练
 
 if __name__ == "__main__":
     main()
