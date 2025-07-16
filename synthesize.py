@@ -8,12 +8,13 @@ def main():
     # 1. 加载模型
 
     # 如果检查点包含配置，则可以直接加载
-    # checkpoint_path = "./outputs/checkpoint_step_14999.pth"  
+    checkpoint_path = "./outputs/checkpoint_step_17999.pth" 
+    checkpoint_path = "./outputs/fail.pth" 
 
     # 如果是仅包含模型权重的文件，还需要提供 config
     # checkpoint_path = "/mnt/nas/shared/datasets/voices/best_model.pth"  # 你的检查点路径
     # checkpoint_path = "./weights/best_model.pth"  
-    checkpoint_path = "./outputs/best_model.pth"  
+    # checkpoint_path = "./outputs/best_model.pth"  
 
     config = GlowTTSConfig(
         num_chars=47,
@@ -40,7 +41,7 @@ def main():
         num_block_layers=6,       # 从 4 增加到 6
     )
 
-    model, config = load_model_from_checkpoint(checkpoint_path, config=config)
+    model, config = load_model_from_checkpoint(checkpoint_path, config=None)
     
     # 2. 准备输入文本
     text = "hɐi22 kɐm33 kei33 ua22 tsɐu22 m21 uui13 tsɔi33 ioŋ22 pheŋ21 kuɔ35 sɐu35 kei55 la55"
