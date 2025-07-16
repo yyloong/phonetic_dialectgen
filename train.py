@@ -29,7 +29,7 @@ def main():
         num_block_layers=6,       # 从 4 增加到 6
 
         # 训练参数
-        csv_file="/home/u-wuhc/backup/edge-hk.csv",
+        csv_file="/home/u-wuhc/backup/edge-hk-period.csv",
         root_path="/home/u-wuhc/backup/edge-mel",  # 假设数据存储在这个路径下
         epochs=10000,
         data_dep_init_steps=60,
@@ -61,7 +61,7 @@ def main():
     
     # 开始训练
     # trainer.fit()
-    trainer.fit_from_checkpoint("outputs/checkpoint_step_8999.pth", config)  # 从检查点恢复训练
+    trainer.fit_from_checkpoint("outputs/checkpoint_step_14999.pth", config)  # 从检查点恢复训练
 
 if __name__ == "__main__":
     main()
