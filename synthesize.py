@@ -10,9 +10,9 @@ def main():
     # 如果检查点包含配置，则可以直接加载
     # checkpoint_path = "./outputs/fail.pth"  # 假设这是你的检查点路径
     # checkpoint_path = "./outputs/checkpoint_step_44999.pth" 
-    # checkpoint_path = "./restart/checkpoint_step_17999.pth"
-    # checkpoint_path = "./finetune/checkpoint_step_131999.pth" 
-    checkpoint_path = "./weights/aitts234.pth"
+    # checkpoint_path = "./restart/checkpoint_step_29999.pth"
+    checkpoint_path = "./finetune/checkpoint_step_137999.pth" 
+    # checkpoint_path = "./weights/aitts234.pth"
 
     # 如果是仅包含模型权重的文件，还需要提供 config
     # checkpoint_path = "/mnt/nas/shared/datasets/voices/best_model.pth"  # 你的检查点路径
@@ -48,7 +48,7 @@ def main():
     model, config = load_model_from_checkpoint(checkpoint_path, config=None)
     
     # 2. 准备输入文本
-    text = "tni215 xai35 mei35 tʂuən215 pei51 xau215 ma0 ？ təŋ215 xuei51 ər35 tɕiou51 iau51 tʂhu55 fa55 lɤ0 o35 ！"
+    text = "tsɛ13 ia13 tseŋ33 si22 kau33 iok2 tek5 mei13 hou35 tshoŋ55 keŋ35 。"
     
     # 3. 文本预处理
     tokenizer = TTSTokenizer()
