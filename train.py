@@ -29,24 +29,24 @@ def main():
         num_block_layers=6,       # 从 4 增加到 6
 
         # 训练参数
-        csv_file="/home/u-wuhc/backup/cv-hk.csv",
-        root_path="/home/u-wuhc/backup/clips_wav_melspec",  # 假设数据存储在这个路径下
+        csv_file="/home/u-wuhc/backup/edge-hk.csv",
+        root_path="/home/u-wuhc/backup/edge-mel",  # 假设数据存储在这个路径下
         epochs=10000,
-        data_dep_init_steps=40,
-        batch_size=16,
-        lr=1e-4, 
+        data_dep_init_steps=100,
+        batch_size=24,
+        lr=1e-5, 
         grad_clip=5.0,
         print_step=20,
         save_step=3000,
         run_eval=True,
-        # optimizer="RAdam",
-        # optimizer_params={"betas": [0.9, 0.998], "weight_decay": 1e-6},
-        optimizer = "AdamW",
-        optimizer_params = {"betas": [0.9, 0.998], "weight_decay": 1e-2},
-        use_scheduler=False
+        optimizer="RAdam",
+        optimizer_params={"betas": [0.9, 0.998], "weight_decay": 1e-6},
+        # optimizer = "AdamW",
+        # optimizer_params = {"betas": [0.9, 0.998], "weight_decay": 1e-2},
+        use_scheduler=False,
         # lr_scheduler="NoamLR",
         # lr_scheduler_params={"warmup_steps": 10000},
-        # scheduler_after_epoch=False  # NoamLR 按步调度
+        # scheduler_after_epoch=False,  # NoamLR 按步调度
     )
     
     # 模型
@@ -60,8 +60,8 @@ def main():
     )
     
     # 开始训练
-    # trainer.fit()
-    trainer.fit_from_checkpoint("outputs/checkpoint_step_125999.pth", config)  # 从检查点恢复训练
+    trainer.fit()
+    # trainer.fit_from_checkpoint("outputs/checkpoint_step_125999.pth", config)  # 从检查点恢复训练
 
 if __name__ == "__main__":
     main()
