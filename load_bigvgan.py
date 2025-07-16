@@ -35,7 +35,7 @@ if __name__ == "__main__":
     model = Load_Bigvgan()
     
     # 原始梅尔频谱
-    mel = torch.load("../backup/edge-mel/100.pt")
+    mel = torch.load("../backup/edge-mel/5000.pt")
     mel = mel.unsqueeze(0)  # 添加 batch 维度
     mel = mel.to(model.device)
     model.spectrogram_to_wave(mel, "origin.wav")
