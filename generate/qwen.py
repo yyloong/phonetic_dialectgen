@@ -17,6 +17,10 @@ response = dashscope.audio.qwen_tts.SpeechSynthesizer.call(
     text=text,
     voice="Dylan",
 )
+# voice: 
+# Dylan=北京话
+# Jada=吴语
+# Sunny=四川话
 audio_url = response.output.audio["url"]
 save_path = "downloaded_audio.wav"  # 自定义保存路径
 
