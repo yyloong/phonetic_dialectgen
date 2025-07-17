@@ -10,8 +10,8 @@ def main():
     # 如果检查点包含配置，则可以直接加载
     # checkpoint_path = "./outputs/fail.pth"  # 假设这是你的检查点路径
     # checkpoint_path = "./outputs/checkpoint_step_44999.pth" 
-    # checkpoint_path = "./restart/checkpoint_step_29999.pth"
-    checkpoint_path = "./finetune/checkpoint_step_137999.pth" 
+    checkpoint_path = "./restart/checkpoint_step_110999.pth"
+    # checkpoint_path = "./finetune/checkpoint_step_137999.pth" 
     # checkpoint_path = "./weights/aitts234.pth"
 
     # 如果是仅包含模型权重的文件，还需要提供 config
