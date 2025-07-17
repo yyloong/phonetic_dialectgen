@@ -63,7 +63,7 @@ def main():
     # 创建CSV文件并写入表头
     with open(file, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['序号', '句子'])
+        writer.writerow(['audio', 'text'])
         
         current_number = 1
         
