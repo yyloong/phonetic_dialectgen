@@ -3,7 +3,7 @@ import csv
 import re
 import time
 
-def ask_ollama(prompt, model="gemma3:latest"):
+def ask_ollama(prompt, model="gemma3:27b"):
     """调用Ollama API"""
     url = "http://localhost:11434/api/generate"
     
@@ -11,7 +11,7 @@ def ask_ollama(prompt, model="gemma3:latest"):
         "model": model,
         "prompt": prompt,
         "stream": False,
-        "temperature": 1.5,
+        "temperature": 1.2,
     }
     
     try:
@@ -43,7 +43,7 @@ def extract_sentences(text):
 
 def generate_sentences_batch():
     """生成一批句子（20个）"""
-    prompt = """请随机生成20个句子，主题和内容尽量天马行空, 甚至可以是对话，毫无逻辑的观点，规则，句子成分不完整的胡言乱语。每个句子长度在10到20个字之间。输出格式为一行一个句子，前面带有序号，格式为：1. 句子内容
+    prompt = """请随机生成20个句子，所有句子需要包含说话的话语，主题和内容可以天马行空, 句式尽量多样化。每个句子长度在10到20个字之间。输出格式为一行一个句子，前面带有序号，格式为：1. 句子内容
 2. 句子内容
 ..."""
     
@@ -56,10 +56,10 @@ def main():
     print("开始生成1000个随机句子...")
     
     all_sentences = []
-    target_count = 10000
+    target_count = 1000
     batch_size = 20
     
-    file = 'sentences.csv'
+    file = 'conv.csv'
     # 创建CSV文件并写入表头
     with open(file, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)

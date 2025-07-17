@@ -8,9 +8,9 @@ def main():
     # 1. 加载模型
 
     # 如果检查点包含配置，则可以直接加载
-    # checkpoint_path = "./outputs/fail.pth"  # 假设这是你的检查点路径
+    checkpoint_path = "./outputs/checkpoint_step_129999.pth"  # 假设这是你的检查点路径
     # checkpoint_path = "./outputs/checkpoint_step_44999.pth" 
-    checkpoint_path = "./restart/checkpoint_step_110999.pth"
+    # checkpoint_path = "./restart/checkpoint_step_110999.pth"
     # checkpoint_path = "./finetune/checkpoint_step_137999.pth" 
     # checkpoint_path = "./weights/aitts234.pth"
 
@@ -48,7 +48,7 @@ def main():
     model, config = load_model_from_checkpoint(checkpoint_path, config=None)
     
     # 2. 准备输入文本
-    text = "tsɛ13 ia13 tseŋ33 si22 kau33 iok2 tek5 mei13 hou35 tshoŋ55 keŋ35 。"
+    text = "thou33 tsi35 uɔ21 tshoŋ21 sy35 iɐt5 hei35 fɐn55 hœŋ35 mei13 mei22 tek5 uu21 lɔ21 pok5 。"
     
     # 3. 文本预处理
     tokenizer = TTSTokenizer()
