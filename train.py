@@ -29,7 +29,7 @@ def main():
         num_block_layers=6,       # 从 4 增加到 6
 
         # 训练参数
-        csv_file="/home/u-wuhc/backup/aitts_merged.csv",
+        csv_file="aitts_merged.csv",
         root_path="/home/u-wuhc/backup/AItts",  # 假设数据存储在这个路径下
         epochs=10000,
         data_dep_init_steps=80,
