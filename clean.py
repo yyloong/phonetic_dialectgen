@@ -1,7 +1,7 @@
 import pandas as pd
 from tokenizer import TTSTokenizer
 
-csv_file = "~/backup/cv-hk.csv"
+csv_file = "aitts5.csv"
 error_count = 0
 valid_rows = []
 file = pd.read_csv(csv_file)
