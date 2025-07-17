@@ -1,0 +1,7 @@
+mitmproxy --listen-port 42069 -s http_filter.py
+
+# set proxy to 127.0.0.1:42069
+
+python random_urls.py
+
+# while true; do sleep $((RANDOM % 30 + 90)); dt=$(date +"%Y.%m.%d %H:%M:%S"); succ=$(find ./data/ -type f -name "*.json" -size +128k | wc -l); fail=$(find ./data/ -type f -name "*.json" -size -128k | wc -l); echo -e "\n\033[93m$dt\033[0m\n\033[92msucc = $succ\033[0m\n\033[91mfail = $fail\033[0m"; done;
