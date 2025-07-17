@@ -29,15 +29,15 @@ def main():
         num_block_layers=6,       # 从 4 增加到 6
 
         # 训练参数
-        csv_file="/home/u-wuhc/backup/edge-hk-period.csv",
-        root_path="/home/u-wuhc/backup/edge-mel",  # 假设数据存储在这个路径下
+        csv_file="/home/u-wuhc/backup/aitts_merged.csv",
+        root_path="/home/u-wuhc/backup/AItts",  # 假设数据存储在这个路径下
         epochs=10000,
         data_dep_init_steps=80,
-        batch_size=32,
+        batch_size=48,
         lr=1e-5, 
         grad_clip=5.0,
         print_step=20,
-        save_step=3000,
+        save_step=5000,
         run_eval=True,
         # optimizer="RAdam",
         # optimizer_params={"betas": [0.9, 0.998], "weight_decay": 1e-6},
@@ -56,12 +56,12 @@ def main():
     trainer = GlowTTSTrainer(
         model=model,
         config=config,
-        output_path="./finetune"
+        output_path="./outputs"
     )
     
     # 开始训练
     # trainer.fit()
-    trainer.fit_from_checkpoint("finetune/checkpoint_step_128999.pth", config)  # 从检查点恢复训练
+    trainer.fit_from_checkpoint("outputs/aitts234.pth", config)  # 从检查点恢复训练
 
 if __name__ == "__main__":
     main()
