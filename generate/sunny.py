@@ -14,7 +14,7 @@ load_dotenv()
 
 df = pd.read_csv("aitts3_shu.csv", encoding='utf-8')
 
-for i in tqdm.tqdm(range(len(df))):
+for i in tqdm.tqdm(range(3000, 5000)):
     text = df.loc[i, 'text']
     response = dashscope.audio.qwen_tts.SpeechSynthesizer.call(
         model="qwen-tts-latest",
@@ -22,11 +22,12 @@ for i in tqdm.tqdm(range(len(df))):
         text=text,
         voice="Sunny", 
     )
+    name = df.loc[i, 'audio']
     audio_url = response.output.audio["url"]
-    save_path = f"sichuan/{i+1}.wav"  # 自定义保存路径
+    save_path = f"sichuan/{name}.wav"  # 自定义保存路径
 
     response = requests.get(audio_url)
     response.raise_for_status()  # 检查请求是否成功
     with open(save_path, 'wb') as f:
         f.write(response.content)
-    print(f"音频文件已保存至：{save_path}")
+    # print(f"音频文件已保存至：{save_path}")
