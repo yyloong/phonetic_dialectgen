@@ -8,11 +8,18 @@ def main():
     # 1. 加载模型
 
     # 如果检查点包含配置，则可以直接加载
-    # checkpoint_path = "./outputs/checkpoint_step_122999.pth"  
+    
+    # 混合模型
+    checkpoint_path = "./weights/hybrid.pth" 
+    # 普通话模型
+    # checkpoint_path = "./weights/mandarin.pth"
+    # 粤语模型
+    # checkpoint_path = "./weights/cantonese.pth"
 
     # 如果是仅包含模型权重的文件，还需要提供 config
+    # checkpoint_path = "./weights/best_model.pth"  
     # checkpoint_path = "./outputs/best_model.pth"  
-    checkpoint_path = "/mnt/nas/shared/datasets/voices/best_model.pth"  # 你的检查点路径
+    # checkpoint_path = "./restart/best_model.pth"
 
     config = GlowTTSConfig(
         num_chars=47,
@@ -42,7 +49,7 @@ def main():
     model, config = load_model_from_checkpoint(checkpoint_path, config=config)
     
     # 2. 准备输入文本
-    text = "fəŋ55 pau51 tʂəŋ51 tsai51 ɕye35 ɕi35 ʐu35 xɤ35 ian215 tsou51 kuan215 lɤ51 tɕhi51 。"
+    text = "tʂɤ51 pu51 tian51 iŋ215 khou215 pei55 xən215 paŋ51 ， pu51 ʐu35 tʂou55 muo51 i55 tɕhi215 tɕhy51 khan51 ？"
     
     # 3. 文本预处理
     tokenizer = TTSTokenizer()

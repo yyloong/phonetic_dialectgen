@@ -2,10 +2,13 @@
 data/
 melspec/
 test_data/
+clips_wav_melspec/
 aitts*/
 *.pt
 *.wav
 *.csv
+
+.env
 
 # Python 缓存文件
 __pycache__/
@@ -14,4 +17,3 @@ __pycache__/
 # 模型
 outputs/
 *.pth
->>>>>>> origin/main

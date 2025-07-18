@@ -63,16 +63,23 @@ class TTSTokenizer:
             '—': 39,
             '…': 40,
             '。': 41,
+            '.': 41,  # '.' 和 '。' 都映射到同一个 ID
             '！': 42,
+            '!': 42,  # '!' 和 '！' 都映射到同一个 ID
             '，': 43,
+            ',': 43,
+            '、': 43,  # '、', '，' 和 ',' 都映射到同一个 ID
             '：': 44,
+            ':': 44,  # ':' 和 '：' 都映射到同一个 ID
             '；': 45,
-            '？': 46
+            ';': 45,  # ';' 和 '；' 都映射到同一个 ID
+            '？': 46,
+            '?': 46  # '?' 和 '？' 都映射到同一个 ID
         }
 
     def __call__(self, text):
         # 定义中文标点符号集合
-        chinese_punctuation = "。！？，、；：“”‘’（）【】《》"
+        punctuations = "“”‘’（）【】《》\"'()[]{}<>《》"
 
         codes = []  # 存储编码结果
 
@@ -83,7 +90,7 @@ class TTSTokenizer:
                 codes.append(self.mapping[char])
             else:
                 # 检查是否为中文标点
-                if char in chinese_punctuation:
+                if char in punctuations:
                     continue  # 忽略标点
                 else:
                     raise ValueError(f"字符 '{char}' 缺失映射")
@@ -93,7 +100,7 @@ class TTSTokenizer:
 if __name__ == "__main__":
     # Example usage
     print("Testing TTSTokenizer...")
-    text = "ye51 liaŋ51 thou55 thou55 kei215 xai215 ou55 suŋ51 tɕhy51 niŋ35 məŋ35 khou215 uei51 tɤ0 thaŋ35 kuo215 。"
+    text = """ye51 liaŋ51 thou55 thou55 kei215 xai215 ou55 suŋ51 tɕhy51 niŋ35 məŋ35 khou215 uei51 tɤ0 thaŋ35 kuo215 。"""
     print(len(text))
     print(f"Tokenizing ...")
     tokenizer = TTSTokenizer()

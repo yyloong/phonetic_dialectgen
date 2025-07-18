@@ -1,6 +1,6 @@
 ### 请先添加 bigvgan22HZ 目录路径
 import sys
-sys.path.append("/mnt/nas/shared/datasets/voices/bigvgan22HZ")
+sys.path.append("/home/u-wuhc/backup/bigvgan22HZ")
 import bigvgan as bigvgan
 import soundfile as sf
 import librosa
@@ -9,7 +9,7 @@ import torch
 
 
 class Load_Bigvgan:
-    def __init__(self, model_name="/mnt/nas/shared/datasets/voices/bigvgan22HZ"):
+    def __init__(self, model_name="/home/u-wuhc/backup/bigvgan22HZ"):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = bigvgan.BigVGAN.from_pretrained(model_name)
         self.model.remove_weight_norm()
@@ -35,15 +35,15 @@ if __name__ == "__main__":
     model = Load_Bigvgan()
     
     # 原始梅尔频谱
-    # mel = torch.load("melspec/6953.pt")
-    # mel = mel.unsqueeze(0)  # 添加 batch 维度
-    # mel = mel.to(model.device)
-    # model.spectrogram_to_wave(mel, "origin.wav")
-    # print("🎵 音频已保存为 origin.wav")
+    mel = torch.load("../backup/edge-mel/100.pt")
+    mel = mel.unsqueeze(0)  # 添加 batch 维度
+    mel = mel.to(model.device)
+    model.spectrogram_to_wave(mel, "origin.wav")
+    print("🎵 音频已保存为 origin.wav")
 
     # 生成梅尔频谱
-    mel = torch.load("mel_output.pth")
-    mel = mel.to(model.device).transpose(1, 2)
-    model.spectrogram_to_wave(mel, "output.wav")
-    print("🎵 音频已保存为 output.wav")
+    # mel = torch.load("output.pth")
+    # mel = mel.to(model.device).transpose(1, 2)
+    # model.spectrogram_to_wave(mel, "output.wav")
+    # print("🎵 音频已保存为 output.wav")
      
