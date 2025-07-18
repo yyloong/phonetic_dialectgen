@@ -1,6 +1,6 @@
 import yaml
 
-with open('shupin.yaml', 'r', encoding='utf-8') as file:
+with open('shupin_simp.yaml', 'r', encoding='utf-8') as file:
     mapping = yaml.safe_load(file)
 
 def convert_text(text):
