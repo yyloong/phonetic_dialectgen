@@ -22,4 +22,6 @@ for value in mapping.values():
     for char in value:
         unique.add(char)
 
-print(unique)
+print(sorted(list(unique)))
+
+print(len(unique))
