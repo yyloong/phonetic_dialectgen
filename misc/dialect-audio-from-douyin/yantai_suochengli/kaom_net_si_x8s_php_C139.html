@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html>
+<!-- http://www.kaom.net/si_x8.php?c=C139 -->
+<head>
+    <meta charset="utf-8">
+    <title>漢語方言音系查詢</title>
+    <meta name="description" content="">
+    <base target="_blank">
+    <script type="text/javascript">
+        function checkAll(name) {
+            var el = document.getElementsByTagName('input');
+            var len = el.length;
+            for (var i = 0; i < len; i++) {
+                if ((el[i].type == "checkbox") && (el[i].name == name)) {
+                    el[i].checked = true;
+                }
+            }
+        }
+        function clearAll(name) {
+            var el = document.getElementsByTagName('input');
+            var len = el.length;
+            for (var i = 0; i < len; i++) {
+                if ((el[i].type == "checkbox") && (el[i].name == name)) {
+                    el[i].checked = false;
+                }
+            }
+        }
+        function checkAll2(name) {
+            var el = document.getElementsByClassName(name);
+            var len = el.length;
+            for (var i = 0; i < len; i++) {
+                el[i].checked = true;
+            }
+        }
+        function clearAll2(name) {
+            var el = document.getElementsByClassName(name);
+            var len = el.length;
+            for (var i = 0; i < len; i++) {
+                el[i].checked = false;
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        /* 下拉內容 */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        /* 下拉式功能表內容設置為隱藏 */
+        .dropdown-content {
+            width: 138px;
+            background: #162436;
+            position: absolute;
+            right: 0;
+            display: none;
+            box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+        }
+
+        /* 下拉按鈕樣式 */
+        .dropbtn {
+            color: white;
+            font-size: 13px;
+            line-height: 15px;
+            padding: 12px 6px;
+            /* 控制條紋高度重要 */
+            border: none;
+            background: #2a3c54;
+            cursor: pointer;
+        }
+
+        /* 下拉式功能表連結 */
+        .dropdown-content a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 18px;
+            display: block;
+            font-size: 12px;
+        }
+
+        /* 滑鼠移入後顯示下拉式功能表 */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* 滑鼠移入後修改連結的背景色 */
+        .dropdown-content a:hover {
+            background: #aa334c;
+        }
+
+        /* 滑鼠移入背景色 */
+        .form_b:hover {
+            background: #ca334c;
+        }
+
+        /* 下拉式功能表顯示後修改下拉按鈕的背景色 */
+        .dropdown:hover .dropbtn {
+            background: #162436;
+        }
+
+        .dropdown:hover .dropbtn2 {
+            background: #162436;
+        }
+
+        /*頁面上的橫條*/
+        .header {
+            background: #2a3c54;
+            width: 96%;
+            padding: 0px 2%;
+            margin: 0px auto;
+            text-align: right;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: KaiXinSong;
+            font-size: 15px;
+            background: #ddd;
+            -webkit-text-size-adjust: none;
+        }
+
+        .win {
+            max-width: 1200px;
+            margin: 0px auto;
+            background: #fff;
+            box-shadow: darkgrey 0px 0px 6px 5px;
+        }
+
+        table {
+            width: 92%;
+            margin: 50px auto;
+            border-collapse: collapse;
+            color: #000;
+            text-align: center;
+            vertical-align: center;
+            line-height: 22px;
+        }
+
+        th {
+            font-size: 13px;
+            color: #ddd;
+            background: #2a3c54;
+            padding: 5px 2px;
+            line-height: 16px;
+        }
+
+        td {
+            font-size: 14px;
+            color: #333;
+            background: #eee;
+            border: 1px solid #ddd;
+            /*word-wrap:break-word;強制換行*/
+            /*word-break:break-all;強制換行*/
+        }
+
+        caption {
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        th.red {
+            background: #aa334c;
+            color: #fff;
+            width: 140px;
+        }
+
+        .table_mini {
+            width: 88%;
+        }
+
+        .td_footer {
+            height: 20px;
+            background: #666;
+            color: #ccc;
+            font-size: 13px;
+        }
+
+        .table_mini td {
+            background: #f8f8f8;
+            font-size: 12px;
+        }
+
+        .form_1 {
+            font-size: 14px;
+            height: 36px;
+            line-height: 36px;
+            /*垂直居中*/
+            border: 1px solid #aaa;
+            padding: 0px 0px 0px 5px;
+            vertical-align: bottom;
+        }
+
+        .form_2 {
+            background: #2a3c54;
+            color: #fff;
+            font-size: 14px;
+            width: 120px;
+            height: 38px;
+            line-height: 36px;
+            /*垂直居中*/
+            border: none;
+            vertical-align: bottom;
+        }
+
+        .form_2:hover {
+            background: #aa334c;
+            box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        /*全選、清空按鈕*/
+        input[type="button"] {
+            height: 22px;
+            width: 38px;
+            font-size: 12px;
+        }
+
+        /*以下4個是電子字樣式*/
+        .box_main {
+            margin: 50px auto 20px auto;
+            max-width: 90%;
+            text-align: center;
+            width: 92%;
+        }
+
+        .box_div {
+            width: 60px;
+            height: 38px;
+            margin: 5px;
+            padding: 12px 2px;
+            background: #2a3c54;
+            display: inline-block;
+            font-size: 32px;
+            color: #eee;
+            vertical-align: middle;
+            text-align: center;
+            line-height: 22px;
+        }
+
+        .box_div_mini {
+            width: 25px;
+            height: 25px;
+            margin: 2px;
+            padding: 2px 2px;
+            background: #2a3c54;
+            display: inline-block;
+            font-size: 18px;
+            color: #eee;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .box_div:hover,
+        .box_div_mini:hover {
+            background: #aa334c;
+            box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        .right {
+            color: #aa334c;
+        }
+
+        .wrong {
+            color: #2a3c54;
+        }
+
+        .error {
+            text-align: center;
+            font-size: 13px;
+            margin: 45px auto 45px auto;
+            line-height: 20px;
+            background: #eee;
+            width: 500px;
+            padding: 20px 35px;
+            border-radius: 5px;
+            color: #aa334c;
+            font-weight: bold;
+        }
+
+        .kuangjia {
+            background: #f8f8f8;
+            width: 96%;
+            text-align: center;
+            margin: 20px auto;
+            overflow: scroll
+        }
+
+        i {
+            font-size: 12px;
+            color: #888;
+            font-style: normal;
+        }
+
+        b {
+            font-size: 14px;
+            color: #aa334c;
+        }
+
+        td a:link,
+        .link a:link {
+            color: blue;
+            text-decoration: none;
+        }
+
+        /*未被訪問的連結*/
+        td a:visited,
+        .link a:visited {
+            color: blue;
+            text-decoration: none;
+        }
+
+        /*已被訪問的連結*/
+        td a:hover,
+        .link a:hover {
+            color: #aa334c;
+            text-decoration: none;
+        }
+
+        /*滑鼠指標移動到連結上*/
+        td a:active,
+        .link a:active {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /*正在被點擊的連結*/
+        a:link {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        a:active {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div style="float:left;margin-left: 5px">
+            <div class="dropdown">
+                <button type="button" class="dropbtn" style="background: #aa334c;padding-right: 18px;padding-left: 18px">
+                    <a href="index.php" style="color: #fff;font-size: 13px;line-height: 15px"> Home <br>首頁</a>
+                </button>
+            </div>
+
+            <div class="dropdown">
+                <button type="button" class="dropbtn">Hmong-Mien<br>苗瑤語</button>
+                <div class="dropdown-content">
+                    <a href="/min_z_hmongmien.php"><span style="color: orange">✿</span> 苗瑤語素</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="dropbtn">Kra-Tai<br>侗台語</button>
+                <div class="dropdown-content">
+                    <a href="/min_z_kamtai.php"><span style="color: orange">✿</span> 侗台語素</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="dropbtn">Austroasiatic<br>南亞語</button>
+                <div class="dropdown-content">
+                    <a href="/min_z_austroasiatic.php"><span style="color: orange">✿</span> 南亞語素</a>
+                    <a href="/min_tree.php?t=austroasiatic"><span style="color: orange">✿</span> 關係樹</a>
+                    <a href="/min_z_austroasiatic_family.php"><span style="color: orange">✿</span> 語支史</a>
+                    <a href="min_z_austroasiatic.php?t=xmonic">①孟語支</a>
+                    <a href="min_z_austroasiatic.php?t=xkhmerpear">②高棉語支</a>
+                    <a href="min_z_austroasiatic.php?t=xkhmerpear">③比爾語支</a>
+                    <a href="min_z_austroasiatic.php?t=xbahnaric">④巴那語支</a>
+                    <a href="min_z_austroasiatic.php?t=xkatuic">⑤卡都語支</a>
+                    <a href="min_z_austroasiatic.php?t=xvietic">⑥越語支</a>
+                    <a href="min_z_austroasiatic.php?t=xkhmuic">⑦克木語支</a>
+                    <a href="min_z_austroasiatic.php?t=xpalaungic">⑧崩龍語支</a>
+                    <a href="min_z_austroasiatic.php?t=xkhasian">⑨卡西語支</a>
+                    <a href="min_z_austroasiatic.php?t=xmanglai">⑩莽語支</a>
+                    <a href="min_z_austroasiatic.php?t=xmanglai">⑪倈語支</a>
+                    <a href="min_z_austroasiatic.php?t=xaslian">⑫愛麗語支</a>
+                    <a href="min_z_austroasiatic.php?t=xmundaic">⑬蒙達語支</a>
+                    <a href="min_z_austroasiatic.php?t=xnicobaric">⑭尼科語支</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="dropbtn">Sino-Tibetan<br>漢藏語</button>
+                <div class="dropdown-content">
+                    <a href="/min_z_zangs.php">藏語素A</a>
+                    <a href="/min_z_zang.php">藏語素B</a>
+                    <a href="/min_z_kang.php">康語素</a>
+                    <a href="/min_z_qiang.php">羌語素</a>
+                    <a href="/min_z_ni.php">尼語素</a>
+                    <a href="/min_z_bo.php">僰語素</a>
+                    <a href="/mat_word.php">附：詞彙查詢</a>
+                    <a href="/min_z_sinotibetan.php?t=vkarenic">①克倫語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vtani">②塔尼語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vido">③依度語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vnungic">④儂語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vbai">⑤白語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vtujia">⑤土家語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vkukichin">⑥庫基欽語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vnaga">⑦那嘉語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vsal">⑧薩爾語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vkiranti">⑨基蘭蒂語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vtamangic">⑩塔芒語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vkinnauric">⑪金瑙爾語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vrsu">⑫爾蘇語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vnaic">⑬納語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vrma">⑭爾瑪語支</a>
+                    <a href="/min_z_sinotibetan.php?t=vrgyalrongic">⑮嘉絨語支</a>
+                    <a href="">添加中…</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-right: 5px">
+            <div class="dropdown">
+                <button type="button" class="dropbtn">Sino Phonology<br>漢語上古音</button>
+                <div class="dropdown-content">
+                    <a href="/ny_word.php">① 擬音查詢</a>
+                    <a href="/yayuns_net.php">② 先秦韻</a>
+                    <a href="/sgy_xs.php">③ 聲符</a>
+                    <a href="/sgy_jj_xilian.php">④ 假借</a>
+                    <a href="/sgy_yidu.php">⑤ 異讀</a>
+                    <a href="/sgy_shengxun.php">⑥ 聲訓</a>
+                    <a href="/sgy_fanhan.php">⑦ 梵漢</a>
+                    <a href="/sgy_xs_guilv.php">附：諧聲規律</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="dropbtn">Sino Paleography<br>漢語古文字</button>
+                <div class="dropdown-content">
+                    <a href="/jgw.php">甲骨字形庫</a>
+                    <a href="/jw.php">金文字形庫</a>
+                    <a href="/jianc.php"><span style="color: orange">✿</span> 楚簡字形庫</a>
+                    <a href="/swxz.php">小篆部件譜</a>
+                    <a href="/guwenzi_note.php">簡介</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="dropbtn">Sino Dialect<br>漢語地理</button>
+                <div class="dropdown-content">
+                    <a href="/si_word.php">單字查詢[圖]</a>
+                    <a href="/si_words.php">單字對比[圖]</a>
+                    <a href="/si_mid.php">音類查詢[圖]</a>
+                    <a href="/si_mids.php">音類對比[圖]</a>
+                    <a href="/si_goto.php">演化統計[圖]</a>
+                    <a href="/si_ci.php">詞彙地理[圖]</a>
+                    <a href="/si_x.php">音系</a>
+                    <a href="/si_history.php">古今演化</a>
+                    <a href="/si_many.php">批量查詢</a>
+                    <a href="/si_yuwaiyin.php">日韓越音</a>
+                    <a href="/si_evo.php">新老派音變</a>
+                    <a href="/si_ipa.php">音素統計</a>
+                    <a href="/si_net_ci.php">詞彙距離</a>
+                    <a href="/si_net_yin.php">語音距離</a>
+                    <a href="/si_time.php">分手表</a>
+                    <a href="/si_times.php">分手圖</a>
+                    <a href="/si_timex.php">內部縱深</a>
+                    <a href="/si_tree.php">關係樹</a>
+                    <a href="/dm_map.php"><span style="color: orange">✿</span> 地名·全國</a>
+                    <a href="/dm_ng.php"><span style="color: orange">✿</span> 地名·吳語</a>
+                    <a href="/si_about.php">簡介</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="dropbtn"><span style="color: orange">▼</span> Dictionary<br>工具書</button>
+                <div class="dropdown-content">
+                    <a href="/word.php">韻書38種</a>
+                    <a href="/book_xungu.php">訓詁32種</a>
+                    <a href="/book_vot.php">沙門10種</a>
+                    <a href="/book_jian.php">簡帛11種</a>
+                    <a href="/mzy_word.php">民族語20種</a>
+                    <a href="/book_jiajie.php">通假字12種</a>
+                    <a href="/book_hanyudacidian.php">漢語大詞典</a>
+                    <a href="/book_fangyandacidian.php">方言大詞典</a>
+                    <a href="/book_minqingwuyucidian.php">明清吳語詞典</a>
+                    <a href="/zgy_dw.php"><span style="color: orange">✿</span> 廣韻·集韻</a>
+                    <a href="/sgy_bzd.php"><span style="color: orange">✿</span> 廣韻形聲考</a>
+                    <a href="/sgy_jiyunshengxi.php"><span style="color: orange">✿</span> 集韻聲系</a>
+                    <a href="/zgy_ypcj.php">玉篇殘卷</a>
+                    <a href="/book_jjzg.php">經籍籑詁</a>
+                    <a href="/zgy_jdsw.php">經典釋文</a>
+                    <a href="/font_jianhua_hbz.php">簡化合併字表</a>
+                    <a href="/font_jianhua_txz.php">簡化同形字表</a>
+                    <a href="/font.php"><span style="color: orange">🔧</span> 部件輸入法</a>
+                    <a href="/tool.php"><span style="color: orange">🔧</span> 小功能</a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="font-size: 12px;color: #aaa;margin: 0px auto 20px auto;border:none;text-align: center;background: #eee;padding: 5px 5%;">
+        提示：近期欄目位置有些調整、所有舊功能都在、可仔細找找　2025-7-2
+    </div>
+
+
+
+
+
+    <style>
+        table {
+            margin: 0px auto;
+            table-layout: fixed;
+        }
+
+        td {
+            text-align: left;
+            padding: 0px;
+            font-size: 13px;
+            line-height: 13px;
+        }
+
+        h4 {
+            text-align: center;
+            font-size: 14px;
+            color: #aa334c;
+        }
+
+        i {
+            font-size: 12px;
+            font-style: normal;
+            color: #aa334c;
+        }
+
+        .kuangjia {
+            width: 96%;
+        }
+    </style>
+
+
+    <div style="margin: 20px auto 10px auto;text-align: center">
+        <h4>全字表</h4>語言點：膠遼官話 山東煙臺芝罘　字數：3325<br><i>提示：格內數字為聲調、左右滾動條在下方</i>
+    </div>
+    <div class="kuangjia">
+        <table style="width: 1320px">
+            <tr>
+                <th style="background: #aa334c;width: 30px">韻尾</th>
+                <th style="background: #aa334c;width: 30px">介音</th>
+                <th style="background: #aa334c;width: 50px">韻母</th>
+                <th>p</th>
+                <th>ph</th>
+                <th>f</th>
+                <th>t</th>
+                <th>th</th>
+                <th>ts</th>
+                <th>s</th>
+                <th>tsh</th>
+                <th>tɕ</th>
+                <th>ɕ</th>
+                <th>tɕh</th>
+                <th>c</th>
+                <th>ch</th>
+                <th>ç</th>
+                <th>k</th>
+                <th>kh</th>
+                <th>x</th>
+                <th>m</th>
+                <th>n</th>
+                <th>ȵ</th>
+                <th>l</th>
+                <th>零</th>
+            </tr>
+            <tr>
+                <td rowspan='22'>
+                    <div style='text-align: center'><b>零</b></div>
+                </td>
+                <td rowspan='11'>
+                    <div style='text-align: center'><b>零</b></div>
+                </td>
+                <td>
+                    <div style="text-align: center"><b>a</b></div>
+                </td>
+                <td><i>213 </i>八把靶<br><i>31 </i>巴疤笆<br><i>55 </i>壩拔罷雹霸<br></td>
+                <td><i>31 </i>趴<br><i>55 </i>怕爬筢<br></td>
+                <td><i>213 </i>法發<br><i>55 </i>乏伐筏罰閥<br></td>
+                <td><i>213 </i>打搭答<br><i>31 </i>答耷<br><i>55 </i>大達沓<br></td>
+                <td><i>213 </i>塌塔踏<br><i>31 </i>他<br></td>
+                <td><i>213 </i>劄眨紮<br><i>31 </i>喳楂渣<br><i>55 </i>乍柵榨炸砸詐鍘雜<br></td>
+                <td><i>213 </i>刹撒殺灑<br><i>31 </i>仨沙砂紗鯊<br><i>55 </i>廈<br></td>
+                <td><i>213 </i>插擦衩<br><i>31 </i>叉差杈<br><i>55 </i>察岔差查茶<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>割胳葛鴿<br><i>31 </i>疙<br></td>
+                <td><i>213 </i>嗑渴磕<br></td>
+                <td><i>213 </i>喝<br></td>
+                <td><i>213 </i>抹碼螞馬<br><i>31 </i>媽麻<br><i>55 </i>罵螞<br></td>
+                <td><i>213 </i>哪<br><i>31 </i>拿<br><i>55 </i>娜捺納那<br></td>
+                <td></td>
+                <td><i>213 </i>拉臘蠟辣<br><i>31 </i>拉<br><i>55 </i>拉落<br></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>o</b></div>
+                </td>
+                <td style="background: #f8f8f8"><i>213 </i>伯剝北撥柏百簸<br><i>31 </i>播波玻菠<br><i>55 </i>勃渤白簸脖薄<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>拍泊潑迫魄<br><i>31 </i>坡頗<br><i>55 </i>婆破<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>墨抹末脈陌麥<br><i>31 </i>摩摸模磨魔<br><i>55 </i>沫漠磨<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>u</b></div>
+                </td>
+                <td><i>213 </i>不哺捕蔔補<br><i>55 </i>埠布怖步簿部<br></td>
+                <td><i>213 </i>僕圃撲普浦甫脯譜<br><i>55 </i>菩葡蒲鋪<br></td>
+                <td><i>213 </i>俯府撫斧福符腐腑腹輔輻<br><i>31 </i>夫膚<br><i>55 </i>付伏佛俘傅副婦孵富扶拂服浮父縛芙复負赴附駙<br></td>
+                <td><i>213 </i>堵睹篤肚賭<br><i>31 </i>督都<br><i>55 </i>妒度杜毒渡瀆獨肚讀鍍<br></td>
+                <td><i>213 </i>凸吐土禿突<br><i>55 </i>兔圖塗屠徒途<br></td>
+                <td><i>213 </i>族燭祖竹足<br><i>31 </i>租組阻<br><i>55 </i>助卒囑祝築足逐<br></td>
+                <td><i>213 </i>屬數<br><i>31 </i>梳疏蔬蘇酥<br><i>55 </i>俗塑數束熟素訴贖速<br></td>
+                <td><i>213 </i>促族楚礎觸<br><i>31 </i>初畜粗<br><i>55 </i>醋鋤<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>估古穀股骨鼓<br><i>31 </i>姑孤箍辜<br><i>55 </i>固故雇顧<br></td>
+                <td><i>213 </i>哭苦<br><i>31 </i>枯窟骷<br><i>55 </i>庫褲<br></td>
+                <td><i>213 </i>虎<br><i>31 </i>乎互呼弧忽<br><i>55 </i>壺戶核湖滬胡葫蝴護鵠<br></td>
+                <td><i>213 </i>拇木某母牡畝<br><i>31 </i>模牟謀<br><i>55 </i>募墓幕慕牧目睦穆<br></td>
+                <td><i>55 </i>奴怒農<br></td>
+                <td></td>
+                <td><i>213 </i>擄擼虜轆錄魯鹵鹿<br><i>31 </i>廬爐盧蘆<br><i>55 </i>碌祿路陸露鷺<br></td>
+                <td><i>213 </i>五伍侮午捂武舞<br><i>31 </i>吳嗚屋巫梧汙烏無蜈誣<br><i>55 </i>務勿悟惡物誤霧<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>i</b></div>
+                </td>
+                <td style="background: #f8f8f8"><i>213 </i>壁彼比璧畢筆逼鄙<br><i>55 </i>幣弊必敝痹碧臂蔽避閉鼻<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>僻劈匹痞癖辟<br><i>31 </i>批<br><i>55 </i>屁琵疲皮脾<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>底抵氐滴邸<br><i>31 </i>低堤提<br><i>55 </i>地帝弟敵滌狄笛第諦遞<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>剔踢體<br><i>31 </i>梯<br><i>55 </i>剃啼屜提替涕蹄題<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>執擠擲汁濟秩積績織職脊質跡際鯽<br><i>31 </i>只知蜘<br><i>55 </i>侄值制劑即智植殖治滯疾痔直祭籍置致集<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>夕失室徙悉惜昔析洗濕熄璽習識適釋錫飾<br><i>31 </i>熙犀西<br><i>55 </i>世勢十實席拾石細蝕襲誓逝食<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>七吃尺恥沏漆砌臍<br><i>31 </i>妻棲淒癡<br><i>55 </i>持池遲馳齊<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>己幾急擊<br><i>31 </i>基妓技機級譏雞饑<br><i>55 </i>冀及季寄忌極系紀繼計記<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>乞企啟祈豈起<br><i>31 </i>期欺<br><i>55 </i>其器奇契崎旗棄棋歧氣汽泣琦祁騎<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>吸喜<br><i>31 </i>兮嘻奚希曦棲溪熙犧稀羲<br><i>55 </i>戲系<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>密米<br><i>31 </i>彌泥眯迷<br><i>55 </i>泌秘蜜覓<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>你<br><i>55 </i>匿昵膩<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>李理禮立粒里鯉<br><i>31 </i>厘梨犁籬離黎<br><i>55 </i>例利力厲吏曆荔莉隸麗<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>乙以倚尾已日椅蟻<br><i>31 </i>一亦伊依儀夷姨宜彝役怡抑揖沂溢疑疫益移縊翼胰衣裔譯逸遺醫<br><i>55 </i>億意憶易毅異義肄藝誼議<br></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>y</b></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>主拄煮粥<br><i>31 </i>朱株珠蛛諸豬<br><i>55 </i>妯柱注聚著軸鑄駐<br></td>
+                <td><i>213 </i>叔宿暑鼠<br><i>31 </i>書樞舒輸需須<br><i>55 </i>墅婿序徐恕敘樹熟絮續術豎<br></td>
+                <td><i>213 </i>取娶處<br><i>31 </i>出蛆趨<br><i>55 </i>廚殊處趣除<br></td>
+                <td><i>213 </i>橘舉菊<br><i>31 </i>居拘車駒<br><i>55 </i>俱具劇句局巨懼拒距鋸<br></td>
+                <td><i>213 </i>屈曲<br><i>31 </i>區嶇軀驅<br><i>55 </i>去渠<br></td>
+                <td><i>213 </i>栩許<br><i>31 </i>噓墟虛<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>女<br></td>
+                <td><i>213 </i>侶呂屢履捋旅縷褸鋁<br><i>31 </i>驢<br><i>55 </i>律慮濾率<br></td>
+                <td><i>213 </i>乳入宇嶼汝禹羽與語雨<br><i>31 </i>俞如娛愚於榆淤漁虞余魚<br><i>55 </i>喻娛寓愉欲浴獄玉育裕褥譽豫遇預鬱<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>ao</b></div>
+                </td>
+                <td style="background: #f8f8f8"><i>213 </i>保堡寶褒飽<br><i>31 </i>包苞<br><i>55 </i>報抱暴爆豹<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>跑<br><i>31 </i>拋泡<br><i>55 </i>刨泡炮袍<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>倒導島搗禱蹈<br><i>31 </i>刀叨<br><i>55 </i>到悼盜稻道<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>討<br><i>31 </i>掏滔濤<br><i>55 </i>套桃逃陶<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>找早棗澡爪藻<br><i>31 </i>糟遭<br><i>55 </i>噪灶燥皂笊罩造<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>嫂掃<br><i>31 </i>捎搔梢稍臊騷<br><i>55 </i>哨掃潲臊<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>吵炒草<br><i>31 </i>抄操糙鈔<br><i>55 </i>巢曹槽肏<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>搞稿<br><i>31 </i>糕羔膏高<br><i>55 </i>告膏<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>拷烤考<br><i>31 </i>尻<br><i>55 </i>犒銬靠<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>好郝<br><i>31 </i>蒿薅<br><i>55 </i>壕好毫濠皓耗號豪<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>卯鉚<br><i>31 </i>毛矛茅貓<br><i>55 </i>冒帽茂貌貿<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>惱瑙腦<br><i>31 </i>孬撓<br><i>55 </i>鬧<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>老<br><i>31 </i>勞嘮撈牢<br><i>55 </i>撈澇<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>襖<br><i>31 </i>熬<br><i>55 </i>傲奧懊澳<br></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>aɛ</b></div>
+                </td>
+                <td><i>213 </i>擺<br><i>55 </i>■拜敗<br></td>
+                <td><i>55 </i>排派牌<br></td>
+                <td></td>
+                <td><i>213 </i>歹逮<br><i>31 </i>呆<br><i>55 </i>代大帶待戴袋貸黛<br></td>
+                <td><i>31 </i>胎苔<br><i>55 </i>太態抬汰泰台<br></td>
+                <td><i>213 </i>仔宰崽載<br><i>31 </i>栽災齋<br><i>55 </i>債再在寨<br></td>
+                <td><i>31 </i>篩腮鰓<br><i>55 </i>曬賽<br></td>
+                <td><i>213 </i>彩睬踩采<br><i>31 </i>差猜釵<br><i>55 </i>才材柴菜蔡裁豺財<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>改<br><i>31 </i>該<br><i>55 </i>丐概溉蓋<br></td>
+                <td><i>213 </i>凱慨鎧<br><i>31 </i>開<br></td>
+                <td><i>213 </i>海<br><i>55 </i>亥孩害<br></td>
+                <td><i>213 </i>買<br><i>31 </i>埋<br><i>55 </i>賣邁<br></td>
+                <td><i>213 </i>乃奶<br><i>55 </i>奈耐<br></td>
+                <td></td>
+                <td><i>31 </i>來萊<br><i>55 </i>癩籟賴<br></td>
+                <td><i>213 </i>礙藹<br><i>31 </i>哀<br><i>55 </i>愛礙<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>ei</b></div>
+                </td>
+                <td style="background: #f8f8f8"><i>31 </i>卑悲杯碑背<br><i>55 </i>倍背蓓被貝輩<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>坯披胚<br><i>55 </i>佩培沛賠配陪<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>匪翡誹<br><i>31 </i>菲霏非飛<br><i>55 </i>吠廢痱肥肺費<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>堆<br><i>55 </i>對隊<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>腿<br><i>31 </i>推<br><i>55 </i>蛻褪退<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>嘴<br><i>55 </i>最罪醉<br></td>
+                <td style="background: #f8f8f8"><i>55 </i>歲碎穗遂隋隨雖<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>催崔摧<br><i>55 </i>淬粹翠脆萃<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>給<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>每美<br><i>31 </i>媒枚梅煤玫眉黴<br><i>55 </i>妹媚<br></td>
+                <td style="background: #f8f8f8"><i>55 </i>內<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>儡壘蕊<br><i>55 </i>擂淚瑞蕾銳雷類<br></td>
+                <td style="background: #f8f8f8"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>ou</b></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>否<br></td>
+                <td><i>213 </i>抖蚪陡斗<br><i>31 </i>兜都<br><i>55 </i>痘竇豆逗斗<br></td>
+                <td><i>31 </i>偷<br><i>55 </i>投透頭<br></td>
+                <td><i>213 </i>走<br><i>31 </i>謅<br><i>55 </i>做奏揍皺縐驟<br></td>
+                <td><i>31 </i>搜餿<br><i>55 </i>瘦<br></td>
+                <td><i>213 </i>瞅<br><i>55 </i>愁湊<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>枸狗苟<br><i>31 </i>勾溝篝鉤<br><i>55 </i>垢夠構購<br></td>
+                <td><i>213 </i>口<br><i>31 </i>摳<br><i>55 </i>寇扣蔻<br></td>
+                <td><i>213 </i>吼<br><i>31 </i>齁<br><i>55 </i>侯候厚喉後猴<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>摟簍<br><i>31 </i>婁摟樓<br><i>55 </i>漏陋露<br></td>
+                <td><i>213 </i>偶嘔藕<br><i>31 </i>歐毆謳鷗<br><i>55 </i>慪漚<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>ɤ</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>得德<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>特<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>則摘窄<br><i>55 </i>宅擇澤責賊<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>嗇塞澀瑟色<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>側冊拆測策<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>格隔革<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>克刻客<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>黑<br><i>55 </i>核<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>勒肋<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>額<br></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>ɿ</b></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>只址姊子指旨止籽紙紫脂趾<br><i>31 </i>之咨嗞姿支枝滋肢脂芝茲資<br><i>55 </i>字志恣痣自至<br></td>
+                <td><i>213 </i>使史始屎死駛<br><i>31 </i>司屍師廝思撕斯施獅私絲詩<br><i>55 </i>事似侍嗜嗣四士寺巳市恃是時柿氏泗示祀肆視試飼<br></td>
+                <td><i>213 </i>此齒<br><i>31 </i>呲疵<br><i>55 </i>伺刺慈次瓷磁祠翅詞賜辭雌<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td rowspan='5'>
+                    <div style='text-align: center'><b>i</b></div>
+                </td>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>ia</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>傻<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>假夾甲角賈<br><i>31 </i>佳加嘉家枷<br><i>55 </i>價嫁架稼駕<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>掐<br><i>55 </i>恰洽<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>蝦<br><i>314 </i>瞎<br><i>55 </i>下俠匣嚇夏峽暇狹瑕轄遐霞<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>倆<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>啞壓押雅鴨<br><i>31 </i>丫牙芽鴉<br><i>55 </i>亞軋<br></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>ie</b></div>
+                </td>
+                <td><i>213 </i>憋鱉<br><i>31 </i>癟<br><i>55 </i>別別<br></td>
+                <td><i>213 </i>撇<br></td>
+                <td></td>
+                <td><i>213 </i>跌<br><i>31 </i>爹<br><i>55 </i>疊碟蝶諜迭<br></td>
+                <td><i>213 </i>帖貼鐵<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>姐折捷接節者蟄<br><i>31 </i>哲遮<br><i>55 </i>借哲截捷絕蜇轍<br></td>
+                <td><i>213 </i>寫舍設雪<br><i>31 </i>些賒<br><i>55 </i>佘卸射攝斜泄涉瀉社舌蛇謝赦邪<br></td>
+                <td><i>213 </i>且切扯<br><i>31 </i>車<br><i>55 </i>妾徹撤澈<br></td>
+                <td><i>213 </i>揭結<br><i>55 </i>傑劫潔竭<br></td>
+                <td><i>213 </i>怯<br><i>55 </i>茄<br></td>
+                <td><i>213 </i>歇蠍血<br><i>55 </i>攜脅<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>聶躡鑷<br><i>31 </i>捏<br></td>
+                <td><i>213 </i>劣烈裂<br><i>55 </i>列獵<br></td>
+                <td><i>213 </i>也噎惹熱葉野頁<br><i>31 </i>爺<br><i>55 </i>夜業<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>iu</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>31 </i>丟<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>肘酒<br><i>31 </i>周州揪洲舟<br><i>55 </i>咒宙就晝紂<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>守手首<br><i>31 </i>修收羞<br><i>55 </i>受壽授獸秀繡袖鏽<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>醜<br><i>31 </i>抽秋<br><i>55 </i>仇售囚惆稠籌綢臭酋酬<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>久九灸韭<br><i>31 </i>咎究糾赳鬮鳩<br><i>55 </i>救臼舅舊<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>丘蚯邱<br><i>55 </i>求球<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>朽<br><i>31 </i>休<br><i>55 </i>嗅<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>扭紐鈕<br><i>55 </i>拗<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>柳綹<br><i>31 </i>劉流溜琉留<br><i>55 </i>六溜遛<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>友有<br><i>31 </i>優幽悠憂<br><i>55 </i>佑又右尤幼揉柔油由祐肉誘遊郵<br></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>iao</b></div>
+                </td>
+                <td><i>213 </i>婊表裱<br><i>31 </i>彪標膘飆<br><i>55 </i>摽鰾<br></td>
+                <td><i>213 </i>漂瞟<br><i>31 </i>漂飄<br><i>55 </i>剽漂瓢票<br></td>
+                <td></td>
+                <td><i>31 </i>凋刁叼貂雕<br><i>55 </i>吊掉調釣<br></td>
+                <td><i>213 </i>挑<br><i>31 </i>佻挑<br><i>55 </i>條調跳迢<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>31 </i>召招朝椒焦礁蕉<br><i>55 </i>兆照趙<br></td>
+                <td><i>213 </i>少<br><i>31 </i>宵消瀟燒簫肖蕭銷霄<br><i>55 </i>嘯小少笑紹韶<br></td>
+                <td><i>31 </i>悄超鍬<br><i>55 </i>俏峭朝樵潮瞧鞘<br></td>
+                <td><i>213 </i>攪矯絞繳餃<br><i>31 </i>交嬌教澆膠驕<br><i>55 </i>叫教校窖較轎<br></td>
+                <td><i>213 </i>巧<br><i>31 </i>敲<br><i>55 </i>喬橋竅翹蕎<br></td>
+                <td><i>213 </i>曉<br><i>31 </i>囂<br><i>55 </i>孝效校<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>淼渺秒藐<br><i>31 </i>描瞄苗<br><i>55 </i>妙廟<br></td>
+                <td></td>
+                <td><i>213 </i>鳥<br><i>55 </i>尿<br></td>
+                <td><i>213 </i>了燎<br><i>31 </i>撩聊蹽<br><i>55 </i>廖撂料療聊遼鐐<br></td>
+                <td><i>213 </i>咬繞舀<br><i>31 </i>吆堯夭妖姚搖瑤窯腰要遙邀饒<br><i>55 </i>耀要<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>iaɛ</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>解<br><i>31 </i>皆秸街階<br><i>55 </i>介屆戒界誡<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>55 </i>械蟹解諧鞋<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>矮<br><i>31 </i>崖挨涯<br></td>
+            </tr>
+            <tr>
+                <td rowspan='4'>
+                    <div style='text-align: center'><b>u</b></div>
+                </td>
+                <td>
+                    <div style="text-align: center"><b>ua</b></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>抓爪<br><i>31 </i>抓<br></td>
+                <td><i>213 </i>刷耍<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>刮剮寡<br><i>31 </i>呱瓜<br><i>55 </i>卦掛褂<br></td>
+                <td><i>213 </i>垮<br><i>31 </i>誇<br><i>55 </i>挎胯跨<br></td>
+                <td><i>31 </i>花<br><i>55 </i>劃化樺滑猾畫華話<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>挖瓦襪<br><i>31 </i>蛙<br><i>55 </i>瓦窪<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>uo</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>朵躲<br><i>31 </i>多<br><i>55 </i>剁垛墮奪惰舵跺<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>妥脫<br><i>31 </i>托拖<br><i>55 </i>唾砣陀馱駝<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>佐坐左座拙昨<br><i>31 </i>作捉桌<br><i>55 </i>啄濁琢著酌鐲鑿<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>嗩所瑣索說鎖<br><i>31 </i>唆梭<br><i>55 </i>勺芍<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>戳撮<br><i>31 </i>搓磋<br><i>55 </i>挫措矬銼錯<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>各國擱果裹閣<br><i>31 </i>哥歌郭鍋<br><i>55 </i>個過<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>可括<br><i>31 </i>擴棵科闊顆<br><i>55 </i>課<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>夥火<br><i>31 </i>豁<br><i>55 </i>何合和和或河活獲盒禍禾荷貨賀<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>31 </i>挪<br><i>55 </i>糯<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>掠烙略落裸<br><i>31 </i>啰羅蘿鑼騾<br><i>55 </i>樂洛絡駱<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>惡我握<br><i>31 </i>俄窩萵蛾蝸訛鵝<br><i>55 </i>臥餓<br></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>ui</b></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>31 </i>椎追錐<br><i>55 </i>墜惴綴贅<br></td>
+                <td><i>213 </i>水<br><i>55 </i>睡稅誰<br></td>
+                <td><i>31 </i>吹炊<br><i>55 </i>垂捶錘陲<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>詭軌鬼<br><i>31 </i>歸規閨龜<br><i>55 </i>劊桂櫃瑰貴跪<br></td>
+                <td><i>31 </i>盔虧<br><i>55 </i>傀匱奎愧潰葵<br></td>
+                <td><i>213 </i>悔毀<br><i>31 </i>徽恢揮暉灰輝麾<br><i>55 </i>卉回彗惠慧會穢繪諱<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>偉偽微緯萎葦<br><i>31 </i>危唯圍威惟桅為維衛<br><i>55 </i>位味慰未蔚魏<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>uaɛ</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>55 </i>拽<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>甩<br><i>31 </i>摔衰<br><i>55 </i>帥率蟀<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>揣<br><i>55 </i>踹<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>拐<br><i>31 </i>乖<br><i>55 </i>怪<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>㧟<br><i>55 </i>塊快會筷<br></td>
+                <td style="background: #f8f8f8"><i>55 </i>壞徊懷槐淮踝<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>崴<br><i>31 </i>歪<br><i>55 </i>外<br></td>
+            </tr>
+            <tr>
+                <td rowspan='1'>
+                    <div style='text-align: center'><b>y</b></div>
+                </td>
+                <td>
+                    <div style="text-align: center"><b>yø</b></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>腳覺角<br><i>55 </i>抉掘決訣<br></td>
+                <td><i>213 </i>卻確缺<br><i>55 </i>瘸<br></td>
+                <td><i>31 </i>靴<br><i>55 </i>學<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>月瘧約藥虐越鑰<br><i>55 </i>嶽悅樂粵躍閱<br></td>
+            </tr>
+            <tr>
+                <td rowspan='1'>
+                    <div style='text-align: center'><b>yu</b></div>
+                </td>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>yuo</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>55 </i>嚼爵<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>削<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>雀鵲<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+            </tr>
+            <tr>
+                <td rowspan='8'>
+                    <div style='text-align: center'><b>n</b></div>
+                </td>
+                <td rowspan='5'>
+                    <div style='text-align: center'><b>零</b></div>
+                </td>
+                <td>
+                    <div style="text-align: center"><b>an</b></div>
+                </td>
+                <td><i>213 </i>板版<br><i>31 </i>搬班般頒<br><i>55 </i>伴半拌瓣絆辦<br></td>
+                <td><i>31 </i>攀潘<br><i>55 </i>判叛畔盤盼<br></td>
+                <td><i>213 </i>反<br><i>31 </i>帆番翻<br><i>55 </i>凡泛煩犯範繁販飯<br></td>
+                <td><i>213 </i>短膽<br><i>31 </i>丹單擔端耽<br><i>55 </i>但彈擔斷旦段淡緞蛋誕鍛<br></td>
+                <td><i>213 </i>坦毯袒<br><i>31 </i>攤灘癱貪<br><i>55 </i>團壇彈探歎潭炭痰碳談譚<br></td>
+                <td><i>213 </i>嶄攢斬盞<br><i>31 </i>簪鑽<br><i>55 </i>暫棧站綻蘸贊鑽<br></td>
+                <td><i>213 </i>傘刪散珊<br><i>31 </i>三山杉衫酸<br><i>55 </i>散算蒜<br></td>
+                <td><i>213 </i>慘產鏟<br><i>31 </i>參摻竄餐<br><i>55 </i>慚殘燦璨蠶饞<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>感杆趕<br><i>31 </i>乾甘竿肝<br><i>55 </i>乾贛<br></td>
+                <td><i>213 </i>侃坎砍<br><i>31 </i>刊勘看<br><i>55 </i>看瞰<br></td>
+                <td><i>213 </i>喊罕<br><i>31 </i>憨鼾<br><i>55 </i>函含寒憾捍撼旱汗涵漢焊韓<br></td>
+                <td><i>213 </i>滿<br><i>31 </i>瞞蠻饅<br><i>55 </i>幔慢曼漫<br></td>
+                <td><i>213 </i>暖<br><i>31 </i>南男難<br><i>55 </i>捺難<br></td>
+                <td></td>
+                <td><i>213 </i>卵巒懶攬欒<br><i>31 </i>婪攔欄籃藍蘭<br><i>55 </i>亂濫爛<br></td>
+                <td><i>213 </i>俺<br><i>31 </i>安庵鞍<br><i>55 </i>岸暗案<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>ən</b></div>
+                </td>
+                <td style="background: #f8f8f8"><i>213 </i>本<br><i>31 </i>奔<br><i>55 </i>奔笨<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>噴<br><i>55 </i>盆<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>粉<br><i>31 </i>分吩紛芬<br><i>55 </i>份分墳奮忿憤焚糞<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>盹<br><i>31 </i>噸墩敦蹲<br><i>55 </i>燉盾遁鈍頓<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>吞<br><i>55 </i>囤屯臀褪豚<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>尊遵<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>損筍<br><i>31 </i>參孫森<br><i>55 </i>滲瘆<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>村<br><i>55 </i>存寸襯<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>艮<br><i>31 </i>根跟<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>啃墾懇肯<br><i>55 </i>裉<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>很狠<br><i>55 </i>恨痕<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>燜門<br><i>55 </i>悶<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>31 </i>侖倫輪<br><i>55 </i>嫩論<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>恩<br></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>un</b></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>准<br></td>
+                <td><i>55 </i>瞬舜順<br></td>
+                <td><i>213 </i>蠢<br><i>31 </i>春椿<br><i>55 </i>唇純醇<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>滾袞<br><i>55 </i>棍<br></td>
+                <td><i>213 </i>捆<br><i>31 </i>坤昆<br><i>55 </i>困<br></td>
+                <td><i>213 </i>混<br><i>31 </i>婚昏葷<br><i>55 </i>混渾餛魂<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>刎吻穩<br><i>31 </i>文溫紋聞蚊<br><i>55 </i>問<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>in</b></div>
+                </td>
+                <td style="background: #f8f8f8"><i>31 </i>彬斌濱瀕繽賓<br><i>55 </i>殯鬢<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>品<br><i>31 </i>姘拼<br><i>55 </i>聘貧頻<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>枕疹診<br><i>31 </i>斟津珍真針<br><i>55 </i>俊峻振浸燼盡賑進鎮陣震駿<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>審沈<br><i>31 </i>伸心新深申薪身辛<br><i>55 </i>信尋慎甚神腎<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>寢抻<br><i>31 </i>侵皴親<br><i>55 </i>唚塵晨沁沉秦臣趁辰陳<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>僅緊謹錦<br><i>31 </i>今巾斤筋襟金<br><i>55 </i>妗盡禁近<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>欽<br><i>55 </i>勤擒琴禽芹<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>昕欣鑫馨<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>敏旻民泯皿閔閩<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>凜檁<br><i>31 </i>拎林淋臨鄰霖鱗麟<br><i>55 </i>吝賃<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>引忍隱飲<br><i>31 </i>人仁吟因姻寅茵銀陰音<br><i>55 </i>任刃印壬妊認韌飲<br></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>yn</b></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>55 </i>巡循旬汛荀訊詢迅遜<br></td>
+                <td></td>
+                <td><i>31 </i>君均軍<br><i>55 </i>菌郡<br></td>
+                <td><i>55 </i>群裙<br></td>
+                <td><i>31 </i>勳熏薰<br><i>55 </i>訓馴<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>允隕<br><i>31 </i>勻暈耘雲<br><i>55 </i>孕潤熨運閏韻<br></td>
+            </tr>
+            <tr>
+                <td rowspan='1'>
+                    <div style='text-align: center'><b>i</b></div>
+                </td>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>ian</b></div>
+                </td>
+                <td style="background: #f8f8f8"><i>213 </i>匾扁貶<br><i>31 </i>編邊鞭<br><i>55 </i>便辨辮辯遍<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>偏篇翩<br><i>55 </i>便片騙<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>典踮點<br><i>31 </i>巔掂癲顛<br><i>55 </i>墊店惦澱甸電<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>腆舔<br><i>31 </i>天添<br><i>55 </i>填甜田<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>剪展輾<br><i>31 </i>尖殲氈沾煎瞻粘肩<br><i>55 </i>占戰漸濺箭薦賤顫<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>閃陝<br><i>31 </i>仙先煽膻鮮<br><i>55 </i>善單扇擅線羨腺贍<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>淺潛<br><i>31 </i>千簽遷<br><i>55 </i>前禪纏蟬蟾錢顫<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>儉堿揀檢減簡<br><i>31 </i>兼堅奸監肩艱間<br><i>55 </i>件健劍建澗艦見鍵<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>遣<br><i>31 </i>牽簽謙鉛<br><i>55 </i>嵌乾欠歉虔鉗黔<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>險顯<br><i>31 </i>掀鍁<br><i>55 </i>嫌嫻憲涎獻現縣賢銜閑限陷餡鹹<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>冕勉緬<br><i>31 </i>棉眠綿<br><i>55 </i>面<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>撚攆碾<br><i>31 </i>年粘<br><i>55 </i>念<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>斂臉<br><i>31 </i>廉憐簾聯蓮連鏈鐮<br><i>55 </i>戀煉練<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>掩染演眼<br><i>31 </i>嚴嫣岩延沿淹炎焉然煙燃研簷胭言閻顏鹽<br><i>55 </i>厭咽晏焰燕硯諺豔雁驗<br></td>
+            </tr>
+            <tr>
+                <td rowspan='1'>
+                    <div style='text-align: center'><b>u</b></div>
+                </td>
+                <td>
+                    <div style="text-align: center"><b>uan</b></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>轉<br><i>31 </i>專磚<br><i>55 </i>傳撰賺轉<br></td>
+                <td><i>31 </i>拴栓閂<br><i>55 </i>涮<br></td>
+                <td><i>213 </i>喘<br><i>31 </i>川穿<br><i>55 </i>串傳船<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>管館<br><i>31 </i>冠官觀關<br><i>55 </i>冠慣灌罐貫<br></td>
+                <td><i>213 </i>款<br><i>31 </i>寬<br></td>
+                <td><i>213 </i>緩<br><i>31 </i>歡獾<br><i>55 </i>喚幻患換桓浣煥環還<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>婉宛挽晚皖碗<br><i>31 </i>丸剜完彎灣玩豌頑<br><i>55 </i>萬<br></td>
+            </tr>
+            <tr>
+                <td rowspan='1'>
+                    <div style='text-align: center'><b>y</b></div>
+                </td>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>yan</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>癬選<br><i>31 </i>宣<br><i>55 </i>旋漩<br></td>
+                <td style="background: #f8f8f8"><i>55 </i>全泉痊<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>卷<br><i>31 </i>捐鵑<br><i>55 </i>倦卷圈眷<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>犬<br><i>31 </i>圈<br><i>55 </i>勸拳權<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>暄軒<br><i>55 </i>懸楦炫玄眩<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>軟遠阮<br><i>31 </i>元冤員園圓援淵源猿緣袁轅鴛<br><i>55 </i>怨院願<br></td>
+            </tr>
+            <tr>
+                <td rowspan='7'>
+                    <div style='text-align: center'><b>ŋ</b></div>
+                </td>
+                <td rowspan='5'>
+                    <div style='text-align: center'><b>零</b></div>
+                </td>
+                <td>
+                    <div style="text-align: center"><b>əŋ</b></div>
+                </td>
+                <td><i>213 </i>繃<br><i>31 </i>崩繃<br><i>55 </i>泵蹦迸<br></td>
+                <td><i>213 </i>捧<br><i>31 </i>抨澎烹<br><i>55 </i>彭朋棚碰篷蓬鵬<br></td>
+                <td><i>213 </i>諷<br><i>31 </i>封峰楓豐鋒風<br><i>55 </i>俸奉縫縫逢馮鳳<br></td>
+                <td><i>213 </i>等<br><i>31 </i>燈登蹬<br><i>55 </i>凳瞪鄧<br></td>
+                <td><i>31 </i>熥<br><i>55 </i>滕疼藤騰<br></td>
+                <td><i>31 </i>增曾爭睜箏<br><i>55 </i>憎掙贈<br></td>
+                <td><i>213 </i>省<br><i>31 </i>僧牲生甥<br></td>
+                <td><i>31 </i>撐<br><i>55 </i>層撐曾橕蹭<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>埂梗耿<br><i>31 </i>更耕<br><i>55 </i>更<br></td>
+                <td><i>31 </i>坑<br></td>
+                <td><i>31 </i>亨哼<br><i>55 </i>恒橫橫衡<br></td>
+                <td><i>213 </i>猛<br><i>31 </i>懵盟萌蒙<br><i>55 </i>夢孟<br></td>
+                <td><i>31 </i>能<br></td>
+                <td></td>
+                <td><i>213 </i>冷<br><i>31 </i>扔<br><i>55 </i>愣棱<br></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>uŋ</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>懂董<br><i>31 </i>冬咚東<br><i>55 </i>凍動棟洞<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>捅桶筒統<br><i>31 </i>通<br><i>55 </i>同童銅<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>種總腫<br><i>31 </i>中宗忠終綜蹤鐘<br><i>55 </i>中眾種粽縱重<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>聳<br><i>31 </i>松<br><i>55 </i>宋訟誦送頌<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>寵<br><i>31 </i>充匆囪沖聰蔥<br><i>55 </i>叢崇從沖蟲重<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>拱鞏<br><i>31 </i>公功宮工弓恭攻躬龔<br><i>55 </i>供共貢<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>孔恐<br><i>31 </i>空<br><i>55 </i>控空<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>哄<br><i>31 </i>哄烘轟<br><i>55 </i>哄宏弘洪紅虹鴻<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>31 </i>濃膿農<br><i>55 </i>弄<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>壟攏<br><i>31 </i>籠聾隆<br><i>55 </i>龍<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>嗡翁<br><i>55 </i>甕<br></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>iŋ</b></div>
+                </td>
+                <td><i>213 </i>丙柄炳秉稟餅<br><i>31 </i>兵冰<br><i>55 </i>並病<br></td>
+                <td><i>55 </i>坪屏平憑瓶萍評<br></td>
+                <td></td>
+                <td><i>213 </i>頂鼎<br><i>31 </i>丁盯釘<br><i>55 </i>定腚訂<br></td>
+                <td><i>213 </i>挺艇<br><i>31 </i>廳聽<br><i>55 </i>亭停婷庭<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>井拯整<br><i>31 </i>偵征旌晶正睛精蒸貞<br><i>55 </i>正淨症證鄭靜<br></td>
+                <td><i>213 </i>擤醒<br><i>31 </i>升惺星猩聲腥<br><i>55 </i>剩勝姓性盛繩聖<br></td>
+                <td><i>213 </i>請逞<br><i>31 </i>清稱青<br><i>55 </i>丞乘城情懲成承晴橙澄秤程誠騁<br></td>
+                <td><i>213 </i>憬景警<br><i>31 </i>京更經耕荊驚鯨<br><i>55 </i>境竟競莖鏡<br></td>
+                <td><i>31 </i>傾卿輕<br><i>55 </i>慶擎<br></td>
+                <td><i>31 </i>興<br><i>55 </i>刑型幸形杏興行邢<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>31 </i>冥名明銘鳴<br><i>55 </i>命<br></td>
+                <td></td>
+                <td><i>213 </i>擰<br><i>55 </i>凝寧寧擰獰<br></td>
+                <td><i>213 </i>嶺領<br><i>31 </i>淩玲羚菱鈴陵零靈齡<br><i>55 </i>令另<br></td>
+                <td><i>213 </i>影<br><i>31 </i>凝應櫻營盈英蠅贏迎鶯鷹<br><i>55 </i>應映硬<br></td>
+            </tr>
+            <tr>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>yŋ</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>31 </i>嵩松<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>炯窘<br></td>
+                <td style="background: #f8f8f8"><i>55 </i>瓊穹窮<br></td>
+                <td style="background: #f8f8f8"><i>31 </i>兄兇匈胸<br><i>55 </i>熊雄<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>勇永泳湧詠<br><i>31 </i>容庸慵戎擁榕榮溶熔絨茸融雍<br><i>55 </i>用<br></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="text-align: center"><b>ɑŋ</b></div>
+                </td>
+                <td><i>213 </i>榜綁<br><i>31 </i>幫梆浜邦<br><i>55 </i>傍棒謗<br></td>
+                <td><i>55 </i>彷旁胖膀螃龐<br></td>
+                <td><i>213 </i>仿紡訪<br><i>31 </i>方芳<br><i>55 </i>妨房放肪防<br></td>
+                <td><i>213 </i>擋黨<br><i>31 </i>當襠<br><i>55 </i>當蕩<br></td>
+                <td><i>213 </i>淌躺<br><i>31 </i>湯<br><i>55 </i>唐堂棠燙糖趟<br></td>
+                <td><i>31 </i>贓髒<br><i>55 </i>葬藏髒<br></td>
+                <td><i>213 </i>嗓<br><i>31 </i>喪桑<br><i>55 </i>喪<br></td>
+                <td><i>31 </i>倉滄艙蒼<br><i>55 </i>藏<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>崗港<br><i>31 </i>剛岡綱缸肛鋼<br><i>55 </i>杠<br></td>
+                <td><i>31 </i>康慷糠<br><i>55 </i>亢扛抗炕<br></td>
+                <td><i>31 </i>夯<br><i>55 </i>杭航行<br></td>
+                <td><i>213 </i>莽蟒<br><i>31 </i>忙盲芒茫<br></td>
+                <td><i>213 </i>攮<br><i>31 </i>囊<br></td>
+                <td></td>
+                <td><i>213 </i>朗<br><i>31 </i>廊榔狼螂郎<br><i>55 </i>浪<br></td>
+                <td><i>31 </i>昂肮<br></td>
+            </tr>
+            <tr>
+                <td rowspan='1'>
+                    <div style='text-align: center'><b>i</b></div>
+                </td>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>iɑŋ</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>掌槳漲獎蔣長<br><i>31 </i>將張樟漿章蟑<br><i>55 </i>丈仗匠將帳杖脹賬醬障<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>想晌賞<br><i>31 </i>傷商廂相箱襄鑲<br><i>55 </i>上像尚橡相祥翔詳象<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>場廠搶敞<br><i>31 </i>娼昌槍猖<br><i>55 </i>倡唱嗆嘗常暢牆腸薔長<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>講<br><i>31 </i>僵江疆薑<br><i>55 </i>強糨降<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>強<br><i>31 </i>羌腔<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>享餉<br><i>31 </i>鄉香<br><i>55 </i>向巷降項<br></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>31 </i>娘<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>兩<br><i>31 </i>梁涼粱糧良量<br><i>55 </i>亮晾諒踉輛量<br></td>
+                <td style="background: #f8f8f8"><i>213 </i>仰壤癢養<br><i>31 </i>央揚楊殃泱洋瓤秧羊陽<br><i>55 </i>恙樣漾讓<br></td>
+            </tr>
+            <tr>
+                <td rowspan='1'>
+                    <div style='text-align: center'><b>u</b></div>
+                </td>
+                <td>
+                    <div style="text-align: center"><b>uɑŋ</b></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>31 </i>妝樁莊裝<br><i>55 </i>壯幢狀<br></td>
+                <td><i>213 </i>爽<br><i>31 </i>孀雙霜<br><i>55 </i>雙<br></td>
+                <td><i>213 </i>闖<br><i>31 </i>瘡窗<br><i>55 </i>創床撞<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>廣<br><i>31 </i>光咣<br><i>55 </i>逛<br></td>
+                <td><i>31 </i>匡筐誆<br><i>55 </i>曠況狂眶礦<br></td>
+                <td><i>213 </i>幌恍謊<br><i>31 </i>慌荒<br><i>55 </i>凰晃煌皇簧蝗黃<br></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><i>213 </i>往枉網<br><i>31 </i>亡汪王<br><i>55 </i>妄忘望<br></td>
+            </tr>
+            <tr>
+                <td rowspan='1'>
+                    <div style='text-align: center'><b>r</b></div>
+                </td>
+                <td rowspan='1'>
+                    <div style='text-align: center'><b>零</b></div>
+                </td>
+                <td style="background: #f8f8f8">
+                    <div style="text-align: center"><b>ər</b></div>
+                </td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"></td>
+                <td style="background: #f8f8f8"><i>213 </i>爾耳邇餌<br><i>55 </i>二兒而<br></td>
+            </tr>
+        </table>
+    </div>
+    <div style="margin: 30px auto;text-align: center;font-size: 12px;color: #888">
+        <img src="/img/guyinxiaojings.png" style="height: 24px;margin-bottom: 5px">　
+        <div><a href="https://beian.miit.gov.cn/" style="color:#888;text-decoration:none">蘇ICP備17001294號</a> | 1.82MB 2.77MB 0.028s | 材料如有冒犯通知即刪</div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+{
+  "failed_files": [
+    "2023-04-22_10-58-56.wav",
+    "2023-04-23_11-07-44.wav",
+    "2024-01-26_12-17-51.wav",
+    "2024-02-06_08-18-06.wav"
+  ],
+  "relaxed_thresholds": {
+    "silence_thresh": -40,
+    "min_silence_len": 300,
+    "target_length": 8000,
+    "force_split": true
+  },
+  "generated_at": "2025-07-16T02:01:01.884655"
+}
