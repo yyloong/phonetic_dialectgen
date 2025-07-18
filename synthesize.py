@@ -8,20 +8,17 @@ def main():
     # 1. 加载模型
 
     # 如果检查点包含配置，则可以直接加载
-    # checkpoint_path = "./outputs/checkpoint_step_129999.pth"  # 假设这是你的检查点路径
     checkpoint_path = "./outputs/checkpoint_step_139999.pth" 
-    # checkpoint_path = "./finetune/checkpoint_step_137999.pth" 
 
-    # 最终的普通话模型
+    # 普通话模型
     # checkpoint_path = "./weights/mandarin.pth"
-    # 最终的粤语模型
+    # 粤语模型
     # checkpoint_path = "./weights/cantonese.pth"
 
     # 如果是仅包含模型权重的文件，还需要提供 config
-    # checkpoint_path = "/mnt/nas/shared/datasets/voices/best_model.pth"  # 你的检查点路径
     # checkpoint_path = "./weights/best_model.pth"  
     # checkpoint_path = "./outputs/best_model.pth"  
-    # checkpoint_path = "./restart/best_model.pth"  # 从检查点恢复训练
+    # checkpoint_path = "./restart/best_model.pth"
 
     config = GlowTTSConfig(
         num_chars=47,
