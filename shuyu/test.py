@@ -15,3 +15,11 @@ def convert_text(text):
 text = '我是一个测试文本'
 converted_text = convert_text(text)
 print(converted_text)
+
+unique = set()
+
+for value in mapping.values():
+    for char in value:
+        unique.add(char)
+
+print(unique)
