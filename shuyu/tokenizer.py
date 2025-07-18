@@ -74,8 +74,8 @@ class ShuTokenizer:
 
 if __name__ == "__main__":
     # Example usage
-    print("Testing TTSTokenizer...")
-    text = """ye51 liaŋ51 thou55 thou55 kei215 xai215 ou55 suŋ51 tɕhy51 niŋ35 məŋ35 khou215 uei51 tɤ0 thaŋ35 kuo215 。"""
+    print("Testing ShuTokenizer...")
+    text = """ngo3 shi4 yi5 geo4 ce5 shi4 wen2 ben3"""
     print(len(text))
     print(f"Tokenizing ...")
     tokenizer = ShuTokenizer()

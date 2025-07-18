@@ -1,3 +1,4 @@
+import pandas as pd
 import yaml
 
 with open('shupin.yaml', 'r', encoding='utf-8') as file:
@@ -12,16 +13,15 @@ def convert_text(text):
             converted_text.append(char)
     return ' '.join(converted_text)
 
-text = '我是一个测试文本'
-converted_text = convert_text(text)
-print(converted_text)
+df = pd.read_csv("aitts3.csv")
 
-unique = set()
+rows = []
 
-for value in mapping.values():
-    for char in value:
-        unique.add(char)
+for index, row in df.iterrows():
+    converted_text = convert_text(row['text'])
+    new_row = row[:-1].copy()
+    new_row['IPA'] = converted_text
+    rows.append(new_row)
 
-print(sorted(list(unique)))
-
-print(len(unique))
+new_df = pd.DataFrame(rows)
+new_df.to_csv("aitts3_shu.csv", index=False, encoding='utf-8')
