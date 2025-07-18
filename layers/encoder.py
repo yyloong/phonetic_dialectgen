@@ -106,27 +106,51 @@ class Encoder(nn.Module):
         if encoder_type.lower() == "rel_pos_transformer":
             if use_prenet:
                 self.prenet = ResidualConv1dLayerNormBlock(
-                    hidden_channels, hidden_channels, hidden_channels, kernel_size=5, num_layers=3, dropout_p=0.5
+                    hidden_channels,
+                    hidden_channels,
+                    hidden_channels,
+                    kernel_size=5,
+                    num_layers=3,
+                    dropout_p=0.5,
                 )
             self.encoder = RelativePositionTransformer(
-                hidden_channels, hidden_channels, hidden_channels, **encoder_params
+                hidden_channels,
+                hidden_channels,
+                hidden_channels,
+                **encoder_params
             )
         elif encoder_type.lower() == "gated_conv":
             self.encoder = GatedConvBlock(hidden_channels, **encoder_params)
         elif encoder_type.lower() == "residual_conv_bn":
             if use_prenet:
-                self.prenet = nn.Sequential(nn.Conv1d(hidden_channels, hidden_channels, 1), nn.ReLU())
-            self.encoder = ResidualConv1dBNBlock(hidden_channels, hidden_channels, hidden_channels, **encoder_params)
+                self.prenet = nn.Sequential(
+                    nn.Conv1d(hidden_channels, hidden_channels, 1), nn.ReLU()
+                )
+            self.encoder = ResidualConv1dBNBlock(
+                hidden_channels,
+                hidden_channels,
+                hidden_channels,
+                **encoder_params
+            )
             self.postnet = nn.Sequential(
-                nn.Conv1d(self.hidden_channels, self.hidden_channels, 1), nn.BatchNorm1d(self.hidden_channels)
+                nn.Conv1d(self.hidden_channels, self.hidden_channels, 1),
+                nn.BatchNorm1d(self.hidden_channels),
             )
         elif encoder_type.lower() == "time_depth_separable":
             if use_prenet:
                 self.prenet = ResidualConv1dLayerNormBlock(
-                    hidden_channels, hidden_channels, hidden_channels, kernel_size=5, num_layers=3, dropout_p=0.5
+                    hidden_channels,
+                    hidden_channels,
+                    hidden_channels,
+                    kernel_size=5,
+                    num_layers=3,
+                    dropout_p=0.5,
                 )
             self.encoder = TimeDepthSeparableConvBlock(
-                hidden_channels, hidden_channels, hidden_channels, **encoder_params
+                hidden_channels,
+                hidden_channels,
+                hidden_channels,
+                **encoder_params
             )
         else:
             raise ValueError(" [!] Unkown encoder type.")
@@ -153,7 +177,9 @@ class Encoder(nn.Module):
         # [B, D, T]
         x = torch.transpose(x, 1, -1)
         # compute input sequence mask
-        x_mask = torch.unsqueeze(sequence_mask(x_lengths, x.size(2)), 1).to(x.dtype)
+        x_mask = torch.unsqueeze(sequence_mask(x_lengths, x.size(2)), 1).to(
+            x.dtype
+        )
         # prenet
         if hasattr(self, "prenet") and self.use_prenet:
             x = self.prenet(x, x_mask)
@@ -177,7 +203,7 @@ class Encoder(nn.Module):
         # duration predictor
         logw = self.duration_predictor(x_dp, x_mask)
         return x_m, x_logs, logw, x_mask
-    
+
     # x_m 编码器输出的均值 (Mean)
     # x_logs 编码器输出的对数标准差 (Log Standard Deviation)
     # logw 持续时间预测的对数 (Log Duration)
