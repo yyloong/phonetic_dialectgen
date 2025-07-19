@@ -37,7 +37,7 @@ def main():
         lr=1e-5, 
         grad_clip=5.0,
         print_step=20,
-        save_step=5000,
+        save_step=2000,
         run_eval=True,
         # optimizer="RAdam",
         # optimizer_params={"betas": [0.9, 0.998], "weight_decay": 1e-6},
@@ -60,8 +60,7 @@ def main():
     )
     
     # 开始训练
-    # trainer.fit()
-    trainer.fit_from_checkpoint("finetune/checkpoint_step_134999.pth", config)  # 从检查点恢复训练
+    trainer.fit()
 
 if __name__ == "__main__":
     main()
