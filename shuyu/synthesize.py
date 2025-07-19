@@ -57,10 +57,10 @@ def load_model_from_checkpoint(checkpoint_path, config=None):
 
 def main():
     # 如果检查点包含配置，则可以直接加载
-    checkpoint_path = "./outputs/checkpoint_step_164999.pth" 
+    # checkpoint_path = "./outputs/checkpoint_step_164999.pth" 
 
     # 如果是仅包含模型权重的文件，还需要提供 config
-    # checkpoint_path = "./outputs/best_model.pth"  
+    checkpoint_path = "./outputs/best_model.pth"  
 
     config = GlowTTSConfig(
         num_chars=39,
