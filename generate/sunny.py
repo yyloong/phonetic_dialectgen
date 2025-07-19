@@ -16,15 +16,15 @@ df = pd.read_csv("aitts3_shu.csv", encoding='utf-8')
 
 print(len(df))
 
-for i in tqdm.tqdm(range(7000, len(df))):
+for i in tqdm.tqdm(range(7000, 7010)):
     text = df.loc[i, 'text']
+    name = df.loc[i, 'audio']
     response = dashscope.audio.qwen_tts.SpeechSynthesizer.call(
         model="qwen-tts-latest",
         api_key=os.getenv("DASHSCOPE_API_KEY"),
         text=text,
         voice="Sunny", 
     )
-    name = df.loc[i, 'audio']
     audio_url = response.output.audio["url"]
     save_path = f"sichuan/{name}.wav"  # 自定义保存路径
 
