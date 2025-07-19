@@ -14,7 +14,9 @@ load_dotenv()
 
 df = pd.read_csv("aitts3_shu.csv", encoding='utf-8')
 
-for i in tqdm.tqdm(range(3000, 5000)):
+print(len(df))
+
+for i in tqdm.tqdm(range(7000, len(df))):
     text = df.loc[i, 'text']
     response = dashscope.audio.qwen_tts.SpeechSynthesizer.call(
         model="qwen-tts-latest",
