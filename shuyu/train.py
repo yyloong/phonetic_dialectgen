@@ -5,7 +5,7 @@ from trainer import GlowTTSTrainer
 def main():
     # 配置
     config = GlowTTSConfig(
-        num_chars=38,
+        num_chars=39,
         out_channels=80,
 
         # 编码器参数
@@ -29,11 +29,13 @@ def main():
         num_block_layers=6,       # 从 4 增加到 6
 
         # 训练参数
-        csv_file="mixed.csv",
-        root_path="/home/u-wuhc/backup/AItts",  # 假设数据存储在这个路径下
+        csv_file="aitts3_shu.csv",
+        root_path="/home/u-wuhc/backup/sichuan-mel",
+        test_csv_file="test_data.csv",
+        test_root_path="/home/u-wuhc/backup/sichuan-mel",
         epochs=10000,
         data_dep_init_steps=80,
-        batch_size=40,
+        batch_size=48,
         lr=1e-5, 
         grad_clip=5.0,
         print_step=20,
