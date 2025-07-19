@@ -5,7 +5,7 @@ from trainer import GlowTTSTrainer
 def main():
     # 配置
     config = GlowTTSConfig(
-        num_chars=47,
+        num_chars=38,
         out_channels=80,
 
         # 编码器参数

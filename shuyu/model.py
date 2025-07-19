@@ -8,7 +8,7 @@ from layers.encoder import Encoder
 from utils import generate_path, maximum_path, sequence_mask
 from torch.utils.data import DataLoader
 from dataset import TTSDataset
-from tokenizer import TTSTokenizer
+from tokenizer import ShuTokenizer
 
 class GlowTTS(nn.Module):
     """GlowTTS model.
@@ -333,13 +333,13 @@ class GlowTTS(nn.Module):
         # 创建数据集
         if not is_eval:
             dataset = TTSDataset(
-                tokenizer=TTSTokenizer(),
+                tokenizer=ShuTokenizer(),
                 csv_file=config.csv_file,
                 root_path=config.root_path
             )
         else:
             dataset = TTSDataset(
-                tokenizer=TTSTokenizer(),
+                tokenizer=ShuTokenizer(),
                 csv_file=config.test_csv_file,
                 root_path=config.test_root_path
             )
@@ -440,7 +440,7 @@ class GlowTTSLoss(torch.nn.Module):
 if __name__ == "__main__":
     # Example usage
     config = GlowTTSConfig(num_chars=100, out_channels=80)
-    tokenizer = TTSTokenizer()
+    tokenizer = ShuTokenizer()
     model = GlowTTS(config)
     print(model)
 

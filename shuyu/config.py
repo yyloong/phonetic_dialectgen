@@ -98,7 +98,7 @@ class GlowTTSConfig:
     model: str = "glow_tts"
 
     # model params
-    num_chars: int = 47
+    num_chars: int = 38
     encoder_type: str = "rel_pos_transformer"
     encoder_params: dict = field(
         default_factory=lambda: {
