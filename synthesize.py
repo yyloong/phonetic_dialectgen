@@ -2,8 +2,8 @@ import torch
 from model import GlowTTS
 from config import GlowTTSConfig
 from tokenizer import TTSTokenizer
-from load_bigvgan import Load_Bigvgan
-from IPA.text_to_IPA import text_to_IPA
+from bigvgan22HZ import Load_Bigvgan
+from text_to_IPA import text_to_IPA
 
 
 def load_model_from_checkpoint(checkpoint_path, config=None):

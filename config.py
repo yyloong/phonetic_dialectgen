@@ -136,7 +136,7 @@ class GlowTTSConfig:
     run_eval: bool = True
     csv_file: str = "data.csv"
     root_path: str = "data"  # 假设数据存储在这个
-    test_csv_file: str = "test_data.csv" 
+    test_csv_file: str = "test_data.csv"
     test_root_path: str = "test_data"
 
     # inference params
