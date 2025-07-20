@@ -39,7 +39,7 @@ def main():
         lr=1e-5, 
         grad_clip=5.0,
         print_step=20,
-        save_step=2000,
+        save_step=5000,
         run_eval=True,
         # optimizer="RAdam",
         # optimizer_params={"betas": [0.9, 0.998], "weight_decay": 1e-6},
@@ -62,7 +62,11 @@ def main():
     )
     
     # 开始训练
-    trainer.fit()
+    # trainer.fit()
+    trainer.fit_from_checkpoint(
+        checkpoint_path="./outputs/checkpoint_step_81999.pth",
+        config=config
+    )
 
 if __name__ == "__main__":
     main()
