@@ -9,12 +9,12 @@ def main():
 
     # 如果检查点包含配置，则可以直接加载
     
-    checkpoint_path = "./outputs/checkpoint_step_164999.pth" 
+    # checkpoint_path = "./outputs/checkpoint_step_164999.pth" 
 
     # 混合模型
     # checkpoint_path = "./weights/hybrid.pth" 
     # 普通话模型
-    # checkpoint_path = "./weights/mandarin.pth"
+    checkpoint_path = "./weights/mandarin.pth"
     # 粤语模型
     # checkpoint_path = "./weights/cantonese.pth"
 
@@ -51,7 +51,7 @@ def main():
     model, config = load_model_from_checkpoint(checkpoint_path, config=config)
     
     # 2. 准备输入文本
-    text = "nɛ55 pou22 tin22 ieŋ35 hɐu35 pei55 hou35 keŋ22 ， pu51 ʐu35 tʂou55 muo51 i55 tɕhi215 tɕhy51 khan51 ？"
+    text = "suŋ55 ʂu215 tsai51 iou55 ɕian35 tɤ0 kuo51 tha55 tɤ0 ʂu215 tɕia51 。"
     
     # 3. 文本预处理
     tokenizer = TTSTokenizer()
