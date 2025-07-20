@@ -3,6 +3,7 @@ from model import GlowTTS
 from config import GlowTTSConfig
 from tokenizer import TTSTokenizer
 from load_bigvgan import Load_Bigvgan
+from IPA.text_to_IPA import text_to_IPA
 
 
 def load_model_from_checkpoint(checkpoint_path, config=None):
@@ -74,9 +75,9 @@ def main():
     model, config = load_model_from_checkpoint(checkpoint_path, config=config)
 
     # 2. 准备输入文本
-    text = "nɛ55 pou22 tin22 ieŋ35 hɐu35 pei55 hou35 keŋ22 ， pɐt5 iy21 tsɐu55 mut2 iɐt5 tshɐi21 høy33 thɐi35 ？"
-    text = "tʂɤ51 pu51 tian51 iŋ215 khou215 pei55 xən215 paŋ51 ， pu51 ʐu35 tʂou55 muo51 i55 tɕhi215 tɕhy51 khan51 ？"
-    text = "nɛ55 pou22 tin22 ieŋ35 hɐu35 pei55 hou35 keŋ22 ， pu51 ʐu35 tʂou55 muo51 i55 tɕhi215 tɕhy51 khan51 ？"
+    Chinese_text = "松鼠在悠闲地过它的暑假。"  # 中文文本
+    language = "jyutping"  # "pinyin" 或 "jyutping"
+    text, failed_words, success = text_to_IPA(Chinese_text, language)
 
     # 3. 文本预处理
     tokenizer = TTSTokenizer()
@@ -102,7 +103,7 @@ def main():
     mel_spectrogram = mel_spectrogram.to(vocoder.device).transpose(
         1, 2
     )  # 转置为 [1, C, T]
-    out_path = "output2.wav"
+    out_path = "output.wav"
     vocoder.spectrogram_to_wave(mel_spectrogram, out_path)
     print(f"🎵 音频已保存为 {out_path}")
 
