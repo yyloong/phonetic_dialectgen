@@ -86,6 +86,7 @@ def main():
     # 为什么要加上一个空格？
     text = "大熊猫在树上吃竹子。"
     # text = "松鼠在悠闲地过它的暑假。"
+    text = ' ' + text
     text = convert_text(text)
     print(f"转换后的文本: {text}")
     tokenizer = ShuTokenizer()
