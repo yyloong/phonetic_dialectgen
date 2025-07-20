@@ -57,7 +57,7 @@ def load_model_from_checkpoint(checkpoint_path, config=None):
 
 def main():
     # 如果检查点包含配置，则可以直接加载
-    checkpoint_path = "./outputs/checkpoint_step_84999.pth" 
+    checkpoint_path = "./outputs/checkpoint_step_99999.pth" 
 
     # 如果是仅包含模型权重的文件，还需要提供 config
     # checkpoint_path = "./outputs/best_model.pth"  
@@ -83,12 +83,14 @@ def main():
 
     model, config = load_model_from_checkpoint(checkpoint_path, config=config)
     
+    # 为什么要加上一个空格？
     text = "大熊猫在树上吃竹子。"
     # text = "松鼠在悠闲地过它的暑假。"
     text = convert_text(text)
     print(f"转换后的文本: {text}")
     tokenizer = ShuTokenizer()
     token_ids = tokenizer(text)
+    print(f"文本转换为token IDs: {token_ids}")
     
     # 转换为tensor
     text_input = torch.LongTensor(token_ids).unsqueeze(0)  # [1, seq_len]
