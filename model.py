@@ -155,59 +155,6 @@ class GlowTTS(nn.Module):
         }
         return outputs
 
-    # @torch.no_grad()
-    # def inference_with_MAS(
-    #     self, x, x_lengths, y=None, y_lengths=None
-    # ):
-    #     """
-    #     It's similar to the teacher forcing in Tacotron.
-    #     It was proposed in: https://arxiv.org/abs/2104.05557
-
-    #     Shapes:
-    #         - x: :math:`[B, T]`      text token ids
-    #         - x_lenghts: :math:`B`   lengths of input text sequences
-    #         - y: :math:`[B, T, C]`   target mel-spectrogram
-    #         - y_lengths: :math:`B`   length of target mel-spectrogram frames
-    #     """
-    #     y = y.transpose(1, 2)
-    #     y_max_length = y.size(2)
-    #     # embedding pass (without speaker embedding)
-    #     o_mean, o_log_scale, o_dur_log, x_mask = self.encoder(x, x_lengths, g=None)
-    #     # drop redisual frames wrt num_squeeze and set y_lengths.
-    #     y, y_lengths, y_max_length, attn = self.preprocess(y, y_lengths, y_max_length, None)
-    #     # create masks
-    #     y_mask = torch.unsqueeze(sequence_mask(y_lengths, y_max_length), 1).to(x_mask.dtype)
-    #     attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
-    #     # decoder pass (without speaker embedding)
-    #     z, logdet = self.decoder(y, y_mask, g=None, reverse=False)
-    #     # find the alignment path between z and encoder output
-    #     o_scale = torch.exp(-2 * o_log_scale)
-    #     logp1 = torch.sum(-0.5 * math.log(2 * math.pi) - o_log_scale, [1]).unsqueeze(-1)  # [b, t, 1]
-    #     logp2 = torch.matmul(o_scale.transpose(1, 2), -0.5 * (z**2))  # [b, t, d] x [b, d, t'] = [b, t, t']
-    #     logp3 = torch.matmul((o_mean * o_scale).transpose(1, 2), z)  # [b, t, d] x [b, d, t'] = [b, t, t']
-    #     logp4 = torch.sum(-0.5 * (o_mean**2) * o_scale, [1]).unsqueeze(-1)  # [b, t, 1]
-    #     logp = logp1 + logp2 + logp3 + logp4  # [b, t, t']
-    #     attn = maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()
-
-    #     y_mean, y_log_scale, o_attn_dur = self.compute_outputs(attn, o_mean, o_log_scale, x_mask)
-    #     attn = attn.squeeze(1).permute(0, 2, 1)
-
-    #     # get predited aligned distribution
-    #     z = y_mean * y_mask
-
-    #     # reverse the decoder and predict using the aligned distribution
-    #     y, logdet = self.decoder(z, y_mask, g=None, reverse=True)
-    #     outputs = {
-    #         "model_outputs": z.transpose(1, 2),
-    #         "logdet": logdet,
-    #         "y_mean": y_mean.transpose(1, 2),
-    #         "y_log_scale": y_log_scale.transpose(1, 2),
-    #         "alignments": attn,
-    #         "durations_log": o_dur_log.transpose(1, 2),
-    #         "total_durations_log": o_attn_dur.transpose(1, 2),
-    #     }
-    #     return outputs
-
     @torch.no_grad()
     def decoder_inference(
         self, y, y_lengths=None
@@ -352,64 +299,6 @@ class GlowTTS(nn.Module):
             collate_fn=dataset.collate_fn
         )
         return loader
-    
-    # def format_batch(self, batch: Dict) -> Dict:
-    #     """Simplified batch formatting for single-speaker GlowTTS.
-
-    #     Args:
-    #         batch (Dict): Raw batch from dataloader
-
-    #     Returns:
-    #         Dict: Formatted batch for GlowTTS training
-    #     """
-    #     # 由 dataset.collate_fn 返回的 batch 已经是格式化好的数据
-    
-    #     return {
-    #         "token_ids": batch["token_ids"],                    # 文本 token IDs
-    #         "token_ids_lengths": batch["token_ids_lengths"],    # 文本长度
-    #         "mel_input": batch["mel_input"],                    # 梅尔频谱  [B, C, T]
-    #         "mel_lengths": batch["mel_lengths"]                 # 梅尔频谱长度
-    #     }
-    
-    #     text_input = batch["token_ids"]           # 文本 token IDs
-    #     text_lengths = batch["token_ids_lengths"] # 文本长度
-    #     mel_input = batch["mel_input"]            # 梅尔频谱  [B, C, T]
-    #     mel_lengths = batch["mel_lengths"]        # 梅尔频谱长度
-        
-    #     # 计算最大长度（用于 padding）
-    #     max_text_length = torch.max(text_lengths.float())
-    #     max_spec_length = torch.max(mel_lengths.float())
-        
-    #     # 从注意力掩码计算持续时间（如果有的话）
-    #     durations = None
-    #     if "attns" in batch and batch["attns"] is not None:
-    #         attn_mask = batch["attns"]
-    #         durations = torch.zeros(attn_mask.shape[0], attn_mask.shape[2])
-    #         for idx, am in enumerate(attn_mask):
-    #             # 计算原始持续时间
-    #             c_idxs = am[:, : text_lengths[idx], : mel_lengths[idx]].max(1)[1]
-    #             c_idxs, counts = torch.unique(c_idxs, return_counts=True)
-    #             dur = torch.ones([text_lengths[idx]]).to(counts.dtype)
-    #             dur[c_idxs] = counts
-                
-    #             # 平滑持续时间，确保总和等于梅尔频谱长度
-    #             extra_frames = dur.sum() - mel_lengths[idx]
-    #             if extra_frames > 0:
-    #                 largest_idxs = torch.argsort(-dur)[:extra_frames]
-    #                 dur[largest_idxs] -= 1
-                
-    #             durations[idx, : text_lengths[idx]] = dur
-        
-    #     # 返回 GlowTTS 需要的最小数据集
-    #     return {
-    #         "token_ids": text_input,
-    #         "token_ids_lengths": text_lengths,
-    #         "mel_input": mel_input,   # [B, C, T]
-    #         "mel_lengths": mel_lengths,
-    #         "durations": durations,
-    #         "max_text_length": float(max_text_length),
-    #         "max_spec_length": float(max_spec_length),
-    #     }
 
 
 class GlowTTSLoss(torch.nn.Module):
