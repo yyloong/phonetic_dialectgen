@@ -10,6 +10,7 @@ from torch.utils.data import DataLoader
 from dataset import TTSDataset
 from tokenizer import TTSTokenizer
 
+
 class GlowTTS(nn.Module):
     """GlowTTS model.
     Examples:
@@ -29,10 +30,7 @@ class GlowTTS(nn.Module):
         >>> model = GlowTTS.init_from_config(config, verbose=False)
     """
 
-    def __init__(
-        self,
-        config: GlowTTSConfig
-    ):
+    def __init__(self, config: GlowTTSConfig):
         super().__init__()
         # pass all config fields to `self`
         # for fewer code change
@@ -72,10 +70,14 @@ class GlowTTS(nn.Module):
     @staticmethod
     def compute_outputs(attn, o_mean, o_log_scale, x_mask):
         """Compute and format the mode outputs with the given alignment map"""
-        y_mean = torch.matmul(attn.squeeze(1).transpose(1, 2), o_mean.transpose(1, 2)).transpose(
+        y_mean = torch.matmul(
+            attn.squeeze(1).transpose(1, 2), o_mean.transpose(1, 2)
+        ).transpose(
             1, 2
         )  # [b, t', t], [b, t, d] -> [b, d, t']
-        y_log_scale = torch.matmul(attn.squeeze(1).transpose(1, 2), o_log_scale.transpose(1, 2)).transpose(
+        y_log_scale = torch.matmul(
+            attn.squeeze(1).transpose(1, 2), o_log_scale.transpose(1, 2)
+        ).transpose(
             1, 2
         )  # [b, t', t], [b, t, d] -> [b, d, t']
         # compute total duration with adjustment
@@ -94,9 +96,7 @@ class GlowTTS(nn.Module):
             if getattr(f, "set_ddi", False):
                 f.set_ddi(False)
 
-    def forward(
-        self, x, x_lengths, y, y_lengths=None
-    ):
+    def forward(self, x, x_lengths, y, y_lengths=None):
         """
         Args:
             x (torch.Tensor):
@@ -124,11 +124,17 @@ class GlowTTS(nn.Module):
         # [B, C, T]
         y_max_length = y.size(2)
         # embedding pass (without speaker embedding)
-        o_mean, o_log_scale, o_dur_log, x_mask = self.encoder(x, x_lengths, g=None)
+        o_mean, o_log_scale, o_dur_log, x_mask = self.encoder(
+            x, x_lengths, g=None
+        )
         # drop redisual frames wrt num_squeeze and set y_lengths.
-        y, y_lengths, y_max_length, attn = self.preprocess(y, y_lengths, y_max_length, None)
+        y, y_lengths, y_max_length, attn = self.preprocess(
+            y, y_lengths, y_max_length, None
+        )
         # create masks
-        y_mask = torch.unsqueeze(sequence_mask(y_lengths, y_max_length), 1).to(x_mask.dtype)
+        y_mask = torch.unsqueeze(sequence_mask(y_lengths, y_max_length), 1).to(
+            x_mask.dtype
+        )
         # [B, 1, T_en, T_de]
         attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
         # decoder pass (without speaker embedding)
@@ -136,13 +142,27 @@ class GlowTTS(nn.Module):
         # find the alignment path
         with torch.no_grad():
             o_scale = torch.exp(-2 * o_log_scale)
-            logp1 = torch.sum(-0.5 * math.log(2 * math.pi) - o_log_scale, [1]).unsqueeze(-1)  # [b, t, 1]
-            logp2 = torch.matmul(o_scale.transpose(1, 2), -0.5 * (z**2))  # [b, t, d] x [b, d, t'] = [b, t, t']
-            logp3 = torch.matmul((o_mean * o_scale).transpose(1, 2), z)  # [b, t, d] x [b, d, t'] = [b, t, t']
-            logp4 = torch.sum(-0.5 * (o_mean**2) * o_scale, [1]).unsqueeze(-1)  # [b, t, 1]
+            logp1 = torch.sum(
+                -0.5 * math.log(2 * math.pi) - o_log_scale, [1]
+            ).unsqueeze(
+                -1
+            )  # [b, t, 1]
+            logp2 = torch.matmul(
+                o_scale.transpose(1, 2), -0.5 * (z**2)
+            )  # [b, t, d] x [b, d, t'] = [b, t, t']
+            logp3 = torch.matmul(
+                (o_mean * o_scale).transpose(1, 2), z
+            )  # [b, t, d] x [b, d, t'] = [b, t, t']
+            logp4 = torch.sum(-0.5 * (o_mean**2) * o_scale, [1]).unsqueeze(
+                -1
+            )  # [b, t, 1]
             logp = logp1 + logp2 + logp3 + logp4  # [b, t, t']
-            attn = maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()
-        y_mean, y_log_scale, o_attn_dur = self.compute_outputs(attn, o_mean, o_log_scale, x_mask)
+            attn = (
+                maximum_path(logp, attn_mask.squeeze(1)).unsqueeze(1).detach()
+            )
+        y_mean, y_log_scale, o_attn_dur = self.compute_outputs(
+            attn, o_mean, o_log_scale, x_mask
+        )
         attn = attn.squeeze(1).permute(0, 2, 1)
         outputs = {
             "z": z.transpose(1, 2),
@@ -156,16 +176,16 @@ class GlowTTS(nn.Module):
         return outputs
 
     @torch.no_grad()
-    def decoder_inference(
-        self, y, y_lengths=None
-    ):
+    def decoder_inference(self, y, y_lengths=None):
         """
         Shapes:
             - y: :math:`[B, C, T]`
             - y_lengths: :math:`B`
         """
         y_max_length = y.size(2)
-        y_mask = torch.unsqueeze(sequence_mask(y_lengths, y_max_length), 1).to(y.dtype)
+        y_mask = torch.unsqueeze(sequence_mask(y_lengths, y_max_length), 1).to(
+            y.dtype
+        )
         # decoder pass (without speaker embedding)
         z, logdet = self.decoder(y, y_mask, g=None, reverse=False)
         # reverse decoder and predict
@@ -176,29 +196,40 @@ class GlowTTS(nn.Module):
         return outputs
 
     @torch.no_grad()
-    def inference(
-        self, x, x_lengths=None
-    ):
+    def inference(self, x, x_lengths=None):
         # embedding pass (without speaker embedding)
-        o_mean, o_log_scale, o_dur_log, x_mask = self.encoder(x, x_lengths, g=None)
+        o_mean, o_log_scale, o_dur_log, x_mask = self.encoder(
+            x, x_lengths, g=None
+        )
         # compute output durations
         w = (torch.exp(o_dur_log) - 1) * x_mask * self.length_scale
         w_ceil = torch.clamp_min(torch.ceil(w), 1)
         y_lengths = torch.clamp_min(torch.sum(w_ceil, [1, 2]), 1).long()
         y_max_length = None
         # compute masks
-        y_mask = torch.unsqueeze(sequence_mask(y_lengths, y_max_length), 1).to(x_mask.dtype)
+        y_mask = torch.unsqueeze(sequence_mask(y_lengths, y_max_length), 1).to(
+            x_mask.dtype
+        )
         attn_mask = torch.unsqueeze(x_mask, -1) * torch.unsqueeze(y_mask, 2)
         # compute attention mask
-        attn = generate_path(w_ceil.squeeze(1), attn_mask.squeeze(1)).unsqueeze(1)
-        y_mean, y_log_scale, o_attn_dur = self.compute_outputs(attn, o_mean, o_log_scale, x_mask)
+        attn = generate_path(w_ceil.squeeze(1), attn_mask.squeeze(1)).unsqueeze(
+            1
+        )
+        y_mean, y_log_scale, o_attn_dur = self.compute_outputs(
+            attn, o_mean, o_log_scale, x_mask
+        )
         # add noise to the decoder input (inference noise scale is the temperature parameter)
-        z = (y_mean + torch.exp(y_log_scale) * torch.randn_like(y_mean) * self.inference_noise_scale) * y_mask
+        z = (
+            y_mean
+            + torch.exp(y_log_scale)
+            * torch.randn_like(y_mean)
+            * self.inference_noise_scale
+        ) * y_mask
         # decoder pass (without speaker embedding)
         y, logdet = self.decoder(z, y_mask, g=None, reverse=True)
         attn = attn.squeeze(1).permute(0, 2, 1)
         outputs = {
-            "model_outputs": y.transpose(1, 2),   # mel_spectrograms [B, T, C]
+            "model_outputs": y.transpose(1, 2),  # mel_spectrograms [B, T, C]
             "logdet": logdet,
             "y_mean": y_mean.transpose(1, 2),
             "y_log_scale": y_log_scale.transpose(1, 2),
@@ -265,7 +296,10 @@ class GlowTTS(nn.Module):
             y = y[:, :, :y_max_length]
             if attn is not None:
                 attn = attn[:, :, :, :y_max_length]
-        y_lengths = torch.div(y_lengths, self.num_squeeze, rounding_mode="floor") * self.num_squeeze
+        y_lengths = (
+            torch.div(y_lengths, self.num_squeeze, rounding_mode="floor")
+            * self.num_squeeze
+        )
         return y, y_lengths, y_max_length, attn
 
     def store_inverse(self):
@@ -276,19 +310,19 @@ class GlowTTS(nn.Module):
         return GlowTTSLoss()
 
     def get_data_loader(self, config, is_eval):
-        """创建数据加载器"""        
+        """创建数据加载器"""
         # 创建数据集
         if not is_eval:
             dataset = TTSDataset(
                 tokenizer=TTSTokenizer(),
                 csv_file=config.csv_file,
-                root_path=config.root_path
+                root_path=config.root_path,
             )
         else:
             dataset = TTSDataset(
                 tokenizer=TTSTokenizer(),
                 csv_file=config.test_csv_file,
-                root_path=config.test_root_path
+                root_path=config.test_root_path,
             )
         # 创建数据加载器
         loader = DataLoader(
@@ -296,7 +330,7 @@ class GlowTTS(nn.Module):
             batch_size=config.batch_size,
             shuffle=not is_eval,
             drop_last=not is_eval,
-            collate_fn=dataset.collate_fn
+            collate_fn=dataset.collate_fn,
         )
         return loader
 
@@ -306,13 +340,29 @@ class GlowTTSLoss(torch.nn.Module):
         super().__init__()
         self.constant_factor = 0.5 * math.log(2 * math.pi)
 
-    def forward(self, z, means, scales, log_det, y_lengths, o_dur_log, o_attn_dur, x_lengths):
+    def forward(
+        self,
+        z,
+        means,
+        scales,
+        log_det,
+        y_lengths,
+        o_dur_log,
+        o_attn_dur,
+        x_lengths,
+    ):
         return_dict = {}
         # flow loss - neg log likelihood
-        pz = torch.sum(scales) + 0.5 * torch.sum(torch.exp(-2 * scales) * (z - means) ** 2)
-        log_mle = self.constant_factor + (pz - torch.sum(log_det)) / (torch.sum(y_lengths) * z.shape[2])
+        pz = torch.sum(scales) + 0.5 * torch.sum(
+            torch.exp(-2 * scales) * (z - means) ** 2
+        )
+        log_mle = self.constant_factor + (pz - torch.sum(log_det)) / (
+            torch.sum(y_lengths) * z.shape[2]
+        )
         # duration loss - MSE
-        loss_dur = torch.sum((o_dur_log - o_attn_dur) ** 2) / torch.sum(x_lengths)
+        loss_dur = torch.sum((o_dur_log - o_attn_dur) ** 2) / torch.sum(
+            x_lengths
+        )
         # duration loss - huber loss
         # loss_dur = torch.nn.functional.smooth_l1_loss(o_dur_log, o_attn_dur, reduction="sum") / torch.sum(x_lengths)
         return_dict["loss"] = log_mle + loss_dur
@@ -336,7 +386,9 @@ if __name__ == "__main__":
     # Dummy input
     x = torch.randint(0, 100, (2, 50))  # Batch of 2 sequences of length 50
     x_lengths = torch.tensor([50, 50])
-    y = torch.randn(2, 80, 100)  # Batch of 2 mel spectrograms with 80 channels and length 100
+    y = torch.randn(
+        2, 80, 100
+    )  # Batch of 2 mel spectrograms with 80 channels and length 100
     y_lengths = torch.tensor([100, 100])
 
     outputs = model.forward(x, x_lengths, y, y_lengths)
