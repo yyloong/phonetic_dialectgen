@@ -18,11 +18,11 @@ def main():
     # 如果检查点包含配置，则可以直接加载
 
     # 混合模型
-    # checkpoint_path = "./weights/hybrid.pth"
+    checkpoint_path = "./weights/hybrid.pth"
     # 普通话模型
     # checkpoint_path = "./weights/mandarin.pth"
     # 粤语模型
-    checkpoint_path = "./weights/cantonese.pth"
+    # checkpoint_path = "./weights/cantonese.pth"
 
     # 如果是仅包含模型权重的文件，还需要提供 config
     # checkpoint_path = "./weights/best_model.pth"

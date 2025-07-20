@@ -1,8 +1,37 @@
 import torch
+from model import GlowTTS
 from config import GlowTTSConfig
 from tokenizer import TTSTokenizer
-from inference import load_model_from_checkpoint
 from load_bigvgan import Load_Bigvgan
+
+def load_model_from_checkpoint(checkpoint_path, config=None):
+    """从检查点加载模型进行推理"""
+    # 1. 加载检查点
+    checkpoint = torch.load(
+        checkpoint_path, map_location="cpu", weights_only=False
+    )
+    # 2. 获取配置（如果没有提供的话）
+    if config is None:
+        config = checkpoint.get("config", None)
+        if config is None:
+            raise ValueError("检查点中没有配置信息，请手动提供配置")
+    # config.inference_noise_scale = 0.0  # 推理时不使用噪声缩放
+    # 3. 创建模型
+    model = GlowTTS(config)
+    # 4. 加载模型权重
+    if "model_state_dict" in checkpoint:
+        model.load_state_dict(checkpoint["model_state_dict"])
+    else:
+        model.load_state_dict(checkpoint)
+    # 5. 设置为评估模式
+    model.eval()
+    print(f"✅ 模型已从检查点加载: {checkpoint_path}")
+    print(
+        f"📊 检查点信息: 步骤 {checkpoint.get('total_steps_done', 'N/A')}, "
+        f"Epoch {checkpoint.get('epochs_done', 'N/A')}, "
+        f"损失: {checkpoint.get('best_loss', 'N/A')}"
+    )
+    return model, config
 
 def main():
     # 1. 加载模型
@@ -12,9 +41,9 @@ def main():
     # checkpoint_path = "./outputs/checkpoint_step_164999.pth" 
 
     # 混合模型
-    # checkpoint_path = "./weights/hybrid.pth" 
+    checkpoint_path = "./weights/hybrid.pth" 
     # 普通话模型
-    checkpoint_path = "./weights/mandarin.pth"
+    # checkpoint_path = "./weights/mandarin.pth"
     # 粤语模型
     # checkpoint_path = "./weights/cantonese.pth"
 
@@ -51,7 +80,9 @@ def main():
     model, config = load_model_from_checkpoint(checkpoint_path, config=config)
     
     # 2. 准备输入文本
-    text = "suŋ55 ʂu215 tsai51 iou55 ɕian35 tɤ0 kuo51 tha55 tɤ0 ʂu215 tɕia51 。"
+    text = "nɛ55 pou22 tin22 ieŋ35 hɐu35 pei55 hou35 keŋ22 ， pɐt5 iy21 tsɐu55 mut2 iɐt5 tshɐi21 høy33 thɐi35 ？"
+    text = "tʂɤ51 pu51 tian51 iŋ215 khou215 pei55 xən215 paŋ51 ， pu51 ʐu35 tʂou55 muo51 i55 tɕhi215 tɕhy51 khan51 ？"
+    text = "nɛ55 pou22 tin22 ieŋ35 hɐu35 pei55 hou35 keŋ22 ， pu51 ʐu35 tʂou55 muo51 i55 tɕhi215 tɕhy51 khan51 ？"
     
     # 3. 文本预处理
     tokenizer = TTSTokenizer()
@@ -78,7 +109,7 @@ def main():
 
     vocoder = Load_Bigvgan()
     mel_spectrogram = mel_spectrogram.to(vocoder.device).transpose(1, 2)  # 转置为 [1, C, T]
-    out_path = "output.wav"
+    out_path = "output2.wav"
     vocoder.spectrogram_to_wave(mel_spectrogram, out_path)
     print(f"🎵 音频已保存为 {out_path}")
 
