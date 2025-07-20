@@ -3,11 +3,11 @@ from model import GlowTTS
 from config import GlowTTSConfig
 from tokenizer import ShuTokenizer
 import sys
-import bigvgan as bigvgan
-import soundfile as sf
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from bigvgan22HZ import Load_Bigvgan
 import yaml
 
-sys.path.append("/home/u-wuhc/backup/bigvgan22HZ")
 with open('shupin.yaml', 'r', encoding='utf-8') as file:
     mapping = yaml.safe_load(file)
 
@@ -19,20 +19,6 @@ def convert_text(text):
         else:
             converted_text.append(char)
     return ' '.join(converted_text)
-
-class Load_Bigvgan:
-    def __init__(self, model_name="/home/u-wuhc/backup/bigvgan22HZ"):
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.model = bigvgan.BigVGAN.from_pretrained(model_name)
-        self.model.remove_weight_norm()
-        self.model = self.model.eval().to(self.device)
-        self.h = self.model.h
-
-    def spectrogram_to_wave(self, spectrogram, path):
-        with torch.inference_mode():
-            wavgen = self.model(spectrogram)
-        wav_gen_float = wavgen.squeeze(0).cpu()
-        sf.write(path, wav_gen_float[0].numpy(), self.model.h.sampling_rate)
 
 def load_model_from_checkpoint(checkpoint_path, config=None):
     """从检查点加载模型进行推理"""
@@ -57,10 +43,10 @@ def load_model_from_checkpoint(checkpoint_path, config=None):
 
 def main():
     # 如果检查点包含配置，则可以直接加载
-    # checkpoint_path = "./outputs/checkpoint_step_99999.pth" 
+    checkpoint_path = "./outputs/checkpoint_step_149999.pth" 
 
     # 如果是仅包含模型权重的文件，还需要提供 config
-    checkpoint_path = "./outputs/best_model.pth"  
+    # checkpoint_path = "./outputs/best_model.pth"  
 
     config = GlowTTSConfig(
         num_chars=39,
@@ -106,7 +92,7 @@ def main():
         
     print(f"🎵 生成的梅尔频谱形状: {mel_spectrogram.shape}")
 
-    vocoder = Load_Bigvgan()
+    vocoder = Load_Bigvgan('../bigvgan22HZ/model')
     mel_spectrogram = mel_spectrogram.to(vocoder.device).transpose(1, 2)  # 转置为 [1, C, T]
     out_path = "output.wav"
     vocoder.spectrogram_to_wave(mel_spectrogram, out_path)

@@ -16,8 +16,8 @@ from torch.nn import Conv1d, ConvTranspose1d
 from torch.nn.utils import weight_norm, remove_weight_norm
 
 import bigvgan22HZ.activations as activations
-from bigvgan22HZ import Activation1d as TorchActivation1d
-from bigvgan22HZ import AttrDict
+from bigvgan22HZ.alias_free_activation.torch.act import Activation1d as TorchActivation1d
+from bigvgan22HZ.env import AttrDict
 
 from huggingface_hub import PyTorchModelHubMixin, hf_hub_download
 
@@ -503,7 +503,7 @@ class BigVGAN(
     
 
 class Load_Bigvgan:
-    def __init__(self, model_name="bigvgan22HZ"):
+    def __init__(self, model_name="bigvgan22HZ/model"):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = BigVGAN.from_pretrained(model_name)
         self.model.remove_weight_norm()
