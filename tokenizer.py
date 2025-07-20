@@ -1,6 +1,4 @@
 import torch
-import random
-import json
 
 # IPA 字符串中的字符总数: 46 这个值记为 n
 

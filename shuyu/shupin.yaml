@@ -297,7 +297,7 @@
 避: pi4
 檗: bo5
 逼: bi5
-鼻: Xpi2
+鼻: bi5
 笔: bi5
 必: bi5
 毕: bi5
@@ -438,13 +438,13 @@
 钸: bu1
 卟: bu1
 补: bu3
-捕: Rpu1
+捕: bu4
 哺: pu3
 埔: pu3
 卜: pu2
 卜: bu4
 布: bu4
-步: Rpu1
+步: bu4
 布: bu4
 怖: bu4
 部: bu4
@@ -537,7 +537,6 @@
 榇: cen4
 衬: cen4
 谶: cen4
-郭: go5
 杈: cha1
 嚓: cha1
 槎: cha1
@@ -878,7 +877,7 @@
 抢: ciang3
 戗: ciang4
 呛: ciang4
-像: Rciang1
+像: siang4
 燋: ziao4
 悄: ciao1
 劁: ciao1
@@ -921,7 +920,7 @@
 窃: cie5
 捷: zie5
 睫: zie5
-截: Rcve1
+截: cve5
 侵: cin1
 骎: cin1
 唚: cin1
@@ -1023,11 +1022,11 @@
 蹴: cu2
 措: cu4
 酢: zo5
-促: Cco2
-猝: Cco2
+促: cu5
+猝: cu5
 簇: cu5
 诎: cu5
-族: Cqio2
+族: cu5
 镞: cu5
 歘: cua2
 撺: cuan1
@@ -1088,7 +1087,7 @@
 蛴: cyi2
 槭: se5
 荠: zyi1
-七: Cqie2
+七: cyi5
 沏: cyi5
 柒: cyi5
 戚: cyi5
@@ -1099,7 +1098,7 @@
 葺: cyi5
 碛: cyi5
 打: da3
-大: Rda1
+大: dai4
 耷: da5
 搭: da5
 褡: da5
@@ -1197,7 +1196,7 @@
 捯: dao3
 捣: dao3
 祷: dao3
-倒: Rdou3
+倒: dao4
 到: dao4
 蹈: dao4
 悼: dao4
@@ -1262,7 +1261,7 @@
 籴: di5
 睇: di5
 觌: di5
-的: Ddi
+的: di5
 翟: ze5
 𪮟: dia1
 嗲: lia2
@@ -1391,7 +1390,7 @@
 胴: dong4
 冻: dong4
 硐: dong4
-动: Rdong1
+动: dong4
 栋: dong4
 胨: dong4
 幢: dong4
@@ -1419,7 +1418,7 @@
 赌: du3
 芏: du4
 杜: du4
-肚: Rdu1
+肚: du4
 妒: du4
 渡: du4
 镀: du4
@@ -1911,6 +1910,7 @@
 馃: go3
 过: go4
 崞: go5
+郭: go5
 角: jio5
 工: gong1
 弓: gong1
@@ -2100,7 +2100,7 @@
 虾: ha1
 哈: ha3
 傻: sha3
-下: Rxia1
+下: xia3
 吓: xia4
 嗨: hai1
 咍: hai1
@@ -2111,7 +2111,7 @@
 偕: xiai2
 海: hai3
 醢: hai3
-蟹: Xkai3
+蟹: xiai4
 胲: hai4
 亥: hai4
 氦: hai4
@@ -2304,7 +2304,7 @@
 劐: ho5
 锪: ho5
 豁: ho1
-活: Rho1
+活: ho5
 霍: ho5
 获: ho5
 攉: ho5
@@ -2419,7 +2419,7 @@
 厚: hou4
 垕: hou4
 逅: hou4
-后: Rhou1
+后: hou4
 洉: hou4
 候: hou4
 鲘: hou4
@@ -2715,17 +2715,17 @@
 圾: ji5
 芨: ji5
 嵇: ji5
-激: Cjie2
-击: Cjie2
-及: Cjie2
-吉: Cjie2
+激: ji5
+击: ji5
+及: ji5
+吉: ji5
 岌: ji5
 汲: ji5
 佶: ji5
 亟: ji5
 笈: ji5
 急: ji5
-级: Cjie2
+级: ji5
 极: ji5
 棘: ji5
 殛: ji5
@@ -2815,7 +2815,7 @@
 简: jian3
 碱: jian3
 锏: jian3
-囝: Rlan3
+囝: lan1
 笕: jian4
 件: jian4
 见: jian4
@@ -3125,7 +3125,7 @@
 鞠: ju5
 局: ju5
 局: ju5
-菊: Cqio2
+菊: ju5
 焗: ju5
 跼: ju5
 锔: ju5
@@ -3309,7 +3309,7 @@
 眗: kou1
 芤: kou1
 𠛅: kou1
-抠: Xou1
+抠: kou1
 眍: kou1
 竘: kou1
 鏂: kou1
@@ -3436,7 +3436,7 @@
 摣: la2
 喇: la3
 哪: la3
-那: Rle1
+那: la4
 娜: la1
 邋: la5
 旯: la5
@@ -3564,7 +3564,7 @@
 耨: lao4
 叻: le5
 呢: ni2
-这: Rzhe1
+这: zhe4
 仂: le5
 泐: le5
 勒: le5
@@ -3580,7 +3580,7 @@
 愣: len4
 嫩: len4
 嫰: len4
-恁: Rlen1
+恁: len4
 媆: len4
 腝: len4
 臑: ru2
@@ -3858,7 +3858,7 @@
 瘰: lo2
 蠃: lo2
 荦: lo2
-挪: Xlo4
+挪: lo2
 傩: lo2
 捋: lv3
 漯: ta5
@@ -3919,7 +3919,7 @@
 搂: lou1
 陋: lou4
 漏: lou4
-露: Rlu1
+露: lu4
 噜: lu1
 卢: lu2
 垆: lu2
@@ -3953,7 +3953,7 @@
 掳: lu3
 努: lu3
 弩: lu3
-路: Rlu1
+路: lu4
 潞: lu4
 璐: lu4
 怒: lu4
@@ -4151,7 +4151,7 @@
 未: wei4
 扪: men1
 焖: men1
-们: Rmen2
+们: men1
 闷: men4
 门: men2
 钔: men2
@@ -4190,7 +4190,7 @@
 媚: mi4
 汨: mi5
 宓: mi5
-觅: Cmie2
+觅: mi5
 密: mi5
 幂: mi5
 嘧: mi5
@@ -4280,7 +4280,7 @@
 魔: mo2
 麿: mo2
 耱: mo2
-磨: Rmo1
+磨: mo4
 嫫: mo5
 摹: mo5
 谟: mo5
@@ -4363,7 +4363,7 @@
 硪: ngo2
 莪: ngo3
 我: ngo3
-饿: Ro1
+饿: ngo4
 鳄: ngo5
 握: ngo5
 幄: ngo5
@@ -4399,7 +4399,7 @@
 艺: ni4
 议: ni4
 呓: ni4
-逆: Cnie2
+逆: ni5
 匿: ni5
 溺: niao4
 拈: nian1
@@ -4435,7 +4435,7 @@
 茑: niao3
 嬲: niao3
 脲: niao4
-尿: Rniao1
+尿: sui1
 捏: nie1
 臬: nie5
 涅: nie5
@@ -4454,7 +4454,7 @@
 摄: she5
 脌: nin2
 囜: nin2
-您: Rnin3
+您: nin2
 拰: nin2
 凝: lin4
 聍: nin2
@@ -4531,7 +4531,7 @@
 滂: pang2
 逄: pang2
 旁: pang2
-螃: Xpang2
+螃: pang2
 庞: pang2
 鳑: pang2
 耪: pang2
@@ -4616,7 +4616,7 @@
 鼙: pi2
 仳: pi2
 甓: pi2
-劈: Cpie2
+劈: pi5
 圮: pi3
 痞: pi3
 屁: pi4
@@ -4859,7 +4859,7 @@
 弃: qi4
 器: qi4
 褉: qi4
-乞: Cqie2
+乞: qi5
 迄: qi5
 汔: qi5
 泣: xi5
@@ -5039,7 +5039,7 @@
 蘧: qu4
 阒: qu4
 觑: qu4
-去: Dqu4
+去: qu4
 屈: qu5
 曲: qu5
 拳: quan2
@@ -5152,7 +5152,7 @@
 纴: ren4
 饪: ren4
 韧: ren4
-认: Rren1
+认: ren4
 釰: ri2
 肏: ri5
 鈤: ri5
@@ -5217,7 +5217,7 @@
 溽: ru5
 褥: ru5
 缛: ru5
-阮: Rngun3
+阮: ruan3
 朊: ruan3
 软: ruan3
 蕊: rui3
@@ -5505,7 +5505,7 @@
 偿: shang2
 晌: shao3
 赏: shang3
-上: Rshang1
+上: shang4
 尚: shang4
 縿: shao1
 捎: shao1
@@ -5662,7 +5662,7 @@
 式: shi4
 侍: shi4
 拭: shi4
-是: Rshi1
+是: shi4
 恃: shi4
 逝: shi4
 舐: shi4
@@ -5681,8 +5681,8 @@
 失: shi5
 湿: shi5
 湿: shi5
-十: Rshi1
-石: Rshi1
+十: shi5
+石: shi5
 拾: shi5
 食: shi5
 炻: shi5
@@ -5750,7 +5750,7 @@
 墅: shu4
 竖: shu4
 澍: shu4
-树: Rshu1
+树: shu4
 叔: shu5
 倏: shu5
 菽: shu5
@@ -5761,7 +5761,7 @@
 赎: shu5
 蜀: shu5
 属: shu5
-束: Cso2
+束: shu5
 述: shu5
 沭: shu5
 术: shu5
@@ -6023,7 +6023,7 @@
 鎻: so3
 溯: so4
 摍: so5
-缩: Xxuu5
+缩: so5
 索: so5
 漎: song1
 憁: song1
@@ -6105,10 +6105,10 @@
 僳: su4
 觫: su4
 簌: su4
-俗: Csu2
+俗: su5
 夙: su5
 速: su5
-粟: Csu2
+粟: su5
 肃: su5
 谡: su5
 宿: su5
@@ -6236,7 +6236,7 @@
 昔: syi5
 析: syi5
 穸: syi5
-息: Cxie2
+息: syi5
 悉: syi5
 淅: syi5
 惜: syi5
@@ -6255,7 +6255,7 @@
 舄: syi5
 潟: syi5
 裼: ti5
-他: Rla1
+他: ta1
 它: ta1
 她: ta1
 佗: to2
@@ -6402,7 +6402,7 @@
 替: ti4
 𣨼: ti4
 嚏: ti4
-踢: Ctie2
+踢: ti5
 倜: ti5
 逖: ti5
 天: tian1
@@ -6687,7 +6687,7 @@
 吻: wen3
 稳: wen3
 紊: wen4
-问: Rwen1
+问: wen4
 璺: wen4
 呜: wu1
 屙: wo1
@@ -6898,7 +6898,7 @@
 荇: xin4
 幸: xin4
 悻: xin4
-学: Rxio1
+学: xio5
 泶: xio5
 谑: xio5
 焸: xiong1
@@ -7101,7 +7101,7 @@
 痒: yang3
 恙: yang4
 漾: yang4
-样: Ryang1
+样: yang4
 么: yao1
 夭: yao1
 吆: yao1
@@ -7148,7 +7148,7 @@
 冶: ye3
 野: ye3
 嘢: ye3
-夜: Rye1
+夜: ye4
 液: yi5
 腋: yi5
 掖: ye5
@@ -7385,7 +7385,7 @@
 侑: you3
 宥: you3
 莠: you4
-又: Ryou1
+又: you4
 右: you4
 幼: you4
 佑: you4
@@ -7451,10 +7451,10 @@
 窳: yu3
 屿: yu3
 龉: yu3
-喂: Xyu4
+喂: yu4
 雩: yu4
 玉: yu4
-芋: Ryu1
+芋: yu4
 驭: yu4
 遇: yu4
 喻: yu4
@@ -7477,6 +7477,7 @@
 肀: yu5
 役: yu5
 疫: yu5
+六: lu5
 聿: lu5
 郁: yu5
 育: yu5
@@ -8161,7 +8162,7 @@
 翥: zhu3
 宁: zhu4
 伫: zhu4
-住: Rzhu1
+住: zhu4
 伫: zhu4
 苎: zhu4
 注: zhu4
@@ -8392,10 +8393,10 @@
 僦: ziu1
 鹫: ziu1
 酒: ziu3
-就: Rziu1
+就: dou4
 左: zo3
 佐: zo3
-坐: Rzo1
+坐: zo4
 座: zo4
 唑: zo5
 捽: cu5
@@ -8501,22 +8502,22 @@
 霁: zyi4
 哜: zyi4
 缉: zyi5
-积: Cjie2
-即: Cjie2
+积: zyi5
+即: zyi5
 疾: zyi5
 戢: zyi5
-集: Cjie2
+集: zyi5
 蒺: zyi5
 楫: zyi5
 嵴: zyi5
 嫉: zyi5
 瘠: zyi5
 辑: zyi5
-籍: Cjie2
-脊: Cjie2
+籍: zyi5
+脊: zyi5
 迹: zyi5
 寂: zyi5
-迹: Cjie2
+迹: zyi5
 绩: zyi5
 迹: zyi5
 鲫: zyi5
@@ -12904,6 +12905,7 @@
 僩: xian4
 橌: xian4
 臔: xian4
+𠯟: xian4
 鼸: xian4
 豏: xian4
 壏: xian4
@@ -12924,6 +12926,7 @@
 衖: xiang4
 萫: xiang4
 膮: xiao3
+𢙒: xiao1
 嚻: xiao1
 獢: xiao1
 虈: xiao1
@@ -13021,6 +13024,7 @@
 楥: xuan4
 韗: yun4
 袨: xuan4
+𫖇: xue1
 狘: xue5
 泬: xue5
 瞲: xue5
@@ -13079,6 +13083,7 @@
 𬸘: yan3
 褗: yan4
 蝘: yan3
+𫚢: yan3
 𪩘: yan3
 躽: yan4
 嬿: yan4
@@ -13093,6 +13098,7 @@
 夵: yan3
 顩: zhen4
 隒: yan3
+𪡋: yan4
 黡: yan3
 檿: yan3
 擪: ye5
@@ -14299,5 +14305,4 @@
 匟: kang3
 冚: kang3
 裀: yin1
-六: Dlu5
 咹: an
