@@ -4,8 +4,10 @@
   <img src="assets/logo.png" alt="Phonetic DialectGen Logo" width="500"/>
 </p>
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.10-blue.svg"></a>
+</p>
 
 ## 项目简介
 
@@ -93,6 +95,7 @@ phonetic_dialectgen/
 
 - 四川话效果
 > “伙计，今朝你吃了啥子没得？这个系统安逸得很咯！”
+
 <audio controls>
   <source src="assets/3.wav" type="audio/wav">
 </audio>
