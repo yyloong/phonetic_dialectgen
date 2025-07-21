@@ -7,7 +7,9 @@ from torch.nn import functional as F
 class StandardScaler:
     """StandardScaler for mean-scale normalization with the given mean and scale values."""
 
-    def __init__(self, mean: np.ndarray = None, scale: np.ndarray = None) -> None:
+    def __init__(
+        self, mean: np.ndarray = None, scale: np.ndarray = None
+    ) -> None:
         self.mean_ = mean
         self.scale_ = scale
 
@@ -45,12 +47,19 @@ def sequence_mask(sequence_length, max_len=None):
     """
     if max_len is None:
         max_len = sequence_length.max()
-    seq_range = torch.arange(max_len, dtype=sequence_length.dtype, device=sequence_length.device)
+    seq_range = torch.arange(
+        max_len, dtype=sequence_length.dtype, device=sequence_length.device
+    )
     # B x T_max
     return seq_range.unsqueeze(0) < sequence_length.unsqueeze(1)
 
 
-def segment(x: torch.tensor, segment_indices: torch.tensor, segment_size=4, pad_short=False):
+def segment(
+    x: torch.tensor,
+    segment_indices: torch.tensor,
+    segment_size=4,
+    pad_short=False,
+):
     """Segment each sample in a batch based on the provided segment indices
 
     Args:
@@ -77,7 +86,11 @@ def segment(x: torch.tensor, segment_indices: torch.tensor, segment_size=4, pad_
 
 
 def rand_segments(
-    x: torch.tensor, x_lengths: torch.tensor = None, segment_size=4, let_short_samples=False, pad_short=False
+    x: torch.tensor,
+    x_lengths: torch.tensor = None,
+    segment_size=4,
+    let_short_samples=False,
+    pad_short=False,
 ):
     """Create random segments based on the input lengths.
 
@@ -123,7 +136,9 @@ def average_over_durations(values, durs):
     """
     durs_cums_ends = torch.cumsum(durs, dim=1).long()
     durs_cums_starts = torch.nn.functional.pad(durs_cums_ends[:, :-1], (1, 0))
-    values_nonzero_cums = torch.nn.functional.pad(torch.cumsum(values != 0.0, dim=2), (1, 0))
+    values_nonzero_cums = torch.nn.functional.pad(
+        torch.cumsum(values != 0.0, dim=2), (1, 0)
+    )
     values_cums = torch.nn.functional.pad(torch.cumsum(values, dim=2), (1, 0))
 
     bs, l = durs_cums_ends.size()
@@ -131,10 +146,17 @@ def average_over_durations(values, durs):
     dcs = durs_cums_starts[:, None, :].expand(bs, n_formants, l)
     dce = durs_cums_ends[:, None, :].expand(bs, n_formants, l)
 
-    values_sums = (torch.gather(values_cums, 2, dce) - torch.gather(values_cums, 2, dcs)).float()
-    values_nelems = (torch.gather(values_nonzero_cums, 2, dce) - torch.gather(values_nonzero_cums, 2, dcs)).float()
+    values_sums = (
+        torch.gather(values_cums, 2, dce) - torch.gather(values_cums, 2, dcs)
+    ).float()
+    values_nelems = (
+        torch.gather(values_nonzero_cums, 2, dce)
+        - torch.gather(values_nonzero_cums, 2, dcs)
+    ).float()
 
-    avg = torch.where(values_nelems == 0.0, values_nelems, values_sums / values_nelems)
+    avg = torch.where(
+        values_nelems == 0.0, values_nelems, values_sums / values_nelems
+    )
     return avg
 
 
@@ -157,9 +179,12 @@ def generate_path(duration, mask):
     cum_duration_flat = cum_duration.view(b * t_x)
     path = sequence_mask(cum_duration_flat, t_y).to(mask.dtype)
     path = path.view(b, t_x, t_y)
-    path = path - F.pad(path, convert_pad_shape([[0, 0], [1, 0], [0, 0]]))[:, :-1]
+    path = (
+        path - F.pad(path, convert_pad_shape([[0, 0], [1, 0], [0, 0]]))[:, :-1]
+    )
     path = path * mask
     return path
+
 
 def maximum_path(value, mask, max_neg_val=None):
     """
@@ -182,7 +207,9 @@ def maximum_path(value, mask, max_neg_val=None):
     v = np.zeros((b, t_x), dtype=np.float32)
     x_range = np.arange(t_x, dtype=np.float32).reshape(1, -1)
     for j in range(t_y):
-        v0 = np.pad(v, [[0, 0], [1, 0]], mode="constant", constant_values=max_neg_val)[:, :-1]
+        v0 = np.pad(
+            v, [[0, 0], [1, 0]], mode="constant", constant_values=max_neg_val
+        )[:, :-1]
         v1 = v
         max_mask = v1 >= v0
         v_max = np.where(max_mask, v1, v0)
@@ -203,7 +230,9 @@ def maximum_path(value, mask, max_neg_val=None):
     return path
 
 
-def beta_binomial_prior_distribution(phoneme_count, mel_count, scaling_factor=1.0):
+def beta_binomial_prior_distribution(
+    phoneme_count, mel_count, scaling_factor=1.0
+):
     P, M = phoneme_count, mel_count
     x = np.arange(0, P)
     mel_text_probs = []
@@ -223,6 +252,7 @@ def compute_attn_prior(x_len, y_len, scaling_factor=1.0):
         scaling_factor,
     )
     return attn_prior  # [y_len, x_len]
+
 
 class KeepAverage:
     def __init__(self):
@@ -246,10 +276,14 @@ class KeepAverage:
         else:
             # else update existing value
             if weighted_avg:
-                self.avg_values[name] = 0.99 * self.avg_values[name] + 0.01 * value
+                self.avg_values[name] = (
+                    0.99 * self.avg_values[name] + 0.01 * value
+                )
                 self.iters[name] += 1
             else:
-                self.avg_values[name] = self.avg_values[name] * self.iters[name] + value
+                self.avg_values[name] = (
+                    self.avg_values[name] * self.iters[name] + value
+                )
                 self.iters[name] += 1
                 self.avg_values[name] /= self.iters[name]
 

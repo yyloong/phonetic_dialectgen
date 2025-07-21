@@ -7,3 +7,5 @@ tqdm
 matplotlib
 librosa
 bigvgan
+ToJyutping
+ordered-set
