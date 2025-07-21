@@ -29,8 +29,8 @@ def main():
         num_block_layers=6,       # 从 4 增加到 6
 
         # 训练参数
-        csv_file="aitts3.csv",
-        root_path="aitts3",  # 假设数据存储在这个路径下
+        csv_file="/mnt/nas/shared/datasets/voices/AItts/AItts3/aitts3.csv",
+        root_path="../melspec",  # 假设数据存储在这个路径下
         epochs=10000,
         data_dep_init_steps=40,
         batch_size=16,
@@ -60,8 +60,8 @@ def main():
     )
     
     # 开始训练
-    # trainer.fit()
-    trainer.fit_from_checkpoint("outputs/checkpoint_step_119999.pth", config)  # 从检查点恢复训练
+    trainer.fit()
+    #trainer.fit_from_checkpoint("outputs/checkpoint_step_119999.pth", config)  # 从检查点恢复训练
 
 if __name__ == "__main__":
     main()
