@@ -1,4 +1,8 @@
-# Phonetic DialectGen TTS 项目
+# Phonetic DialectGen TTS
+
+![Phonetic DialectGen Logo](assets/logo.png)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 
 ## 项目简介
 
@@ -57,7 +61,7 @@ phonetic_dialectgen/
 ├── bigvgan22HZ/        # BigVGAN 声码器相关代码和权重
 ├── layers/             # 神经网络层实现
 ├── misc/               # 辅助脚本和资源
-├── tokenizer.py        # IPA/拼音/粤拼等文本编码
+├── tokenizer.py        # 文本编码
 ├── model.py            # GlowTTS 主模型
 ├── config.py           # 模型配置
 ├── trainer.py          # 训练器
@@ -67,6 +71,8 @@ phonetic_dialectgen/
 ├── utils.py            # 工具函数
 ├── requirements.txt    # 依赖包列表
 ```
+
+## 效果展示
 
 ## 扩展与定制
 
