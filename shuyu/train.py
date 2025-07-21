@@ -64,7 +64,7 @@ def main():
     # 开始训练
     # trainer.fit()
     trainer.fit_from_checkpoint(
-        checkpoint_path="./outputs/checkpoint_step_99999.pth",
+        checkpoint_path="./outputs/checkpoint_step_149999.pth",
         config=config
     )
 
