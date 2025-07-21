@@ -1,6 +1,8 @@
 # Phonetic DialectGen TTS
 
-![Phonetic DialectGen Logo](assets/logo.png)
+<p align="center">
+  <img src="assets/logo.png" alt="Phonetic DialectGen Logo" width="200"/>
+</p>
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 
@@ -74,6 +76,26 @@ phonetic_dialectgen/
 
 ## 效果展示
 
+- 普通话效果
+> “你好，欢迎使用通用语音合成系统。我们的模型基于国际音标构建，支持多种语言和方言。”
+
+<audio controls>
+  <source src="assets/1.wav" type="audio/wav">
+</audio>
+
+- 粤语效果
+> “早唞！歡迎你嚟試下我哋嘅語音系統。依家我哋已經支援廣東話喇！”
+
+<audio controls>
+  <source src="assets/2.wav" type="audio/wav">
+</audio>
+
+- 四川话效果
+> “伙计，今朝你吃了啥子没得？这个系统安逸得很咯！”
+<audio controls>
+  <source src="assets/3.wav" type="audio/wav">
+</audio>
+
 ## 扩展与定制
 
 - 支持自定义训练数据和方言
@@ -91,7 +113,7 @@ phonetic_dialectgen/
 感谢以下开源项目和资源, 我们在此基础上进行了扩展和改进：
 - [GlowTTS](https://github.com/jaywalnut310/glow-tts)
 - [Coqui TTS](https://github.com/coqui-ai/TTS)
-- [BigVGAN]()
+- [BigVGAN](https://huggingface.co/nvidia/bigvgan_v2_22khz_80band_256x)
 
 ## 联系与贡献
 

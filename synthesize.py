@@ -41,11 +41,11 @@ def main():
 
     # 如果检查点包含配置，则可以直接加载
     # 混合模型
-    checkpoint_path = "./weights/hybrid.pth"
+    # checkpoint_path = "./weights/hybrid.pth"
     # 普通话模型
     # checkpoint_path = "./weights/mandarin.pth"
     # 粤语模型
-    # checkpoint_path = "./weights/cantonese.pth"
+    checkpoint_path = "./weights/cantonese.pth"
 
     # 如果是仅包含模型权重的文件，还需要提供 config
     # checkpoint_path = "./outputs/best_model.pth"
@@ -75,7 +75,7 @@ def main():
     model, config = load_model_from_checkpoint(checkpoint_path, config=config)
 
     # 2. 准备输入文本
-    Chinese_text = "松鼠在悠闲地过它的暑假。"  # 中文文本
+    Chinese_text = "早唞！歡迎你嚟試下我哋嘅語音系統。依家我哋已經支援廣東話喇！"  # 中文文本
     language = "jyutping"  # "pinyin" 或 "jyutping"
     text, failed_words, success = text_to_IPA(Chinese_text, language)
 

@@ -5,7 +5,7 @@ test_data/
 clips_wav_melspec/
 aitts*/
 *.pt
-*.wav
+# *.wav
 *.csv
 
 .env
