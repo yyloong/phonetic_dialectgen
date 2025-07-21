@@ -82,23 +82,17 @@ phonetic_dialectgen/
 - 普通话效果
 > “你好，欢迎使用通用语音合成系统。我们的模型基于国际音标构建，支持多种语言和方言。”
 
-<audio controls>
-  <source src="assets/1.wav" type="audio/wav">
-</audio>
+[点击试听音频](assets/1.wav)
 
 - 粤语效果
 > “早唞！歡迎你嚟試下我哋嘅語音系統。依家我哋已經支援廣東話喇！”
 
-<audio controls>
-  <source src="assets/2.wav" type="audio/wav">
-</audio>
+[点击试听音频](assets/2.wav)
 
 - 四川话效果
 > “伙计，今朝你吃了啥子没得？这个系统安逸得很咯！”
 
-<audio controls>
-  <source src="assets/3.wav" type="audio/wav">
-</audio>
+[点击试听音频](assets/3.wav)
 
 ## 扩展与定制
 
