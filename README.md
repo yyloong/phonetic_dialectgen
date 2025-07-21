@@ -81,6 +81,12 @@ phonetic_dialectgen/
 - 语言学研究与语音数据增强
 - 智能语音助手、播报系统等
 
+## Acknowledgements
+感谢以下开源项目和资源, 我们在此基础上进行了扩展和改进：
+- [GlowTTS](https://github.com/jaywalnut310/glow-tts)
+- [Coqui TTS](https://github.com/coqui-ai/TTS)
+- [BigVGAN]()
+
 ## 联系与贡献
 
 欢迎提交 issue 或 PR，交流语言学与 TTS 技术！
