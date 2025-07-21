@@ -55,6 +55,11 @@ def main():
     )
 
     # 开始训练
+    # trainer.fit()
+    trainer.fit_from_checkpoint(
+        "finetune/checkpoint_step_134999.pth", config
+    )  # 从检查点恢复训练
+
     trainer.fit()
     #trainer.fit_from_checkpoint("outputs/checkpoint_step_119999.pth", config)  # 从检查点恢复训练
 
