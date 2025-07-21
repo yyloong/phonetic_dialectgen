@@ -1,8 +1,9 @@
 # Phonetic DialectGen TTS
 
 <p align="center">
-  <img src="assets/logo.png" alt="Phonetic DialectGen Logo" width="200"/>
+  <img src="assets/logo.png" alt="Phonetic DialectGen Logo" width="500"/>
 </p>
+
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
 
