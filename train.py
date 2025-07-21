@@ -60,6 +60,8 @@ def main():
         "finetune/checkpoint_step_134999.pth", config
     )  # 从检查点恢复训练
 
+    trainer.fit()
+    #trainer.fit_from_checkpoint("outputs/checkpoint_step_119999.pth", config)  # 从检查点恢复训练
 
 if __name__ == "__main__":
     main()
