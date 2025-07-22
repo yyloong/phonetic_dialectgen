@@ -36,4 +36,4 @@ parallel_wav_to_melspec.py 中提供了更加具体的使用以及通过并行�
 定义了一些工具方法
 
 #### 使用说明
-请从XXXXXXX 下载数据集，并利用上述API对文本数据和.wav文件进行处理得到IPA和梅尔频谱的.pt文件,然后将文本数据整理到一个.csv文件中,确保audio这一列和数据存放地址对应(不含后缀名),然后在config.py文件中指定存放梅尔频谱的root_path和csv文件的path,通过train.py对模型进行训练并保存checkpoint,在synthesize.py中运行模型进行测试
+请从XXXXXXX 下载数据集，并利用上述API对文本数据和.wav文件进行处理得到IPA和梅尔频谱的.pt文件,然后将文本数据整理到一个.csv文件中,确保audio这一列和数据存放地址对应(不含后缀名),然后在config.py文件中指定存放梅尔频谱的root_path和csv文件的path,通过train.py对模型进行训练(需要指定是否通过checkpoint进行训练)并保存checkpoint,在synthesize.py中运行模型进行测试
