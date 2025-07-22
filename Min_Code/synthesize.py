@@ -2,7 +2,7 @@ import torch
 from model import GlowTTS
 from config import GlowTTSConfig
 from tokenizer import TTSTokenizer
-from bigvgan22HZ import Load_Bigvgan
+from load_bigvgan import Load_Bigvgan
 from Character_to_IPA.Text_to_IPA import text_to_IPA
 
 
