@@ -47,6 +47,8 @@ pip install -r requirements.txt
 
 ### 训练模型
 
+设置好 config 之后，运行以下命令开始训练：
+
 ```bash
 python train.py
 ```
