@@ -29,7 +29,7 @@ def main():
         num_block_layers=6,       # 从 4 增加到 6
 
         # 训练参数
-        csv_file="blank_space.csv",
+        csv_file="/home/u-wuhc/backup/aitts3_shu_blank.csv",
         root_path="/home/u-wuhc/backup/sichuan-mel",
         test_csv_file="test_data.csv",
         test_root_path="/home/u-wuhc/backup/sichuan-mel",
@@ -64,7 +64,7 @@ def main():
     # 开始训练
     # trainer.fit()
     trainer.fit_from_checkpoint(
-        checkpoint_path="./outputs/checkpoint_step_149999.pth",
+        checkpoint_path="./weights/sichuan.pth",
         config=config
     )
 

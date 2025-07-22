@@ -26,8 +26,10 @@ def main():
         num_flow_blocks_dec=16,  # 从 12 增加到 16
         num_block_layers=6,  # 从 4 增加到 6
         # 训练参数
-        csv_file="mixed.csv",
-        root_path="/home/u-wuhc/backup/AItts",  # 假设数据存储在这个路径下
+        csv_file="/home/u-wuhc/backup/mixed.csv",
+        root_path="/home/u-wuhc/backup/AItts",
+        test_csv_file="test_data.csv",
+        test_root_path="/home/u-wuhc/backup/AItts",
         epochs=10000,
         data_dep_init_steps=80,
         batch_size=40,
@@ -57,9 +59,8 @@ def main():
     # 开始训练
     # trainer.fit()
     trainer.fit_from_checkpoint(
-        "finetune/checkpoint_step_134999.pth", config
+        "./weights/hybrid.pth", config
     )  # 从检查点恢复训练
-
 
 if __name__ == "__main__":
     main()
