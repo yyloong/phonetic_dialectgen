@@ -18,6 +18,7 @@ Min_Code 是能够复现模型的最小代码集合。
 | **trainer.py** | 模型训练逻辑的类定义 |
 | **train.py** | 模型训练的执行代码（支持从checkpoint恢复训练） |
 | **utils.py** | 通用工具方法集合 |
+| **load_bigvgan.py** | 用于加载bigvgan的文件 |
 
 
 #### 使用说明
@@ -30,6 +31,7 @@ Min_Code 是能够复现模型的最小代码集合。
 4. 在 `config.py` 中配置：
    - `root_path`：梅尔频谱文件的存放根目录
    - `path`：CSV文件的路径
+5. 执行 huggingface-cli download nvidia/bigvgan_v2_22khz_80band_256x --local-dir your bigvgan path从huggingface上下载模型
 5. 训练模型：
    运行trainer.py
 6. 测试模型：
