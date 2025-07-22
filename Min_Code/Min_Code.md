@@ -1,39 +1,36 @@
-#### Min_Code
-Min_Code 是能够复现模型的最小代码
+### Min_Code
+
+Min_Code 是能够复现模型的最小代码集合。
+
+
 #### 代码框架说明
-- Character_to_IPA
-这个文件夹里面Text_to_IPA.py 中包含将文本转化为IPA的接口,Text_to_IPA_in_csv.py 调用这一接口对.csv文件进行处理
 
-- Wav_to_Mel
-这个文件j夹面wav_to_melspec.py 中包含将波形图转化为梅尔频谱的接口
-parallel_wav_to_melspec.py 中提供了更加具体的使用以及通过并行对某个目录下的所有.wav文件进行统一处理为.pt文件的接口
+| 模块/文件 | 功能说明 |
+|-----------|----------|
+| **Character_to_IPA** | 文本转IPA（国际音标）工具<br>- `Text_to_IPA.py`：提供文本转IPA的核心接口<br>- `Text_to_IPA_in_csv.py`：调用上述接口批量处理CSV文件 |
+| **Wav_to_Mel** | 音频转梅尔频谱工具<br>- `wav_to_melspec.py`：提供波形图转梅尔频谱的核心接口<br>- `parallel_wav_to_melspec.py`：并行处理指定目录下的所有WAV文件，统一转为PT格式 |
+| **layers** | 存放模型定义所需的网络模块组件 |
+| **config.py** | 模型参数与训练参数的配置文件 |
+| **dataset.py** | 定义模型所需的数据集类及对应的`collate_fn`方法 |
+| **model.py** | 模型结构的核心类定义 |
+| **synthesize.py** | 加载训练好的模型权重，用于输入输出测试 |
+| **tokenizer.py** | 将模型的文本输入转换为IPA格式 |
+| **trainer.py** | 模型训练逻辑的类定义 |
+| **train.py** | 模型训练的执行代码（支持从checkpoint恢复训练） |
+| **utils.py** | 通用工具方法集合 |
 
-- layers
-模型定义所需的网络模块
-
-- config.py
-用于对模型参数和训练参数进行配置
-
-- dataset.py
-定义了模型需要的特定数据集类和相应的collate_fn方法
-
-- model.py
-定义了模型结构的类
-
-- synthesize.py
-用于加载训练好的模型权重并进行输入输出测试
-
-- tokenizer.py
-用于将模型文本入转化为IPA
-
-- trainer.py
-定义了模型训练的类
-
-- train.py
-定义了模型训练的代码
-
-- utils.py
-定义了一些工具方法
 
 #### 使用说明
-请从XXXXXXX 下载数据集，并利用上述API对文本数据和.wav文件进行处理得到IPA和梅尔频谱的.pt文件,然后将文本数据整理到一个.csv文件中,确保audio这一列和数据存放地址对应(不含后缀名),然后在config.py文件中指定存放梅尔频谱的root_path和csv文件的path,通过train.py对模型进行训练(需要指定是否通过checkpoint进行训练)并保存checkpoint,在synthesize.py中运行模型进行测试
+
+1. 从 [XXXXXXX](链接地址) 下载数据集
+2. 使用工具预处理数据：
+   - 文本数据：通过 `Character_to_IPA` 模块转换为IPA格式
+   - 音频文件：通过 `Wav_to_Mel` 模块转换为梅尔频谱（PT格式）
+3. 整理文本数据为CSV文件，确保 `audio` 列与梅尔频谱文件的存放路径对应（不含文件后缀）
+4. 在 `config.py` 中配置：
+   - `root_path`：梅尔频谱文件的存放根目录
+   - `path`：CSV文件的路径
+5. 训练模型：
+   运行trainer.py
+6. 测试模型：
+   运行synthesize.py
