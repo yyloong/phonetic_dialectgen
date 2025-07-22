@@ -1,9 +1,10 @@
 import pandas as pd
-import tqdm
+from tqdm import tqdm
 import os
 from Text_to_IPA import text_to_IPA
 def process_csv(input_csv: str, input_col: int,languaga: str,save_path: str) -> str:
     """Process CSV file to add IPA."""
+    '''input_col is the number of column in you csv'''
     print(f"读取 CSV 文件：{input_csv}")
     df = pd.read_csv(input_csv)
     if input_col >= len(df.columns):
@@ -42,4 +43,5 @@ def process_csv(input_csv: str, input_col: int,languaga: str,save_path: str) -> 
     )
     return save_path
 
-
+if __name__=="__main__":
+    process_csv("your_path",1,"pinyin","your_path")
