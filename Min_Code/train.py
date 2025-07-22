@@ -55,6 +55,7 @@ def main():
     )
 
     # 开始训练
+    # 如果没有checkpoint 使用trainer.fit()
     # trainer.fit()
     trainer.fit_from_checkpoint(
         "finetune/checkpoint_step_134999.pth", config
