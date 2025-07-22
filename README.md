@@ -23,6 +23,17 @@
 
 ## 快速开始
 
+### 合成语音
+
+- 克隆项目代码
+- 将 BigVGAN 声码器的权重文件 `bigvgan_generator.pt` 放在 `bigvgan22HZ/model` 目录下。（该文件可以从 [Hugging Face BigVGAN 模型](https://huggingface.co/nvidia/bigvgan_v2_22khz_80band_256x/blob/main/bigvgan_generator.pt) 下载）
+- 将我们训练的预训练模型权重 `hybrid.pth`, `mandarin.pth`, `cantonese.pth` 和 `sichuan.pth` 放在仓库根目录新建的 `weights` 目录下。
+- 运行以下合成脚本
+
+```bash
+python synthesize.py
+```
+
 ### 环境准备
 
 ```bash
@@ -40,11 +51,6 @@ pip install -r requirements.txt
 python train.py
 ```
 
-### 合成语音
-
-```bash
-python synthesize.py
-```
 
 ## 主要流程
 
@@ -64,6 +70,8 @@ phonetic_dialectgen/
 ├── shuyu/              # 四川蜀语方言相关代码
 ├── IPA/                # 国际音标（IPA）相关代码
 ├── bigvgan22HZ/        # BigVGAN 声码器相关代码和权重
+├── min_code/           # 最小化复现代码
+├── wav_to_mel/         # 音频转换为梅尔频谱
 ├── layers/             # 神经网络层实现
 ├── misc/               # 辅助脚本和资源
 ├── tokenizer.py        # 文本编码
