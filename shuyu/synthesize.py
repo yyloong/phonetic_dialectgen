@@ -43,7 +43,7 @@ def load_model_from_checkpoint(checkpoint_path, config=None):
 
 def main():
     # 如果检查点包含配置，则可以直接加载
-    checkpoint_path = "./outputs/checkpoint_step_184999.pth" 
+    checkpoint_path = "./weights/sichuan.pth" 
 
     # 如果是仅包含模型权重的文件，还需要提供 config
     # checkpoint_path = "./outputs/best_model.pth"  
@@ -70,8 +70,7 @@ def main():
     model, config = load_model_from_checkpoint(checkpoint_path, config=config)
     
     # 为什么要加上一个空格？
-    text = "大熊猫在树上吃竹子。"
-    # text = "松鼠在悠闲地过它的暑假。"
+    text = "伙计，今朝你吃了啥子没得？这个系统安逸得很咯！"
     text = ' ' + text
     text = convert_text(text)
     print(f"转换后的文本: {text}")

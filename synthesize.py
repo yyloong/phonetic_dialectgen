@@ -75,7 +75,7 @@ def main():
     model, config = load_model_from_checkpoint(checkpoint_path, config=config)
 
     # 2. 准备输入文本
-    Chinese_text = "松鼠在悠闲地过它的暑假。"  # 中文文本
+    Chinese_text = "早唞！歡迎你嚟試下我哋嘅語音系統。依家我哋已經支援廣東話喇！"  # 中文文本
     language = "jyutping"  # "pinyin" 或 "jyutping"
     text, failed_words, success = text_to_IPA(Chinese_text, language)
 
