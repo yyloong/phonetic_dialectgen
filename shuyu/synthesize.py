@@ -69,8 +69,7 @@ def main():
 
     model, config = load_model_from_checkpoint(checkpoint_path, config=config)
     
-    # 为什么要加上一个空格？
-    text = "伙计，今朝你吃了啥子没得？这个系统安逸得很咯！"
+    text = "老子明天不上班,爽翻,巴适的板,老子明天不上班,想咋懒我就咋懒,老子明天不上班,不用见客户装孙子,明天不上班,可以活出一点真实,老子明天不上班,闹钟响也不用管,最烦每天清早八晨,听到闹钟在那喊。"
     text = ' ' + text
     text = convert_text(text)
     print(f"转换后的文本: {text}")
