@@ -1,0 +1,75 @@
+[model]
+model_name = "Vits"
+
+[model.TextEncoder]
+n_vocab = 47
+out_channels = 256
+hidden_channels = 512
+filter_channels =792
+n_heads = 4
+n_layers = 6
+kernel_size = 3
+p_dropout = 0.1
+
+
+[model.Decoder]
+in_channels = 256
+out_channels = 80
+hidden_channels = 512
+kernel_size = 3
+dilation_rate =1 
+n_layers = 6
+
+[model.PosteriorEncoder]
+in_channels = 80
+out_channels = 256
+hidden_channels = 512
+kernel_size = 5
+dilation_rate = 1
+n_layers = 16
+
+[model.ResidualCouplingBlock]
+channels = 256
+hidden_channels = 512
+kernel_size = 5
+dilation_rate = 1
+n_layers = 4
+n_flows = 4
+
+[model.DurationPredictor]
+in_channels = 512
+filter_channels = 256
+kernel_size = 3
+p_dropout = 0.1
+
+[train]
+epochs = 80
+print_step = 20
+save_step = 5000
+use_scheduler = false
+logs_step = 20
+output_path = "/home/u-longyy/week2/Min_Code/Vits_output"
+mandarin_file = "/home/u-longyy/week2/mandarin.csv"
+cantonese_file = "/home/u-longyy/week2/cantonese.csv"
+mandarin_num=49730
+cantonese_num=18975
+root_path = "/home/u-wuhc/backup/AItts"
+tensorboard_logs_dir =  "Vits_logs"
+device = "cuda:2"
+
+[dataloader]
+batch_size = 35
+shuffle = true
+
+[optimizer]
+type = "AdamW"
+[optimizer.params]
+lr=1e-4 
+betas=[0.9, 0.99]
+eps=1e-9
+
+[scheduler]
+type = "OneCycleLR"
+[scheduler.params]
+max_lr=1e-3
+total_steps=400

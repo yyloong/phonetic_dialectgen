@@ -4,24 +4,7 @@ import sys
 import multiprocessing as mp
 import os
 import torch
-import librosa
-
-
-def get_spectrogram(path):
-    '''TODO:change the parameter to fit the model if you use another moder'''
-    signal, _ = librosa.load(path, sr=22050, mono=True)
-    signal = torch.Tensor(signal)
-    spectrogram= mel_spectrogram(
-        y=signal.unsqueeze(0),
-        n_fft=1024,
-        num_mels=80,
-        sampling_rate=22050,
-        hop_size=256,
-        win_size=1024,
-        fmin=0,
-        fmax=None,
-    )
-    return spectrogram
+from wav_to_melspec import get_spectrogram
 
 
 def parallel_process(wav_dir, save_dir, process_fun, num_workers=mp.cpu_count()):

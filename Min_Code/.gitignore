@@ -1,0 +1,15 @@
+__pycache__
+
+output
+
+Glow-TTS_output
+
+Vits_output
+
+Glow-TTS_logs
+
+Vits_logs
+
+*.wav
+
+bigvgan22HZ
