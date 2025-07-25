@@ -1,0 +1,12 @@
+torch
+transformers
+numpy
+pandas
+scipy
+tqdm
+matplotlib
+librosa
+ToJyutping
+ordered-set
+huggingface_hub[cli]
+toml

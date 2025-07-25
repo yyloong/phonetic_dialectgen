@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from layers.generic.normalization import LayerNorm
+from .generic.normalization import LayerNorm
 
 
 class DurationPredictor(nn.Module):

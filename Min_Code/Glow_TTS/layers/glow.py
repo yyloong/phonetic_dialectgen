@@ -3,7 +3,7 @@ from packaging.version import Version
 from torch import nn
 from torch.nn import functional as F
 
-from layers.generic.wavenet import WN
+from .generic.wavenet import WN
 
 class LayerNorm(nn.Module):
     def __init__(self, channels, eps=1e-4):

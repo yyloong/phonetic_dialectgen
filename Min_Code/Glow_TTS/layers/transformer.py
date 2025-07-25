@@ -4,7 +4,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-from layers.generic.normalization import LayerNorm, LayerNorm2
+from .generic.normalization import LayerNorm, LayerNorm2
 
 
 class RelativePositionMultiHeadAttention(nn.Module):

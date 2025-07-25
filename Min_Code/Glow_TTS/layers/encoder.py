@@ -3,13 +3,13 @@ import math
 import torch
 from torch import nn
 
-from layers.generic.gated_conv import GatedConvBlock
-from layers.generic.res_conv_bn import ResidualConv1dBNBlock
-from layers.generic.time_depth_sep_conv import TimeDepthSeparableConvBlock
-from layers.duration_predictor import DurationPredictor
-from layers.glow import ResidualConv1dLayerNormBlock
-from layers.transformer import RelativePositionTransformer
-from utils import sequence_mask
+from .generic.gated_conv import GatedConvBlock
+from .generic.res_conv_bn import ResidualConv1dBNBlock
+from .generic.time_depth_sep_conv import TimeDepthSeparableConvBlock
+from .duration_predictor import DurationPredictor
+from .glow import ResidualConv1dLayerNormBlock
+from .transformer import RelativePositionTransformer
+from ..utils import sequence_mask
 
 
 class Encoder(nn.Module):

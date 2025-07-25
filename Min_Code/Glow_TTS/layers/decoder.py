@@ -1,8 +1,8 @@
 import torch
 from torch import nn
 
-from layers.generic.normalization import ActNorm
-from layers.glow import CouplingBlock, InvConvNear
+from .generic.normalization import ActNorm
+from .glow import CouplingBlock, InvConvNear
 
 
 def squeeze(x, x_mask=None, num_sqz=2):
@@ -136,6 +136,14 @@ class Decoder(nn.Module):
             x, x_mask = unsqueeze(x, x_mask, self.num_squeeze)
         return x, logdet_tot
 
-    def store_inverse(self):
-        for f in self.flows:
-            f.store_inverse()
+    def preprocess(self, y, y_lengths, y_max_length, attn=None):
+        if y_max_length is not None:
+            y_max_length = (y_max_length // self.num_squeeze) * self.num_squeeze
+            y = y[:, :, :y_max_length]
+            if attn is not None:
+                attn = attn[:, :, :, :y_max_length]
+        y_lengths = (
+            torch.div(y_lengths, self.num_squeeze, rounding_mode="floor")
+            * self.num_squeeze
+        )
+        return y, y_lengths, y_max_length, attn

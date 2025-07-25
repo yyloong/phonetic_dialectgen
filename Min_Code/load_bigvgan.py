@@ -1,15 +1,15 @@
 ### 请先添加 bigvgan22HZ 目录路径
 import sys
-sys.path.append("your bigvgan22HZ path")
-import bigvgan as bigvgan
+sys.path.append("/home/u-longyy/week2/Min_Code/bigvgan22HZ")
+import bigvgan
 import soundfile as sf
 import librosa
 import torch
-from meldataset import get_mel_spectrogram
+from Wav_to_Mel.wav_to_melspec import get_spectrogram
 
 
 class Load_Bigvgan:
-    def __init__(self, model_name="your bigvgan22 HZ"):
+    def __init__(self, model_name="/home/u-longyy/week2/Min_Code/bigvgan22HZ"):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = bigvgan.BigVGAN.from_pretrained(model_name)
         self.model.remove_weight_norm()
@@ -21,7 +21,7 @@ class Load_Bigvgan:
             h=self.h.sampling_rate
         wav, sr = librosa.load(path, sr=h, mono=True)
         wav = torch.FloatTensor(wav).unsqueeze(0)
-        mel = get_mel_spectrogram(wav, self.h)
+        mel = get_spectrogram(wav, self.h)
         return mel
 
     def spectrogram_to_wave(self, spectrogram, path):

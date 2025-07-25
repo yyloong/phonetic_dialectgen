@@ -1,14 +1,27 @@
 import os.path as osp
+from torch.nn.utils.rnn import pad_sequence
 import torch
 from torch.utils.data import Dataset
 import pandas as pd
+from from_IPA_to_Tensor.IPA_to_Tensor import ipa_to_tensor
 
 
 class TTSDataset(Dataset):
-    def __init__(self, tokenizer, csv_file, root_path):
-        self.data_df = pd.read_csv(csv_file)
+    def __init__(
+        self,
+        mandarin_file,
+        cantonese_file,
+        root_path,
+        mandarin_num=49730,
+        cantonese_num=18975,
+    ):
+        mandarin = pd.read_csv(mandarin_file)
+        cantonese = pd.read_csv(cantonese_file)
+        self.data_df = pd.concat(
+            [mandarin.sample(mandarin_num), cantonese.sample(cantonese_num)]
+        )
         print(self.data_df.head())
-        self.text_tokenizer = tokenizer
+        self.text_tokenizer = ipa_to_tensor
         self.root_path = root_path
 
     def __len__(self):
@@ -20,17 +33,17 @@ class TTSDataset(Dataset):
         text_tensor: 文本的张量表示
         """
         data = self.data_df.iloc[idx]
-        mel_path = (
-            str(data["audio"]) + ".pt"
-        )  # 存储的是 [B, C, T] 格式的 mel-spec
-        mel_tensor = torch.load(
-            osp.join(self.root_path, mel_path), map_location="cpu"
-        )
+        mel_path = str(data["audio"]) + ".pt"  # 存储的是 [B, C, T] 格式的 mel-spec
+        mel_tensor = torch.load(osp.join(self.root_path, mel_path), map_location="cpu")
+
         text_tensor = self.text_tokenizer(data["IPA"])
         return {
             "token_id": text_tensor,
             "token_id_lengths": len(text_tensor),
-            "mel": mel_tensor,  # [B, C, T]
+            "mel": mel_tensor.squeeze(0).transpose(
+                0, 1
+            ),  # [T, C] 方便后续使用 pad_sequence
+            "mel_length": mel_tensor.shape[-1],
         }
 
     def collate_fn(self, batch):
@@ -39,27 +52,19 @@ class TTSDataset(Dataset):
         token_id = [item["token_id"] for item in batch]
         token_id_lengths = [item["token_id_lengths"] for item in batch]
         mels = [item["mel"] for item in batch]
-
-        # 计算梅尔频谱长度
-        mel_lengths = [mel.shape[1] for mel in mels]  # 梅尔频谱的时间维度
+        mel_lengths = [item['mel_length'] for item in batch]
 
         # 文本数据 padding
-        max_text_len = max(token_id_lengths)
-        token_id_tensor = torch.LongTensor(len(batch), max_text_len).fill_(
-            self.get_pad_id()
+        token_id_tensor = pad_sequence(
+            token_id, batch_first=True, padding_value=self.get_pad_id()
         )
-        for i, length in enumerate(token_id_lengths):
-            token_id_tensor[i, :length] = torch.LongTensor(token_id[i])
 
         # 梅尔频谱数据 padding
-        max_mel_len = max(mel_lengths)
-        mel_dim = mels[0].shape[0]  # 频率维度
-        mel_tensor = torch.zeros(len(batch), mel_dim, max_mel_len)
-        for i, mel in enumerate(mels):
-            mel_length = mel.shape[1]
-            mel_tensor[i, :, :mel_length] = mel
+        mel_tensor = pad_sequence(
+            mels, batch_first=True, padding_value=self.get_pad_id()
+        )  # [B, T, C]
+        mel_tensor = mel_tensor.transpose(1, 2)  # [B, C, T]
 
-        # 返回 GlowTTS 期望的格式
         return {
             "token_ids": token_id_tensor,
             "token_ids_lengths": torch.LongTensor(token_id_lengths),

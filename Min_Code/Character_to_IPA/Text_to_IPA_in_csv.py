@@ -1,6 +1,5 @@
 import pandas as pd
 from tqdm import tqdm
-import os
 from Text_to_IPA import text_to_IPA
 def process_csv(input_csv: str, input_col: int,languaga: str,save_path: str) -> str:
     """Process CSV file to add IPA."""

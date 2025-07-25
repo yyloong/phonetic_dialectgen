@@ -3,8 +3,8 @@ import re
 from typing import Tuple, List
 import ToJyutping
 from pypinyin import lazy_pinyin, Style
-from language.jyutping import jyutping_to_ipa
-from language.pinyin import pinyin_to_ipa
+from .language.jyutping import jyutping_to_ipa
+from .language.pinyin import pinyin_to_ipa
 
 # Configure logging
 logging.basicConfig(
