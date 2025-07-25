@@ -2,6 +2,7 @@ from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
 import os
 from synthesize import synthesize
+from shuyu.synthesize import synthesize_sichuan
 
 app = Flask(__name__)
 CORS(app)
@@ -18,15 +19,19 @@ def generate():
     if not text:
         return jsonify({"error": "Text is required"}), 400
     language = data.get("language", "")
-    if language not in ["pinyin", "jyutping"]:
+    if language not in ["pinyin", "jyutping", "shupin"]:
         return jsonify({"error": "Invalid language"}), 400
     # 合成语音
     model_mapping = {
         "pinyin": "./weights/mandarin.pth",
-        "jyutping": "./weights/cantonese.pth"
+        "jyutping": "./weights/cantonese.pth",
+        "shupin": "./shuyu/weights/sichuan.pth"
     }
     checkpoint_path = model_mapping[language]
-    synthesize(checkpoint_path, text, language)
+    if language == "shupin":
+        synthesize_sichuan(checkpoint_path, text)
+    else:
+        synthesize(checkpoint_path, text, language)
     wav_path = "output.wav"
     if not os.path.exists(wav_path):
         return jsonify({"error": "Audio file not found"}), 500

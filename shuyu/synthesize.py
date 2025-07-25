@@ -70,7 +70,7 @@ def synthesize_sichuan(checkpoint_path, text):
 
 def main():
     checkpoint_path = "./weights/sichuan.pth"
-    text = "你好，欢迎使用四川话语音合成系统！"
+    text = "你好，欢迎使用四川话语音合成系统！我的名字叫做小川。"
     synthesize_sichuan(checkpoint_path, text)
 
 if __name__ == "__main__":
