@@ -1,6 +1,5 @@
 import torch
 from model import GlowTTS
-from config import GlowTTSConfig
 from tokenizer import TTSTokenizer
 from bigvgan22HZ import Load_Bigvgan
 from text_to_IPA import text_to_IPA
