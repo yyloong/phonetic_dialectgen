@@ -48,12 +48,12 @@ print_step = 20
 save_step = 5000
 use_scheduler = false
 logs_step = 20
-output_path = "/home/u-longyy/week2/Min_Code/Vits_output"
-mandarin_file = "/home/u-longyy/week2/mandarin.csv"
-cantonese_file = "/home/u-longyy/week2/cantonese.csv"
+output_path = "Vits_output"
+mandarin_file = "data/mandarin.csv"
+cantonese_file = "data/cantonese.csv"
 mandarin_num=49730
 cantonese_num=18975
-root_path = "/home/u-wuhc/backup/AItts"
+root_path = "data/AItts"
 tensorboard_logs_dir =  "Vits_logs"
 device = "cuda:2"
 
