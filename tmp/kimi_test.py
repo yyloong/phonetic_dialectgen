@@ -17,16 +17,19 @@ client = OpenAI(
 
 
 def preprocess_tts(sentence):
+    content = """你的任务是将用户输入的中文句子进行汉语TTS的text normalization:
+    1. 进行汉语中数字与数量表达的规范化；
+    2. 数学、物理等符号的口语化转换；
+    3. 将所有非中文文本直接进行汉语翻译，使得转换后的句子中仅包含中文；
+    注意：输出的结果中不能出现英文或阿拉伯数字！不要输出任何的额外信息！
+    """
     response = client.chat.completions.create(
         model="moonshot-v1-128k",
         messages=[
-            {
-                "role": "system",
-                "content": "将输入的中文句子进行汉语TTS的text normalization（进行汉语中数字与数量表达的规范化；数学、物理等符号的口语化转换；将所有非中文文本直接进行汉语音译（禁止翻译），使得转换后的句子中仅包含中文；最后返回转换后的句子。注意：输出的结果中不能出现英文或阿拉伯数字！不要输出任何的额外信息！",
-            },
+            {"role": "system", "content": content},
             {"role": "user", "content": sentence},
         ],
-        temperature=0.3,
+        temperature=0.5,
     )
     return response.choices[0].message.content
 
