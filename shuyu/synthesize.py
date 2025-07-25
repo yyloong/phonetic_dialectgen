@@ -1,6 +1,5 @@
 import torch
 from model import GlowTTS
-from config import GlowTTSConfig
 from tokenizer import ShuTokenizer
 import sys
 import os
@@ -40,42 +39,13 @@ def load_model_from_checkpoint(checkpoint_path, config=None):
           f"损失: {checkpoint.get('best_loss', 'N/A')}")
     return model, config
 
-
-def main():
-    # 如果检查点包含配置，则可以直接加载
-    checkpoint_path = "./weights/sichuan.pth" 
-
-    # 如果是仅包含模型权重的文件，还需要提供 config
-    # checkpoint_path = "./outputs/best_model.pth"  
-
-    config = GlowTTSConfig(
-        num_chars=39,
-        out_channels=80,
-        encoder_type="rel_pos_transformer",
-        encoder_params={
-            "kernel_size": 3,
-            "dropout_p": 0.1,
-            "num_layers": 12,
-            "num_heads": 8,
-            "hidden_channels_ffn": 1024,
-            "input_length": None,
-        },
-        hidden_channels_enc=256,
-        hidden_channels_dec=256,
-        hidden_channels_dp=400,
-        num_flow_blocks_dec=16,
-        num_block_layers=6,
-    )
-
-    model, config = load_model_from_checkpoint(checkpoint_path, config=config)
+def synthesize_sichuan(checkpoint_path, text):
+    model, config = load_model_from_checkpoint(checkpoint_path)
     
-    text = "老子明天不上班,爽翻,巴适的板,老子明天不上班,想咋懒我就咋懒,老子明天不上班,不用见客户装孙子,明天不上班,可以活出一点真实,老子明天不上班,闹钟响也不用管,最烦每天清早八晨,听到闹钟在那喊。"
     text = ' ' + text
     text = convert_text(text)
-    print(f"转换后的文本: {text}")
     tokenizer = ShuTokenizer()
     token_ids = tokenizer(text)
-    print(f"文本转换为token IDs: {token_ids}")
     
     # 转换为tensor
     text_input = torch.LongTensor(token_ids).unsqueeze(0)  # [1, seq_len]
@@ -95,6 +65,13 @@ def main():
     out_path = "output.wav"
     vocoder.spectrogram_to_wave(mel_spectrogram, out_path)
     print(f"🎵 音频已保存为 {out_path}")
+
+
+
+def main():
+    checkpoint_path = "./weights/sichuan.pth"
+    text = "你好，欢迎使用四川话语音合成系统！"
+    synthesize_sichuan(checkpoint_path, text)
 
 if __name__ == "__main__":
     main()
