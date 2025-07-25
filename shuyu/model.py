@@ -2,13 +2,14 @@ import math
 import torch
 from torch import nn
 
-from config import GlowTTSConfig
-from layers.decoder import Decoder
-from layers.encoder import Encoder
-from utils import generate_path, maximum_path, sequence_mask
+from shuyu.config import GlowTTSConfig
+from shuyu.layers.decoder import Decoder
+from shuyu.layers.encoder import Encoder
+from shuyu.dataset import TTSDataset
+from shuyu.tokenizer import ShuTokenizer
+from shuyu.utils import generate_path, maximum_path, sequence_mask
+
 from torch.utils.data import DataLoader
-from dataset import TTSDataset
-from tokenizer import ShuTokenizer
 
 
 class GlowTTS(nn.Module):

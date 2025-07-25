@@ -1,13 +1,10 @@
 import torch
-from model import GlowTTS
-from tokenizer import ShuTokenizer
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from shuyu.model import GlowTTS
+from shuyu.tokenizer import ShuTokenizer
 from bigvgan22HZ import Load_Bigvgan
 import yaml
 
-with open('shupin.yaml', 'r', encoding='utf-8') as file:
+with open('shuyu/shupin.yaml', 'r', encoding='utf-8') as file:
     mapping = yaml.safe_load(file)
 
 def convert_text(text):
@@ -60,7 +57,7 @@ def synthesize_sichuan(checkpoint_path, text):
         
     print(f"🎵 生成的梅尔频谱形状: {mel_spectrogram.shape}")
 
-    vocoder = Load_Bigvgan('../bigvgan22HZ/model')
+    vocoder = Load_Bigvgan('bigvgan22HZ/model')
     mel_spectrogram = mel_spectrogram.to(vocoder.device).transpose(1, 2)  # 转置为 [1, C, T]
     out_path = "output.wav"
     vocoder.spectrogram_to_wave(mel_spectrogram, out_path)
@@ -69,9 +66,11 @@ def synthesize_sichuan(checkpoint_path, text):
 
 
 def main():
-    checkpoint_path = "./weights/sichuan.pth"
+    checkpoint_path = "./shuyu/weights/sichuan.pth"
     text = "你好，欢迎使用四川话语音合成系统！我的名字叫做小川。"
     synthesize_sichuan(checkpoint_path, text)
 
 if __name__ == "__main__":
+    # 需要按 python 包的方式运行
+    # python -m shuyu.synthesize
     main()
