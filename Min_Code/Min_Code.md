@@ -62,6 +62,7 @@ tensorboard --logdir xxx_logs
 - 除了命令行输入参数，也可以在main中修改默认值来设置参数
 
 #### 代码结构
+```
 Min_Code/
 ├── Character_to_IPA/              # 提供文本到IPA转变的接口
 ├── from_IPA_Tensor/                # 提供IPA到tensor编码的接口（采用整数编码）
@@ -78,3 +79,4 @@ Min_Code/
 ├── Trainer.py            # 定义训练器类，提供了统一的加载配置文件的接口，Vits、Glow-TTS中的trainer是其子类
 ├── start_your_TTS.py       # 运行模型
 ├── train_your_TTS.py            # 训练接口
+```
