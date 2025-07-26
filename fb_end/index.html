@@ -1,0 +1,331 @@
+<!-- 网页入口声明，设置语言为英文 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 网页头部，设置字符集和响应式布局 -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All In TTS</title>
+  <!-- 页面样式区，包含背景、面板、按钮等所有视觉效果 -->
+  <style>
+    /* 霓虹灯文字动画效果 */
+    @keyframes neonGlow {
+      0%, 100% { text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0; }
+      50% { text-shadow: 0 0 2px #0f0, 0 0 5px #0f0, 0 0 10px #0f0; }
+    }
+    /* 网页整体背景与字体设置 */
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+      font-family: 'Consolas', 'Courier New', monospace;
+    }
+    /* 矩阵雨canvas层，绝对定位，铺满全屏，z-index最低 */
+    canvas { position: absolute; top: 0; left: 0; z-index: 1; display: block; }
+
+    /* 玻璃拟态主面板，居中显示，带模糊和绿色边框、阴影 */
+    .panel {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(0, 255, 0, 0.6);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+      padding: 30px;
+      color: #0f0;
+      text-align: center;
+      z-index: 2;
+    }
+    /* 面板标题，霓虹灯动画 */
+    .panel h1 {
+      margin: 0 0 20px;
+      font-size: 2.8rem;
+    }
+    /* 文字闪烁 */
+    .neon-title {
+      animation: neonGlow 2s ease-in-out infinite;
+      display: inline-block;
+    }
+    /* 文本输入框样式 */
+    .panel textarea {
+      width: 100%; height: 100px;
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      border-radius: 10px;
+      padding: 15px;
+      box-sizing: border-box;
+      color: #0f0;
+      font-size: 1rem;
+      outline: none;
+      resize: none;
+      box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.5);
+    }
+    /* 按钮样式，带绿色阴影和悬停放大效果 */
+    .panel button {
+      margin-top: 20px;
+      width: 100%; padding: 12px;
+      box-sizing: border-box;
+      background: rgba(0, 0, 0, 0.7);
+      border: none;
+      border-radius: 10px;
+      color: #0f0;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .panel button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 1);
+    }
+    /* 音频播放器样式，带绿色阴影 */
+    .panel audio {
+      margin-top: 20px;
+      width: 100%;
+      outline: none;
+      filter: drop-shadow(0 0 5px #0f0);
+    }
+    /* 语言选择下拉区样式 */
+    .lang-select-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    /* 霓虹风格下拉框 */
+    .neon-select {
+      background: rgba(0,0,0,0.7);
+      color: #0f0;
+      border: 1.2px solid #0f0;
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-size: 0.95rem;
+      outline: none;
+      box-shadow: none;
+      transition: border-color 0.2s;
+    }
+    .neon-select:focus, .neon-select:hover {
+      border-color: #39ff14;
+      box-shadow: none;
+    }
+    /* 文件选择按钮整体美化 */
+    .file-upload-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .custom-file-label {
+      background: rgba(0,0,0,0.7);
+      color: #0f0;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0,255,0,0.6);
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .custom-file-label:hover {
+      background: rgba(0,255,0,0.1);
+    }
+    #fileInput {
+      display: none;
+    }
+    .file-status {
+      color: #39ff14;
+      font-size: 0.95rem;
+      margin-left: 0;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景矩阵雨特效层，canvas实现 -->
+  <canvas id="matrix"></canvas>
+  <!-- 主功能面板，包含所有交互控件 -->
+  <div class="panel">
+
+    <!-- 标题区 -->
+    <h1><span style="font-size:1.5rem;vertical-align:middle;"></span> <span class="neon-title">All In TTS</span></h1>
+
+    <!-- 语言选择区 -->
+    <div class="lang-select-wrap">
+      <label for="langSelect" style="font-size:1.2rem;margin-right:8px;">选择语言：</label>
+      <select id="langSelect" class="neon-select">
+        <option value="pinyin">普通话</option>
+        <option value="jyutping">粤语</option>
+        <option value="shupin">四川话</option>  
+      </select>
+    </div>
+
+    <!-- 文本输入区 -->
+    <textarea id="textInput" placeholder="请输入要合成的文本..."></textarea>
+
+    <!-- 语音合成按钮 -->
+    <button id="generateBtn">生成语音</button>
+    <hr style="margin:30px 0;border:1px solid rgba(0, 255, 0, 0.520);">
+
+    <!-- 网页朗读区 -->
+    <div>
+      <textarea id="urlInput" placeholder="请输入要朗读的网址..." style="width:100%;height:60px;padding:10px;border-radius:8px;border:none;margin-bottom:10px;background:rgba(0,0,0,0.5);color:#0f0;"></textarea>
+      <button id="webReadBtn" style="width:100%;">网页朗读</button>
+    </div>
+    <hr style="margin:30px 0;border:1px solid rgba(0, 255, 0, 0.520);">
+
+    <!-- 文件朗读区 -->
+    <div style="margin-top:20px;">
+      <div class="file-upload-wrap">
+        <label for="fileInput" class="custom-file-label">选择文件</label>
+        <span class="file-status" id="fileStatus">未选择文件</span>
+        <input type="file" id="fileInput" accept=".txt,.doc,.docx,.md,.pdf">
+      </div>
+      <button id="fileReadBtn" style="width:100%;">文件朗读</button>
+    </div>
+
+    <!-- 音频播放控件 -->
+    <audio id="audioPlayer" controls></audio>
+
+  </div>
+  <script>
+    // ====== 背景矩阵雨特效 ======
+    // 获取canvas元素和上下文
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    const fontSize = 16; // 字体大小
+    let columns;
+    let drops = [];
+    // 可用字符集，改为只显示“All In TTS”四个单词的字符
+    const letters = Array.from('All In TTS' + 'iœŋ21 kuɔŋ55 sɐi35 tsɔi22 tshœŋ55 thɔi21 sœŋ22 ， nyn13 iœŋ21 iœŋ21 tek5 。' + 'iaŋ35 kuaŋ55 sa215 tsai51 tʂhuaŋ55 thai35 ʂaŋ51 ， nuan215 iaŋ35 iaŋ35 tɤ0 。' + 'NJU NJU NJU'); // 只包含特定字符
+    // 初始化矩阵雨参数
+    function init() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array.from({length: columns}, () => canvas.height + Math.random() * 1000);
+    }
+    // 绘制每一帧的雨滴
+    function draw() {
+      ctx.fillStyle = 'rgba(0,0,0,0.05)'; // 半透明黑色覆盖，形成拖尾
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = '#0F0'; ctx.font = fontSize + 'px monospace'; // 绿色字体
+      for (let i = 0; i < columns; i++) {
+        const char = letters[Math.floor(Math.random() * letters.length)]; // 随机字符
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+        // 雨滴到底部后随机重置
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    // 窗口大小变化时重新初始化
+    window.addEventListener('resize', init);
+    // 启动特效
+    init(); setInterval(draw, 50);
+
+    // ====== TTS文本合成逻辑 ======
+    const btn = document.getElementById('generateBtn'); // 语音合成按钮
+    const input = document.getElementById('textInput'); // 文本输入框
+    const audio = document.getElementById('audioPlayer'); // 音频播放器
+    const lang = document.getElementById('langSelect'); // 语言选择框
+    btn.addEventListener('click', async () => {
+      const text = input.value.trim(); // 获取输入文本
+      const language = lang.value; // 获取选择语言
+      if (!text) return alert('请输入文本！');
+      btn.textContent = '合成中...'; btn.disabled = true;
+      try {
+        // 向后端发送TTS请求
+        const resp = await fetch('http://114.212.87.202:5000/api/tts', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({text, language})
+        });
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert('合成失败: ' + (err.error || resp.status));
+          return;
+        }
+        // 获取音频并播放
+        const blob = await resp.blob();
+        audio.src = URL.createObjectURL(blob);
+        audio.play();
+      } catch (e) {
+        console.error(e); alert('合成失败');
+      } finally {
+        btn.textContent = '生成语音'; btn.disabled = false;
+      }
+    });
+
+    // ====== 网页朗读逻辑 ======
+    const webBtn = document.getElementById('webReadBtn'); // 网页朗读按钮
+    const urlInput = document.getElementById('urlInput'); // 网页地址输入框
+    webBtn.addEventListener('click', async () => {
+      const url = urlInput.value.trim(); // 获取网址
+      const language = lang.value;
+      if (!url) return alert('请输入网址！');
+      webBtn.textContent = '朗读中...'; webBtn.disabled = true;
+      try {
+        // 向后端发送网页朗读请求
+        const resp = await fetch('http://114.212.87.202:5000/api/web_reader', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({url, language})
+        });
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert('网页朗读失败: ' + (err.error || resp.status));
+          return;
+        }
+        // 获取音频并播放
+        const blob = await resp.blob();
+        audio.src = URL.createObjectURL(blob);
+        audio.play();
+      } catch (e) {
+        console.error(e); alert('网页朗读失败');
+      } finally {
+        webBtn.textContent = '网页朗读'; webBtn.disabled = false;
+      }
+    });
+
+    // ====== 文件朗读逻辑 ======
+    const fileBtn = document.getElementById('fileReadBtn'); // 文件朗读按钮
+    const fileInput = document.getElementById('fileInput'); // 文件选择框
+    const fileStatus = document.getElementById('fileStatus'); // 文件状态提示
+    fileInput.addEventListener('change', () => {
+      fileStatus.textContent = fileInput.files[0] ? fileInput.files[0].name : '未选择文件';
+    });
+    fileBtn.addEventListener('click', async () => {
+      const file = fileInput.files[0]; // 获取选中文件
+      const language = lang.value;
+      if (!file) return alert('请先选择一个文件！');
+      fileBtn.textContent = '朗读中...'; fileBtn.disabled = true;
+      try {
+        // 构造表单并发送文件朗读请求
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('language', language);
+        const resp = await fetch('http://114.212.87.202:5000/api/file_reader', {
+          method: 'POST',
+          body: formData
+        });
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert('文件朗读失败: ' + (err.error || resp.status));
+          return;
+        }
+        // 获取音频并播放
+        const blob = await resp.blob();
+        audio.src = URL.createObjectURL(blob);
+        audio.play();
+      } catch (e) {
+        console.error(e); alert('文件朗读失败');
+      } finally {
+        fileBtn.textContent = '文件朗读'; fileBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
