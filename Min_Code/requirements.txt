@@ -8,5 +8,8 @@ matplotlib
 librosa
 ToJyutping
 ordered-set
-huggingface_hub[cli]
+huggingface_hub
+tensorboard
+cython
+pypinyin
 toml

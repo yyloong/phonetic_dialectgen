@@ -39,15 +39,15 @@ c_in_channels = 0
 
 [train]
 data_dep_init_steps = 80
-epochs= 100
+epochs= 150
 print_step = 20
 save_step = 5000
 use_scheduler = false
 grad_clip = 5.0
-output_path = "/home/u-longyy/week2/Min_Code/Glow-TTS_output"
-mandarin_file = "/home/u-longyy/week2/mandarin.csv"
-cantonese_file = "/home/u-longyy/week2/cantonese.csv"
-root_path = "/home/u-wuhc/backup/AItts"
+output_path = "Glow-TTS_output"
+mandarin_file = "data/mandarin.csv"
+cantonese_file = "data/cantonese.csv"
+root_path = "data/AItts"
 logs_step = 20
 mandarin_num=49730
 cantonese_num=18975

@@ -20,6 +20,8 @@ class TTSDataset(Dataset):
         self.data_df = pd.concat(
             [mandarin.sample(mandarin_num), cantonese.sample(cantonese_num)]
         )
+        print(f"total data num : {len(self.data_df)}")
+        print(f"mandarin data num:{mandarin_num},cantonese data num:{cantonese_num}")
         print(self.data_df.head())
         self.text_tokenizer = ipa_to_tensor
         self.root_path = root_path

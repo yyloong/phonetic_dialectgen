@@ -5,6 +5,7 @@ from torch.utils.tensorboard import SummaryWriter
 class Trainers:
     def __init__(self, config, load_checkpoint, save_checkpoint, checkpoint_path=None):
         self.device = config['train']['device']
+        print(f"train by :{self.device}")
         self.model = Load_config.load_model(config).to(self.device)
         self.config = config
         self.logs_step = config['train']['logs_step'] # 定义多少步记录一次log到tensorboard

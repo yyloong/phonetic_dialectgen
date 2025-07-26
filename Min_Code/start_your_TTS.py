@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "--checkpoint_path",
-        default='Glow-TTS_output/checkpoint_step_169999.pth',
+        default='Glow-TTS_output/checkpoint_step_4999.pth',
         help="Path to your checkpont",
     )
     parser.add_argument(
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         help="The text you want to input",
     )
     parser.add_argument(
-        "--language", default='pinyin', help="The language you want to output"
+        "--language", default='jyutping', help="The language you want to output"
     )
     parser.add_argument(
         "--output_path",
