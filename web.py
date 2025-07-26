@@ -64,6 +64,7 @@ def generate():
     # 检测是否包含数字或英文字幕
     if any(char.isdigit() for char in text) or any(char.isalpha() for char in text):
         text = preprocess_tts(text)
+    print(f"🎤 规范化后的文本: {text}")
     if language == "shupin":
         synthesize_sichuan(checkpoint_path, text)
     else:

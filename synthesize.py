@@ -65,9 +65,9 @@ def synthesize(checkpoint_path, text, language="pinyin"):
 
 def main():
     # 混合模型
-    checkpoint_path = "./weights/hybrid.pth"
+    # checkpoint_path = "./weights/hybrid.pth"
     # 普通话模型
-    # checkpoint_path = "./weights/mandarin.pth"
+    checkpoint_path = "./weights/mandarin.pth"
     # 粤语模型
     # checkpoint_path = "./weights/cantonese.pth"
 
