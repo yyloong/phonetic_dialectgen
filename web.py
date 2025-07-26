@@ -109,7 +109,7 @@ def get_text_from_file(file_path):
 def index():
     return send_file('index.html')
 
-@app.route('/tts', methods=['POST'])
+@app.route('/api/tts', methods=['POST'])
 def generate():
     # 读取请求数据
     data = request.get_json()
@@ -140,7 +140,7 @@ def generate():
         return jsonify({"error": "Audio file not found"}), 500
     return send_file(wav_path, mimetype="audio/wav")
 
-@app.route('/web_reader', methods=['POST'])
+@app.route('/api/web_reader', methods=['POST'])
 def web_reader():
     data = request.get_json()
     language = data.get("language", "")
@@ -171,7 +171,7 @@ def web_reader():
         return jsonify({"error": "Audio file not found"}), 500
     return send_file(wav_path, mimetype="audio/wav")
 
-@app.route('/file_reader', methods=['POST'])
+@app.route('/api/file_reader', methods=['POST'])
 def file_reader():
     language = request.form.get("language", "")
     print(f"Received language: {language}")
