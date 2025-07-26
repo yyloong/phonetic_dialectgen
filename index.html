@@ -119,7 +119,7 @@
       <button id="webReadBtn" style="width:100%;">网页朗读</button>
     </div>
     <div style="margin-top:20px;">
-      <input type="file" id="fileInput" accept=".txt" style="color:#0f0;background:rgba(0,0,0,0.5);border-radius:8px;">
+      <input type="file" id="fileInput" accept=".txt,.doc,.docx,.md,.pdf" style="color:#0f0;background:rgba(0,0,0,0.5);border-radius:8px;">
       <button id="fileReadBtn" style="width:100%;">文件朗读</button>
     </div>
   </div>
@@ -216,14 +216,15 @@
     fileBtn.addEventListener('click', async () => {
       const file = fileInput.files[0];
       const language = lang.value;
-      if (!file) return alert('请先选择一个文本文件！');
+      if (!file) return alert('请先选择一个文件！');
       fileBtn.textContent = '朗读中...'; fileBtn.disabled = true;
       try {
-        const text = await file.text();
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('language', language);
         const resp = await fetch('/file_reader', {
           method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({text, language})
+          body: formData
         });
         if (!resp.ok) {
           const err = await resp.json();
