@@ -135,8 +135,8 @@ def generate():
     # 检测是否包含数字或英文字幕
     if any(char.isdigit() for char in text) or contains_english_letter(text):
         text = preprocess_tts(text)
-    # 确保不含有英文字母
-    text = re.sub(r'[A-Za-z]', '', text)
+    # 确保不含有英文字母和阿拉伯数字
+    text = re.sub(r'[A-Za-z0-9]', '', text)
     text = text.strip()
     print(f"🎤 规范化后的文本: {text}")
     if language == "shupin":
@@ -169,8 +169,8 @@ def web_reader():
     # 检测是否包含数字或英文字幕（isalpha() 对中文字符也会返回 True）
     if any(char.isdigit() for char in text) or contains_english_letter(text):
         text = preprocess_tts(text)
-    # 确保不含有英文字母
-    text = re.sub(r'[A-Za-z]', '', text)
+    # 确保不含有英文字母和阿拉伯数字
+    text = re.sub(r'[A-Za-z0-9]', '', text)
     text = text.strip()
     print(f"🎤 规范化后的文本: {text}")
     if language == "shupin":
@@ -196,8 +196,8 @@ def file_reader():
     text = get_text_from_file(file)
     if not text:
         return jsonify({"error": "File is empty"}), 400
-    # 确保不含有英文字母
-    text = re.sub(r'[A-Za-z]', '', text)
+    # 确保不含有英文字母和阿拉伯数字
+    text = re.sub(r'[A-Za-z0-9]', '', text)
     text = text.strip()
     print(f"🎤 规范化后的文本: {text}")
     # 合成语音
