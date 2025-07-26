@@ -1,14 +1,10 @@
 import torch
-from model import GlowTTS
-from config import GlowTTSConfig
-from tokenizer import ShuTokenizer
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from shuyu.model import GlowTTS
+from shuyu.tokenizer import ShuTokenizer
 from bigvgan22HZ import Load_Bigvgan
 import yaml
 
-with open('shupin.yaml', 'r', encoding='utf-8') as file:
+with open('shuyu/shupin.yaml', 'r', encoding='utf-8') as file:
     mapping = yaml.safe_load(file)
 
 def convert_text(text):
@@ -40,43 +36,13 @@ def load_model_from_checkpoint(checkpoint_path, config=None):
           f"损失: {checkpoint.get('best_loss', 'N/A')}")
     return model, config
 
-
-def main():
-    # 如果检查点包含配置，则可以直接加载
-    checkpoint_path = "./weights/sichuan.pth" 
-
-    # 如果是仅包含模型权重的文件，还需要提供 config
-    # checkpoint_path = "./outputs/best_model.pth"  
-
-    config = GlowTTSConfig(
-        num_chars=39,
-        out_channels=80,
-        encoder_type="rel_pos_transformer",
-        encoder_params={
-            "kernel_size": 3,
-            "dropout_p": 0.1,
-            "num_layers": 12,
-            "num_heads": 8,
-            "hidden_channels_ffn": 1024,
-            "input_length": None,
-        },
-        hidden_channels_enc=256,
-        hidden_channels_dec=256,
-        hidden_channels_dp=400,
-        num_flow_blocks_dec=16,
-        num_block_layers=6,
-    )
-
-    model, config = load_model_from_checkpoint(checkpoint_path, config=config)
+def synthesize_sichuan(checkpoint_path, text):
+    model, config = load_model_from_checkpoint(checkpoint_path)
     
-    # 为什么要加上一个空格？
-    text = "伙计，今朝你吃了啥子没得？这个系统安逸得很咯！"
     text = ' ' + text
     text = convert_text(text)
-    print(f"转换后的文本: {text}")
     tokenizer = ShuTokenizer()
     token_ids = tokenizer(text)
-    print(f"文本转换为token IDs: {token_ids}")
     
     # 转换为tensor
     text_input = torch.LongTensor(token_ids).unsqueeze(0)  # [1, seq_len]
@@ -91,11 +57,20 @@ def main():
         
     print(f"🎵 生成的梅尔频谱形状: {mel_spectrogram.shape}")
 
-    vocoder = Load_Bigvgan('../bigvgan22HZ/model')
+    vocoder = Load_Bigvgan('bigvgan22HZ/model')
     mel_spectrogram = mel_spectrogram.to(vocoder.device).transpose(1, 2)  # 转置为 [1, C, T]
     out_path = "output.wav"
     vocoder.spectrogram_to_wave(mel_spectrogram, out_path)
     print(f"🎵 音频已保存为 {out_path}")
 
+
+
+def main():
+    checkpoint_path = "./shuyu/weights/sichuan.pth"
+    text = "你好，欢迎使用四川话语音合成系统！我的名字叫做小川。"
+    synthesize_sichuan(checkpoint_path, text)
+
 if __name__ == "__main__":
+    # 需要按 python 包的方式运行
+    # python -m shuyu.synthesize
     main()

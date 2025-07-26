@@ -7,8 +7,10 @@ aitts*/
 *.pt
 *.wav
 *.csv
+*.md
 
 .env
+2025.07.25_config.toml
 
 # Python 缓存文件
 __pycache__/

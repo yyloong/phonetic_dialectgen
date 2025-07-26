@@ -53,8 +53,8 @@ class ShuTokenizer:
         }
 
     def __call__(self, text):
-        # 定义中文标点符号集合
-        punctuations = "“”‘’（）【】《》\"'()[]{}<>《》"
+         # 定义中文标点符号集合
+        punctuations = "“”‘’（）【】《》\"'()[]{}<>《》#$%^&*_\n"
 
         codes = []  # 存储编码结果
 
