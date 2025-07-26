@@ -74,20 +74,54 @@
       outline: none;
       filter: drop-shadow(0 0 5px #0f0);
     }
+    .lang-select-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .neon-select {
+      background: rgba(0,0,0,0.7);
+      color: #0f0;
+      border: 1.5px solid #0f0;
+      border-radius: 10px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      outline: none;
+      box-shadow: 0 0 8px #0f0, 0 0 2px #0f0 inset;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .neon-select:focus, .neon-select:hover {
+      border-color: #39ff14;
+      box-shadow: 0 0 16px #39ff14, 0 0 4px #39ff14 inset;
+    }
   </style>
 </head>
 <body>
   <canvas id="matrix"></canvas>
   <div class="panel">
     <h1>🗣️ TTS Demo</h1>
+    <div class="lang-select-wrap">
+      <label for="langSelect" style="font-size:1.1rem;margin-right:10px;">选择语言：</label>
+      <select id="langSelect" class="neon-select">
+        <option value="pinyin">普通话</option>
+        <option value="jyutping">粤语</option>
+        <option value="shupin">四川话</option>  
+      </select>
+    </div>
+    <hr style="margin:30px 0;border:1px solid #0f05;">
     <textarea id="textInput" placeholder="请输入要合成的文本..."></textarea>
-    <select id="langSelect">
-      <option value="pinyin">普通话</option>
-      <option value="jyutping">粤语</option>
-      <option value="shupin">四川话</option>  
-    </select>
     <button id="generateBtn">生成语音</button>
     <audio id="audioPlayer" controls></audio>
+    <hr style="margin:30px 0;border:1px solid #0f05;">
+    <div>
+      <textarea id="urlInput" placeholder="请输入要朗读的网址..." style="width:100%;height:60px;padding:10px;border-radius:8px;border:none;margin-bottom:10px;background:rgba(0,0,0,0.5);color:#0f0;"></textarea>
+      <button id="webReadBtn" style="width:100%;">网页朗读</button>
+    </div>
+    <div style="margin-top:20px;">
+      <input type="file" id="fileInput" accept=".txt" style="color:#0f0;background:rgba(0,0,0,0.5);border-radius:8px;">
+      <button id="fileReadBtn" style="width:100%;">文件朗读</button>
+    </div>
   </div>
   <script>
     // Matrix Rain
@@ -144,6 +178,65 @@
         console.error(e); alert('合成失败');
       } finally {
         btn.textContent = '生成语音'; btn.disabled = false;
+      }
+    });
+
+    // Web Reader Logic
+    const webBtn = document.getElementById('webReadBtn');
+    const urlInput = document.getElementById('urlInput');
+    webBtn.addEventListener('click', async () => {
+      const url = urlInput.value.trim();
+      const language = lang.value;
+      if (!url) return alert('请输入网址！');
+      webBtn.textContent = '朗读中...'; webBtn.disabled = true;
+      try {
+        const resp = await fetch('/web_reader', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({url, language})
+        });
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert('网页朗读失败: ' + (err.error || resp.status));
+          return;
+        }
+        const blob = await resp.blob();
+        audio.src = URL.createObjectURL(blob);
+        audio.play();
+      } catch (e) {
+        console.error(e); alert('网页朗读失败');
+      } finally {
+        webBtn.textContent = '网页朗读'; webBtn.disabled = false;
+      }
+    });
+
+    // File Reader Logic
+    const fileBtn = document.getElementById('fileReadBtn');
+    const fileInput = document.getElementById('fileInput');
+    fileBtn.addEventListener('click', async () => {
+      const file = fileInput.files[0];
+      const language = lang.value;
+      if (!file) return alert('请先选择一个文本文件！');
+      fileBtn.textContent = '朗读中...'; fileBtn.disabled = true;
+      try {
+        const text = await file.text();
+        const resp = await fetch('/file_reader', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({text, language})
+        });
+        if (!resp.ok) {
+          const err = await resp.json();
+          alert('文件朗读失败: ' + (err.error || resp.status));
+          return;
+        }
+        const blob = await resp.blob();
+        audio.src = URL.createObjectURL(blob);
+        audio.play();
+      } catch (e) {
+        console.error(e); alert('文件朗读失败');
+      } finally {
+        fileBtn.textContent = '文件朗读'; fileBtn.disabled = false;
       }
     });
   </script>
