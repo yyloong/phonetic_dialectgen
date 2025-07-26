@@ -252,10 +252,34 @@
       font-size: 1em;
       letter-spacing: 1px;
     }
+    /* logo 动画与发光效果 */
+    .logo {
+      position: absolute;
+      top: 5%;
+      left: 90%;
+      transform: translateX(-50%);
+      animation: float 3s ease-in-out infinite;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .logo img {
+      height: 150px;
+      /*filter: drop-shadow(0 0 24px #00FF00) drop-shadow(0 0 8px #00FF00);*/
+      opacity: 0.90;
+      transition: filter 0.3s;
+    }
+    @keyframes float {
+      0% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -16px); }
+      100% { transform: translate(-50%, 0); }
+    }
   </style>
 </head>
 <body>
   <canvas id="matrix"></canvas>
+  <div class="logo">
+    <img src="/static/logo.png" alt="Logo" />
+  </div>
   <div class="panel">
     <h1>🗣️ All In TTS</h1>
     <div class="tabs">
@@ -487,11 +511,34 @@
         fileBtn.textContent = '文件朗读'; fileBtn.disabled = false;
       }
     });
-    
+
     // 文件名显示逻辑
     document.getElementById('fileInput').addEventListener('change', function(e) {
       const fileName = e.target.files[0] ? e.target.files[0].name : '选择文件';
       document.getElementById('fileName').textContent = fileName;
     });
+
+    // 动态字符环绕 logo
+    // (function(){
+    //   const logo = document.querySelector('.logo');
+    //   if (!logo) return;
+    //   const chars = '01abcdefghijklmnopqrstuvwxyz'.split('');
+    //   const n = 18, r = 90; // r略大于logo图片一半
+    //   for(let i=0;i<n;i++){
+    //     const span = document.createElement('span');
+    //     span.textContent = chars[Math.floor(Math.random()*chars.length)];
+    //     span.style.transform = `rotate(${(360/n)*i}deg) translateY(-${r}px)`;
+    //     span.style.color = '#0f0';
+    //     span.style.fontSize = '1.1em';
+    //     span.style.opacity = '0.7';
+    //     span.style.textShadow = '0 0 8px #0f0, 0 0 2px #0f0';
+    //     logo.appendChild(span);
+    //   }
+    //   setInterval(()=>{
+    //     logo.querySelectorAll('span').forEach(span=>{
+    //       if(Math.random()>0.7) span.textContent = chars[Math.floor(Math.random()*chars.length)];
+    //     });
+    //   }, 180);
+    // })();
   </script>
 </body>
