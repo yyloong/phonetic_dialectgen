@@ -143,6 +143,49 @@
       margin-left: 0;
       user-select: none;
     }
+    /* 响应式布局：主面板在手机上自适应宽度和间距 */
+    @media (max-width: 600px) {
+      .panel {
+        width: 94vw;
+        min-width: 0;
+        max-width: 100vw;
+        padding: 7vw 2vw 5vw 2vw;
+        border-radius: 6vw;
+      }
+      .panel h1 {
+        font-size: 1.7rem;
+      }
+      .panel textarea {
+        font-size: 0.9rem;
+        padding: 8px;
+        height: 54px;
+      }
+      .panel button {
+        font-size: 0.9rem;
+        padding: 8px;
+      }
+      .lang-select-wrap {
+        margin-bottom: 8px;
+      }
+      .neon-select {
+        font-size: 0.85rem;
+        padding: 4px 8px;
+      }
+      .custom-file-label {
+        font-size: 0.85rem;
+        padding: 4px 8px;
+      }
+      .file-status {
+        font-size: 0.85rem;
+      }
+      .file-upload-wrap {
+        gap: 4px;
+      }
+      .panel audio {
+        margin-top: 8px;
+        padding: 2px 0;
+      }
+    }
   </style>
 </head>
 <body>
