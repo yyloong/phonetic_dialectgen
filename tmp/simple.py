@@ -1,8 +1,8 @@
 import asyncio
 from crawl4ai import AsyncWebCrawler, BrowserConfig, CrawlerRunConfig, CacheMode
 
-FILE = "zhihu.md"
-URL = "https://www.zhihu.com/question/19731948/answer/1930918298020738153"
+FILE = "ys.md"
+URL = "https://news.cctv.com/2025/07/26/ARTI5H7gVikaCP6VcMtHc7gs250726.shtml?spm=C94212.P4YnMod9m2uD.ENPMkWvfnaiV.14"
 
 async def main():
     browser_conf = BrowserConfig(headless=True)  # or False to see the browser
