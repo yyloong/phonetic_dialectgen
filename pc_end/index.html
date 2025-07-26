@@ -1,20 +1,26 @@
+<!-- 网页入口声明，设置语言为英文 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- 网页头部，设置字符集和响应式布局 -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TTS Demo with Matrix Rain</title>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <title>All In TTS</title>
   <style>
+    /* 霓虹灯文字动画效果 */
     @keyframes neonGlow {
       0%, 100% { text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0; }
       50% { text-shadow: 0 0 2px #0f0, 0 0 5px #0f0, 0 0 10px #0f0; }
     }
+    /* 网页整体背景与字体设置 */
     body {
       margin: 0;
       overflow: hidden;
       background: #000;
       font-family: 'Consolas', 'Courier New', monospace;
     }
+    /* 矩阵雨canvas层，绝对定位，铺满全屏，z-index最低 */
     canvas { position: absolute; top: 0; left: 0; z-index: 1; display: block; }
 
     /* 玻璃拟态面板 */
@@ -33,11 +39,13 @@
       text-align: center;
       z-index: 2;
     }
+    /* 面板标题 */
     .panel h1 {
-      margin: 0 0 20px;
-      font-size: 2rem;
+      margin: 0;
+      font-size: 2.5rem;
       animation: neonGlow 2s ease-in-out infinite;
     }
+    /* 面板内元素样式 */
     .panel textarea {
       width: 100%; height: 100px;
       background: rgba(0, 0, 0, 0.5);
@@ -74,6 +82,86 @@
       outline: none;
       filter: drop-shadow(0 0 5px #0f0);
     }
+    /* Plyr 播放器 */
+    .panel .plyr,
+    .panel audio.plyr {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-top: 20px;
+      box-sizing: border-box;
+    }
+    /* 美化 Plyr 播放器风格，贴合 panel，去除白色背景和阴影 */
+    .panel .plyr {
+      background: transparent !important;
+      border-radius: 16px !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+    .panel .plyr__controls {
+      background: transparent !important;
+      border-radius: 0 0 16px 16px !important;
+      box-shadow: none !important;
+    }
+    .panel .plyr__progress input[type=range] {
+      color: #0f0 !important;
+      background: linear-gradient(90deg, #0f0 0%, #222 100%) !important;
+      height: 4px !important;
+    }
+    .panel .plyr__time,
+    .panel .plyr__controls button {
+      color: #0f0 !important;
+      filter: drop-shadow(0 0 2px #0f0);
+    }
+    .panel .plyr__control--overlaid {
+      background: rgba(0,0,0,0.7) !important;
+      border: 2px solid #0f0 !important;
+      box-shadow: 0 0 10px #0f0 !important;
+    }
+    /* 控制栏纵向排列，按钮一行，进度条+时长一行 */
+    .panel .plyr__controls {
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0 !important;
+      padding: 8px 0 0 0 !important;
+      display: flex !important;
+    }
+    .panel .plyr__controls > .plyr__control {
+      margin-bottom: 8px !important;
+    }
+    .panel .plyr__controls-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+    .panel .plyr__controls-row .plyr__time {
+      min-width: 54px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      font-size: 1.1em;
+      letter-spacing: 1px;
+    }
+    .panel .plyr__controls-row .plyr__progress {
+      flex: 1 1 60%;
+      max-width: 220px;
+      min-width: 80px;
+      margin: 0 8px !important;
+    }
+    .panel .plyr__progress {
+      flex: 1 1 70%;
+      max-width: 180px;
+      min-width: 80px;
+      margin: 0 8px !important;
+    }
+    .panel .plyr__time {
+      min-width: 60px;
+      text-align: right;
+      margin-left: 8px !important;
+    }
     .lang-select-wrap {
       display: flex;
       align-items: center;
@@ -95,42 +183,290 @@
       border-color: #39ff14;
       box-shadow: 0 0 16px #39ff14, 0 0 4px #39ff14 inset;
     }
+    /* 覆盖 Plyr 播放按钮 hover/聚焦时的蓝色，改为绿色高亮 */
+    .panel .plyr__control.plyr__tab-focus,
+    .panel .plyr__control:hover,
+    .panel .plyr__control[aria-expanded='true'] {
+      background: #111 !important;
+      box-shadow: 0 0 12px #0f0, 0 0 2px #0f0 inset !important;
+      border: 2px solid #0f0 !important;
+      color: #0f0 !important;
+      outline: none !important;
+    }
+    /* Tabs 样式 */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+      gap: 18px;
+    }
+    .tab-btn {
+      background: rgba(0,0,0,0.7);
+      color: #0f0;
+      border: 1.5px solid #0f0;
+      border-radius: 10px 10px 0 0;
+      padding: 8px 32px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 0 8px #0f0, 0 0 2px #0f0 inset;
+      transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+      outline: none;
+      position: relative;
+      z-index: 3;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: #111;
+      border-bottom: 2.5px solid #39ff14;
+      color: #39ff14;
+      box-shadow: 0 0 16px #39ff14, 0 0 4px #39ff14 inset;
+    }
+    .tab-content {
+      animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    /* 美化文件上传 */
+    .file-upload-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .file-upload-label {
+      display: inline-block;
+      background: rgba(0,0,0,0.7);
+      color: #0f0;
+      border: 1.5px solid #0f0;
+      border-radius: 10px;
+      padding: 10px 28px;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 0 8px #0f0, 0 0 2px #0f0 inset;
+      transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+      outline: none;
+      user-select: none;
+    }
+    .file-upload-label:hover {
+      background: #111;
+      border-color: #39ff14;
+      color: #39ff14;
+      box-shadow: 0 0 16px #39ff14, 0 0 4px #39ff14 inset;
+    }
+    #fileName {
+      font-family: inherit;
+      font-size: 1em;
+      letter-spacing: 1px;
+    }
+    /* logo 动画与发光效果 */
+    .logo {
+      position: static;
+      animation: none;
+      height: 80px;
+      width: 80px;
+      margin-right: 8px;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+    .logo img {
+      height: 80px;
+      width: 80px;
+      opacity: 0.95;
+      display: block;
+    }
+    @keyframes float {
+      0% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -16px); }
+      100% { transform: translate(-50%, 0); }
+    }
+    /* 脚注提示 */
+    .footer-tip {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #0f0;
+      font-size: 1rem;
+      opacity: 0.92;
+      letter-spacing: 1px;
+      z-index: 20;
+      text-shadow: 0 0 8px #0f0;
+      pointer-events: auto;
+      background: rgba(0, 0, 0, 1);   
+      border-radius: 12px;
+      padding: 8px 24px;
+      box-shadow: 0 0 12px #0f0 inset;
+    }
+    .footer-tip a {
+      color: #39ff14;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .footer-tip a:hover {
+      color: #fff;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+    /* 响应式布局以适应不同屏幕 */
+    @media (max-width: 600px) {
+      .panel {
+        width: 98vw;
+        min-width: unset;
+        max-width: 100vw;
+        padding: 10vw 2vw 6vw 2vw;
+        border-radius: 0;
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, 0);
+      }
+      .panel-header {
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .logo, .logo img {
+        width: 48px;
+        height: 48px;
+      }
+      .panel h1 {
+        font-size: 1.3rem;
+      }
+      .tabs {
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .tab-btn {
+        padding: 6px 10px;
+        font-size: 0.95rem;
+      }
+      .panel textarea {
+        font-size: 0.95rem;
+        height: 70px;
+        padding: 8px;
+      }
+      .panel button {
+        font-size: 0.95rem;
+        padding: 10px;
+        margin-top: 12px;
+      }
+      .lang-select-wrap label {
+        font-size: 1rem !important;
+      }
+      .neon-select {
+        font-size: 0.95rem;
+        padding: 6px 10px;
+      }
+      .footer-tip {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+        border-radius: 8px;
+        bottom: 8px;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- 背景矩阵雨特效层，canvas实现 -->
   <canvas id="matrix"></canvas>
+  <!-- 主面板 -->
   <div class="panel">
-    <h1>🗣️ TTS Demo</h1>
-    <div class="lang-select-wrap">
-      <label for="langSelect" style="font-size:1.1rem;margin-right:10px;">选择语言：</label>
-      <select id="langSelect" class="neon-select">
-        <option value="pinyin">普通话</option>
-        <option value="jyutping">粤语</option>
-        <option value="shupin">四川话</option>  
-      </select>
+    <div class="panel-header">
+      <div class="logo">
+        <img src="/static/logo.png" alt="Logo" />
+      </div>
+      <h1>All In TTS</h1>
     </div>
-    <hr style="margin:30px 0;border:1px solid #0f05;">
-    <textarea id="textInput" placeholder="请输入要合成的文本..."></textarea>
-    <button id="generateBtn">生成语音</button>
-    <audio id="audioPlayer" controls></audio>
-    <hr style="margin:30px 0;border:1px solid #0f05;">
-    <div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tts">读文本</button>
+      <button class="tab-btn" data-tab="web">读网页</button>
+      <button class="tab-btn" data-tab="file">读文档</button>
+    </div>
+    <!-- 三个选项卡内容 -->
+    <!-- 读文本 -->
+    <div class="tab-content" id="tab-tts">
+      <div class="lang-select-wrap">
+        <label for="langSelect" style="font-size:1.1rem;margin-right:10px;">选择语言：</label>
+        <select id="langSelect" class="neon-select">
+          <option value="pinyin">普通话</option>
+          <option value="jyutping">粤语</option>
+          <option value="shupin">四川话</option>  
+        </select>
+      </div>
+      <hr style="margin:30px 0;border:1px solid #0f05;">
+      <textarea id="textInput" placeholder="请输入要合成的文本..."></textarea>
+      <button id="generateBtn">生成语音</button>
+      <audio id="audioPlayer" class="plyr" controls></audio>
+    </div>
+    <!-- 读网页 -->
+    <div class="tab-content" id="tab-web" style="display:none;">
+      <div class="lang-select-wrap">
+        <label for="langSelectWeb" style="font-size:1.1rem;margin-right:10px;">选择语言：</label>
+        <select id="langSelectWeb" class="neon-select">
+          <option value="pinyin">普通话</option>
+          <option value="jyutping">粤语</option>
+          <option value="shupin">四川话</option>  
+        </select>
+      </div>
+      <hr style="margin:30px 0;border:1px solid #0f05;">
       <textarea id="urlInput" placeholder="请输入要朗读的网址..." style="width:100%;height:60px;padding:10px;border-radius:8px;border:none;margin-bottom:10px;background:rgba(0,0,0,0.5);color:#0f0;"></textarea>
       <button id="webReadBtn" style="width:100%;">网页朗读</button>
+      <audio id="audioPlayerWeb" class="plyr" controls></audio>
     </div>
-    <div style="margin-top:20px;">
-      <input type="file" id="fileInput" accept=".txt,.doc,.docx,.md,.pdf" style="color:#0f0;background:rgba(0,0,0,0.5);border-radius:8px;">
-      <button id="fileReadBtn" style="width:100%;">文件朗读</button>
+    <!-- 读文件 -->
+    <div class="tab-content" id="tab-file" style="display:none;">
+      <div class="lang-select-wrap">
+        <label for="langSelectFile" style="font-size:1.1rem;margin-right:10px;">选择语言：</label>
+        <select id="langSelectFile" class="neon-select">
+          <option value="pinyin">普通话</option>
+          <option value="jyutping">粤语</option>
+          <option value="shupin">四川话</option>  
+        </select>
+      </div>
+      <hr style="margin:30px 0;border:1px solid #0f05;">
+      <div class="file-upload-wrap">
+        <input type="file" id="fileInput" accept=".txt,.doc,.docx,.md,.pdf" style="display:none;">
+        <label for="fileInput" class="file-upload-label">
+          <span id="fileName">选择文件</span>
+        </label>
+      </div>
+      <button id="fileReadBtn" style="width:100%;margin-top:10px;">文件朗读</button>
+      <audio id="audioPlayerFile" class="plyr" controls></audio>
     </div>
   </div>
+  <div class="footer-tip">
+    本项目开源于
+    <a href="https://github.com/yyloong/phonetic_dialectgen" target="_blank">GitHub</a>
+    Made by "All In Team"
+  </div>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
   <script>
+    // Tabs 切换逻辑
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const contents = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          contents.forEach(c => c.style.display = 'none');
+          document.getElementById('tab-' + tab.dataset.tab).style.display = '';
+        });
+      });
+    });
     // Matrix Rain
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     const fontSize = 16;
     let columns;
     let drops = [];
-    const letters = Array.from({length: 94}, (_, i) => String.fromCharCode(33 + i));
+    // const letters = Array.from({length: 94}, (_, i) => String.fromCharCode(33 + i));
+    const letters = Array.from('12345aefhiklmnoprstuxyøŋœǾɐɔɕəɛɤɿʂʅʐ—…。.！!，,、：:；;？?')
     function init() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -151,18 +487,57 @@
     window.addEventListener('resize', init);
     init(); setInterval(draw, 50);
 
+    // 多音频播放器初始化
+    const audioPlayers = [
+      new Plyr(document.getElementById('audioPlayer'), {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'duration'],
+        iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
+        tooltips: { controls: true }
+      }),
+      new Plyr(document.getElementById('audioPlayerWeb'), {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'duration'],
+        iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
+        tooltips: { controls: true }
+      }),
+      new Plyr(document.getElementById('audioPlayerFile'), {
+        controls: ['play-large', 'play', 'progress', 'current-time', 'duration'],
+        iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
+        tooltips: { controls: true }
+      })
+    ];
+
+    // Plyr 控件分行：按钮一行，进度条+时长一行
+    setTimeout(() => {
+      document.querySelectorAll('.panel .plyr__controls').forEach(controls => {
+        const progress = controls.querySelector('.plyr__progress');
+        const timeCurrent = controls.querySelector('.plyr__time--current');
+        const timeDuration = controls.querySelector('.plyr__time--duration');
+        // 先移除原有 row
+        const oldRow = controls.querySelector('.plyr__controls-row');
+        if (oldRow) oldRow.remove();
+        if (progress && timeCurrent && timeDuration) {
+          const row = document.createElement('div');
+          row.className = 'plyr__controls-row';
+          row.appendChild(timeCurrent);
+          row.appendChild(progress);
+          row.appendChild(timeDuration);
+          controls.appendChild(row);
+        }
+      });
+    }, 100);
+
     // TTS Logic
     const btn = document.getElementById('generateBtn');
     const input = document.getElementById('textInput');
-    const audio = document.getElementById('audioPlayer');
     const lang = document.getElementById('langSelect');
+    const audioTTS = document.getElementById('audioPlayer');
     btn.addEventListener('click', async () => {
       const text = input.value.trim();
       const language = lang.value;
       if (!text) return alert('请输入文本！');
       btn.textContent = '合成中...'; btn.disabled = true;
       try {
-        const resp = await fetch('/tts', {
+        const resp = await fetch('http://114.212.87.202:5000/api/tts', {
           method: 'POST', headers: {'Content-Type':'application/json'},
           body: JSON.stringify({text, language})
         });
@@ -172,8 +547,8 @@
           return;
         }
         const blob = await resp.blob();
-        audio.src = URL.createObjectURL(blob);
-        audio.play();
+        audioTTS.src = URL.createObjectURL(blob);
+        audioTTS.play();
       } catch (e) {
         console.error(e); alert('合成失败');
       } finally {
@@ -184,13 +559,15 @@
     // Web Reader Logic
     const webBtn = document.getElementById('webReadBtn');
     const urlInput = document.getElementById('urlInput');
+    const langWeb = document.getElementById('langSelectWeb');
+    const audioWeb = document.getElementById('audioPlayerWeb');
     webBtn.addEventListener('click', async () => {
       const url = urlInput.value.trim();
-      const language = lang.value;
+      const language = langWeb.value;
       if (!url) return alert('请输入网址！');
       webBtn.textContent = '朗读中...'; webBtn.disabled = true;
       try {
-        const resp = await fetch('/web_reader', {
+        const resp = await fetch('http://114.212.87.202:5000/api/web_reader', {
           method: 'POST',
           headers: {'Content-Type':'application/json'},
           body: JSON.stringify({url, language})
@@ -201,8 +578,8 @@
           return;
         }
         const blob = await resp.blob();
-        audio.src = URL.createObjectURL(blob);
-        audio.play();
+        audioWeb.src = URL.createObjectURL(blob);
+        audioWeb.play();
       } catch (e) {
         console.error(e); alert('网页朗读失败');
       } finally {
@@ -213,16 +590,18 @@
     // File Reader Logic
     const fileBtn = document.getElementById('fileReadBtn');
     const fileInput = document.getElementById('fileInput');
+    const langFile = document.getElementById('langSelectFile');
+    const audioFile = document.getElementById('audioPlayerFile');
     fileBtn.addEventListener('click', async () => {
       const file = fileInput.files[0];
-      const language = lang.value;
+      const language = langFile.value;
       if (!file) return alert('请先选择一个文件！');
       fileBtn.textContent = '朗读中...'; fileBtn.disabled = true;
       try {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('language', language);
-        const resp = await fetch('/file_reader', {
+        const resp = await fetch('http://114.212.87.202:5000/api/file_reader', {
           method: 'POST',
           body: formData
         });
@@ -232,14 +611,19 @@
           return;
         }
         const blob = await resp.blob();
-        audio.src = URL.createObjectURL(blob);
-        audio.play();
+        audioFile.src = URL.createObjectURL(blob);
+        audioFile.play();
       } catch (e) {
         console.error(e); alert('文件朗读失败');
       } finally {
         fileBtn.textContent = '文件朗读'; fileBtn.disabled = false;
       }
     });
+
+    // 文件名显示逻辑
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      const fileName = e.target.files[0] ? e.target.files[0].name : '选择文件';
+      document.getElementById('fileName').textContent = fileName;
+    });
   </script>
 </body>
-</html>
