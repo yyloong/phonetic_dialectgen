@@ -77,7 +77,7 @@ class TTSTokenizer:
 
     def __call__(self, text):
         # 定义中文标点符号集合
-        punctuations = "“”‘’（）【】《》\"'()[]{}<>《》"
+        punctuations = "“”‘’（）【】《》\"'()[]{}<>《》#$%^&*_"
 
         codes = []  # 存储编码结果
 
