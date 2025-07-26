@@ -102,6 +102,7 @@ if __name__ == "__main__":
     print(len(text))
     print(f"Tokenizing ...")
     tokenizer = TTSTokenizer()
+    print("".join(tokenizer.mapping.keys()))
     tokens = tokenizer(text)
     print(tokens)  # Should print a tensor of token IDs
     print(tokens.shape)  # Should match the length of the input text
