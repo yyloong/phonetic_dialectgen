@@ -1,21 +1,26 @@
+<!-- 网页入口声明，设置语言为英文 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- 网页头部，设置字符集和响应式布局 -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-  <title>TTS Demo with Matrix Rain</title>
+  <title>All In TTS</title>
   <style>
+    /* 霓虹灯文字动画效果 */
     @keyframes neonGlow {
       0%, 100% { text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0; }
       50% { text-shadow: 0 0 2px #0f0, 0 0 5px #0f0, 0 0 10px #0f0; }
     }
+    /* 网页整体背景与字体设置 */
     body {
       margin: 0;
       overflow: hidden;
       background: #000;
       font-family: 'Consolas', 'Courier New', monospace;
     }
+    /* 矩阵雨canvas层，绝对定位，铺满全屏，z-index最低 */
     canvas { position: absolute; top: 0; left: 0; z-index: 1; display: block; }
 
     /* 玻璃拟态面板 */
@@ -34,11 +39,13 @@
       text-align: center;
       z-index: 2;
     }
+    /* 面板标题 */
     .panel h1 {
       margin: 0 0 20px;
       font-size: 2rem;
       animation: neonGlow 2s ease-in-out infinite;
     }
+    /* 面板内元素样式 */
     .panel textarea {
       width: 100%; height: 100px;
       background: rgba(0, 0, 0, 0.5);
@@ -75,7 +82,7 @@
       outline: none;
       filter: drop-shadow(0 0 5px #0f0);
     }
-    /* 修复 Plyr 播放器错位和超出 panel 边界 */
+    /* Plyr 播放器 */
     .panel .plyr,
     .panel audio.plyr {
       width: 100% !important;
@@ -273,10 +280,38 @@
       50% { transform: translate(-50%, -16px); }
       100% { transform: translate(-50%, 0); }
     }
+    /* 脚注提示 */
+    .footer-tip {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #0f0;
+      font-size: 1rem;
+      opacity: 0.92;
+      letter-spacing: 1px;
+      z-index: 20;
+      text-shadow: 0 0 8px #0f0;
+      pointer-events: auto;
+      background: rgba(0, 0, 0, 1);   
+      border-radius: 12px;
+      padding: 8px 24px;
+      box-shadow: 0 0 12px #0f0 inset;
+    }
+    .footer-tip a {
+      color: #39ff14;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .footer-tip a:hover {
+      color: #fff;
+    }
   </style>
 </head>
 <body>
+  <!-- 背景矩阵雨特效层，canvas实现 -->
   <canvas id="matrix"></canvas>
+  <!-- 主面板 -->
   <div class="logo">
     <img src="/static/logo.png" alt="Logo" />
   </div>
@@ -287,6 +322,8 @@
       <button class="tab-btn" data-tab="web">读网页</button>
       <button class="tab-btn" data-tab="file">读文档</button>
     </div>
+    <!-- 三个选项卡内容 -->
+    <!-- 读文本 -->
     <div class="tab-content" id="tab-tts">
       <div class="lang-select-wrap">
         <label for="langSelect" style="font-size:1.1rem;margin-right:10px;">选择语言：</label>
@@ -301,6 +338,7 @@
       <button id="generateBtn">生成语音</button>
       <audio id="audioPlayer" class="plyr" controls></audio>
     </div>
+    <!-- 读网页 -->
     <div class="tab-content" id="tab-web" style="display:none;">
       <div class="lang-select-wrap">
         <label for="langSelectWeb" style="font-size:1.1rem;margin-right:10px;">选择语言：</label>
@@ -315,6 +353,7 @@
       <button id="webReadBtn" style="width:100%;">网页朗读</button>
       <audio id="audioPlayerWeb" class="plyr" controls></audio>
     </div>
+    <!-- 读文件 -->
     <div class="tab-content" id="tab-file" style="display:none;">
       <div class="lang-select-wrap">
         <label for="langSelectFile" style="font-size:1.1rem;margin-right:10px;">选择语言：</label>
@@ -334,6 +373,11 @@
       <button id="fileReadBtn" style="width:100%;margin-top:10px;">文件朗读</button>
       <audio id="audioPlayerFile" class="plyr" controls></audio>
     </div>
+  </div>
+  <div class="footer-tip">
+    本项目开源于
+    <a href="https://github.com/yyloong/phonetic_dialectgen" target="_blank">GitHub</a>
+    Made by "All In Team"
   </div>
   <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
   <script>
@@ -378,7 +422,6 @@
     window.addEventListener('resize', init);
     init(); setInterval(draw, 50);
 
-    // Initialize Plyr for audio player
     // 多音频播放器初始化
     const audioPlayers = [
       new Plyr(document.getElementById('audioPlayer'), {
@@ -517,28 +560,5 @@
       const fileName = e.target.files[0] ? e.target.files[0].name : '选择文件';
       document.getElementById('fileName').textContent = fileName;
     });
-
-    // 动态字符环绕 logo
-    // (function(){
-    //   const logo = document.querySelector('.logo');
-    //   if (!logo) return;
-    //   const chars = '01abcdefghijklmnopqrstuvwxyz'.split('');
-    //   const n = 18, r = 90; // r略大于logo图片一半
-    //   for(let i=0;i<n;i++){
-    //     const span = document.createElement('span');
-    //     span.textContent = chars[Math.floor(Math.random()*chars.length)];
-    //     span.style.transform = `rotate(${(360/n)*i}deg) translateY(-${r}px)`;
-    //     span.style.color = '#0f0';
-    //     span.style.fontSize = '1.1em';
-    //     span.style.opacity = '0.7';
-    //     span.style.textShadow = '0 0 8px #0f0, 0 0 2px #0f0';
-    //     logo.appendChild(span);
-    //   }
-    //   setInterval(()=>{
-    //     logo.querySelectorAll('span').forEach(span=>{
-    //       if(Math.random()>0.7) span.textContent = chars[Math.floor(Math.random()*chars.length)];
-    //     });
-    //   }, 180);
-    // })();
   </script>
 </body>
