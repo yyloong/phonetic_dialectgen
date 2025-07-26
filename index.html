@@ -537,7 +537,7 @@
       if (!text) return alert('请输入文本！');
       btn.textContent = '合成中...'; btn.disabled = true;
       try {
-        const resp = await fetch('/api/tts', {
+        const resp = await fetch('http://114.212.87.202:5000/api/tts', {
           method: 'POST', headers: {'Content-Type':'application/json'},
           body: JSON.stringify({text, language})
         });
@@ -567,7 +567,7 @@
       if (!url) return alert('请输入网址！');
       webBtn.textContent = '朗读中...'; webBtn.disabled = true;
       try {
-        const resp = await fetch('/api/web_reader', {
+        const resp = await fetch('http://114.212.87.202:5000/api/web_reader', {
           method: 'POST',
           headers: {'Content-Type':'application/json'},
           body: JSON.stringify({url, language})
@@ -601,7 +601,7 @@
         const formData = new FormData();
         formData.append('file', file);
         formData.append('language', language);
-        const resp = await fetch('/api/file_reader', {
+        const resp = await fetch('http://114.212.87.202:5000/api/file_reader', {
           method: 'POST',
           body: formData
         });
