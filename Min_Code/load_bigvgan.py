@@ -25,7 +25,7 @@ if __name__ == "__main__":
     ### 获取梅尔频谱
     #mel = model.get_spectrogram("/home/u-longyy/Vocoder/test.wav")
     #mel = mel.to(model.device)
-    mel=torch.load('your mel path').reshape(1,80,-1).to(model.device)
+    mel=torch.load('your path').reshape(1,80,-1).to(model.device)
     print(mel.shape)
     ### 转化梅尔频谱
-    model.spectrogram_to_wave(mel, "your save wav")
+    model.spectrogram_to_wave(mel, "your path")
