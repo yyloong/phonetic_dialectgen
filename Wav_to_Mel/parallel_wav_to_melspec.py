@@ -1,5 +1,5 @@
 from wav_to_melspec import mel_spectrogram
-import tqdm
+from tqdm import tqdm
 import sys
 import multiprocessing as mp
 import os
@@ -48,6 +48,6 @@ def process_file(wav_path, save_path):
 
 if __name__ == "__main__":
     mp.set_start_method("spawn", force=True)
-    wave_path = "/home/u-longyy/week2/Qwen-tts_new"
-    save_path = "/home/u-longyy/week2/Qwen-tts_new_mel"
+    wave_path = "your path"
+    save_path = "your path"
     parallel_process(wave_path, save_path, process_file)
