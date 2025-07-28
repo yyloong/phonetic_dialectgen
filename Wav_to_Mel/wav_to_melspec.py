@@ -1,4 +1,5 @@
 import numpy as np
+import librosa
 import torch
 from librosa.filters import mel as librosa_mel_fn
 
@@ -100,3 +101,19 @@ def mel_spectrogram(
     mel_spec = spectral_normalize_torch(mel_spec)
 
     return mel_spec
+
+def get_spectrogram(path):
+    '''TODO:change the parameter to fit the model if you use another moder'''
+    signal, _ = librosa.load(path, sr=22050, mono=True)
+    signal = torch.Tensor(signal)
+    spectrogram= mel_spectrogram(
+        y=signal.unsqueeze(0),
+        n_fft=1024,
+        num_mels=80,
+        sampling_rate=22050,
+        hop_size=256,
+        win_size=1024,
+        fmin=0,
+        fmax=None,
+    )
+    return spectrogram
