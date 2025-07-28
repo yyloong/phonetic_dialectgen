@@ -1,5 +1,6 @@
 import os
 import io
+import re
 from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
 from synthesize import synthesize
@@ -23,6 +24,10 @@ client = OpenAI(
 app = Flask(__name__)
 CORS(app)
 
+def contains_english_letter(text):
+    return any(c.isalpha() and c.encode().isalpha() and ('a' <= c.lower() <= 'z') for c in text)
+
+
 def preprocess_tts(sentence):
     content = f"""你的任务是将以下给出的中文句子进行汉语TTS的文本规范化:
     1. 去除所有特殊符号，保留标点符号；
@@ -30,7 +35,7 @@ def preprocess_tts(sentence):
     3. 数学、物理等符号的口语化转换；
     4. 将所有非中文文本（包含字母缩写名称）直接进行汉语翻译，使得转换后的句子中仅包含中文；
     5. 不要对原句子进行任何其他修改和润色。
-    注意（重要）：输出的结果中不能出现英文或阿拉伯数字！不要输出任何的额外信息！
+    注意（重要）：输出的结果中不能出现任意英文字母，阿拉伯数字！不要输出任何的额外信息！
     
     文本内容如下：
     {sentence}
@@ -90,8 +95,8 @@ def get_text_from_file(file_path):
     file_content = client.files.content(file_id=file_object.id).text
     messages = [
         {
-        "role": "system",
-        "content": file_content,
+            "role": "system",
+            "content": file_content,
         },
         {
             "role": "user",
@@ -128,8 +133,11 @@ def generate():
     checkpoint_path = model_mapping[language]
     # 规范化文本（如果需要）
     # 检测是否包含数字或英文字幕
-    if any(char.isdigit() for char in text) or any(char.isalpha() for char in text):
+    if any(char.isdigit() for char in text) or contains_english_letter(text):
         text = preprocess_tts(text)
+    # 确保不含有英文字母和阿拉伯数字
+    text = re.sub(r'[A-Za-z0-9]', '', text)
+    text = text.strip()
     print(f"🎤 规范化后的文本: {text}")
     if language == "shupin":
         synthesize_sichuan(checkpoint_path, text)
@@ -158,9 +166,12 @@ def web_reader():
     }
     checkpoint_path = model_mapping[language]
     # 规范化文本（如果需要）
-    # 检测是否包含数字或英文字幕
-    if any(char.isdigit() for char in text) or any(char.isalpha() for char in text):
+    # 检测是否包含数字或英文字幕（isalpha() 对中文字符也会返回 True）
+    if any(char.isdigit() for char in text) or contains_english_letter(text):
         text = preprocess_tts(text)
+    # 确保不含有英文字母和阿拉伯数字
+    text = re.sub(r'[A-Za-z0-9]', '', text)
+    text = text.strip()
     print(f"🎤 规范化后的文本: {text}")
     if language == "shupin":
         synthesize_sichuan(checkpoint_path, text)
@@ -185,6 +196,10 @@ def file_reader():
     text = get_text_from_file(file)
     if not text:
         return jsonify({"error": "File is empty"}), 400
+    # 确保不含有英文字母和阿拉伯数字
+    text = re.sub(r'[A-Za-z0-9]', '', text)
+    text = text.strip()
+    print(f"🎤 规范化后的文本: {text}")
     # 合成语音
     model_mapping = {
         "pinyin": "./weights/mandarin.pth",
@@ -192,7 +207,6 @@ def file_reader():
         "shupin": "./shuyu/weights/sichuan.pth"
     }
     checkpoint_path = model_mapping[language]
-    print(f"🎤 规范化后的文本: {text}")
     if language == "shupin":
         synthesize_sichuan(checkpoint_path, text)
     else:

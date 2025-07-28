@@ -1,6 +1,7 @@
 from openai import OpenAI
 import toml
 
+
 config = toml.load("2025.07.25_config.toml")
 api_key = config["moonshot"]["api_key"]
 base_url = config["moonshot"]["base_url"]
@@ -9,6 +10,7 @@ client = OpenAI(
     api_key=api_key,
     base_url=base_url,
 )
+
 
 def preprocess_tts(sentence):
     content = f"""你的任务是将以下给出的中文句子进行汉语TTS的文本规范化:
