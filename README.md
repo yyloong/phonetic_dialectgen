@@ -1,4 +1,4 @@
-# Phonetic DialectGen TTS
+# Phonetic DialectGEN TTS
 
 <p align="center">
   <img src="assets/logo.png" alt="Phonetic DialectGen Logo" width="500"/>
